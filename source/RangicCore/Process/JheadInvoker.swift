@@ -10,7 +10,8 @@ public class JheadInvoker
 
     static public func autoRotate(files: [String]) -> JheadInvoker
     {
-        let launchPath = (NSBundle.mainBundle().resourcePath! as NSString).stringByAppendingPathComponent("jhead")
+        let bundlePath = NSBundle(forClass:object_getClass(JheadInvoker)).resourcePath! as NSString
+        let launchPath = bundlePath.stringByAppendingPathComponent("jhead")
 
         var args = ["-q", "-autorot", "-ft"]
         for f in files {
