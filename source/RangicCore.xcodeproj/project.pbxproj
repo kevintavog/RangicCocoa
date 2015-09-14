@@ -1,0 +1,358 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		44F420071BA7194000ADBB85 /* OrderedDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F420061BA7194000ADBB85 /* OrderedDictionary.swift */; settings = {ASSET_TAGS = (); }; };
+		44F420091BA7194C00ADBB85 /* ProcessInvoker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F420081BA7194C00ADBB85 /* ProcessInvoker.swift */; settings = {ASSET_TAGS = (); }; };
+		44F4200C1BA7195700ADBB85 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F4200A1BA7195700ADBB85 /* Logger.swift */; settings = {ASSET_TAGS = (); }; };
+		44F4200D1BA7195700ADBB85 /* Mutex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F4200B1BA7195700ADBB85 /* Mutex.swift */; settings = {ASSET_TAGS = (); }; };
+		44F420151BA72F4D00ADBB85 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44F420141BA72F4D00ADBB85 /* Foundation.framework */; };
+		44F4201B1BA7776B00ADBB85 /* BasePreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F4201A1BA7776B00ADBB85 /* BasePreferences.swift */; settings = {ASSET_TAGS = (); }; };
+		44F4201D1BA778F000ADBB85 /* JheadInvoker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F4201C1BA778F000ADBB85 /* JheadInvoker.swift */; settings = {ASSET_TAGS = (); }; };
+		44F420211BA77A0900ADBB85 /* RangicFsEventStreamWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 44F4201F1BA77A0900ADBB85 /* RangicFsEventStreamWrapper.h */; settings = {ASSET_TAGS = (); }; };
+		44F420221BA77A0900ADBB85 /* RangicFsEventStreamWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 44F420201BA77A0900ADBB85 /* RangicFsEventStreamWrapper.m */; settings = {ASSET_TAGS = (); }; };
+		44F420241BA77A2F00ADBB85 /* Radish-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = 44F420231BA77A2F00ADBB85 /* Radish-Bridging-Header.h */; settings = {ASSET_TAGS = (); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		44F41FF81BA7175E00ADBB85 /* RangicCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RangicCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		44F41FFD1BA7175E00ADBB85 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		44F420061BA7194000ADBB85 /* OrderedDictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrderedDictionary.swift; path = Collections/OrderedDictionary.swift; sourceTree = "<group>"; };
+		44F420081BA7194C00ADBB85 /* ProcessInvoker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProcessInvoker.swift; path = Process/ProcessInvoker.swift; sourceTree = "<group>"; };
+		44F4200A1BA7195700ADBB85 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Logger.swift; path = Utilities/Logger.swift; sourceTree = "<group>"; };
+		44F4200B1BA7195700ADBB85 /* Mutex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Mutex.swift; path = Utilities/Mutex.swift; sourceTree = "<group>"; };
+		44F420141BA72F4D00ADBB85 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		44F4201A1BA7776B00ADBB85 /* BasePreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BasePreferences.swift; path = Utilities/BasePreferences.swift; sourceTree = "<group>"; };
+		44F4201C1BA778F000ADBB85 /* JheadInvoker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JheadInvoker.swift; path = Process/JheadInvoker.swift; sourceTree = "<group>"; };
+		44F4201F1BA77A0900ADBB85 /* RangicFsEventStreamWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RangicFsEventStreamWrapper.h; path = EventStreams/RangicFsEventStreamWrapper.h; sourceTree = "<group>"; };
+		44F420201BA77A0900ADBB85 /* RangicFsEventStreamWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RangicFsEventStreamWrapper.m; path = EventStreams/RangicFsEventStreamWrapper.m; sourceTree = "<group>"; };
+		44F420231BA77A2F00ADBB85 /* Radish-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Radish-Bridging-Header.h"; path = "EventStreams/Radish-Bridging-Header.h"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		44F41FF41BA7175E00ADBB85 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				44F420151BA72F4D00ADBB85 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		44F41FEE1BA7175E00ADBB85 = {
+			isa = PBXGroup;
+			children = (
+				44F420141BA72F4D00ADBB85 /* Foundation.framework */,
+				44F41FFA1BA7175E00ADBB85 /* RangicCore */,
+				44F41FF91BA7175E00ADBB85 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		44F41FF91BA7175E00ADBB85 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				44F41FF81BA7175E00ADBB85 /* RangicCore.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		44F41FFA1BA7175E00ADBB85 /* RangicCore */ = {
+			isa = PBXGroup;
+			children = (
+				44F4201E1BA7795300ADBB85 /* EventStream */,
+				44F420031BA718ED00ADBB85 /* Collections */,
+				44F420051BA7191900ADBB85 /* Process */,
+				44F420041BA718F800ADBB85 /* Utilities */,
+				44F41FFD1BA7175E00ADBB85 /* Info.plist */,
+			);
+			name = RangicCore;
+			path = RangicCore;
+			sourceTree = "<group>";
+		};
+		44F420031BA718ED00ADBB85 /* Collections */ = {
+			isa = PBXGroup;
+			children = (
+				44F420061BA7194000ADBB85 /* OrderedDictionary.swift */,
+			);
+			name = Collections;
+			sourceTree = "<group>";
+		};
+		44F420041BA718F800ADBB85 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				44F4200A1BA7195700ADBB85 /* Logger.swift */,
+				44F4200B1BA7195700ADBB85 /* Mutex.swift */,
+				44F4201A1BA7776B00ADBB85 /* BasePreferences.swift */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+		44F420051BA7191900ADBB85 /* Process */ = {
+			isa = PBXGroup;
+			children = (
+				44F4201C1BA778F000ADBB85 /* JheadInvoker.swift */,
+				44F420081BA7194C00ADBB85 /* ProcessInvoker.swift */,
+			);
+			name = Process;
+			sourceTree = "<group>";
+		};
+		44F4201E1BA7795300ADBB85 /* EventStream */ = {
+			isa = PBXGroup;
+			children = (
+				44F420231BA77A2F00ADBB85 /* Radish-Bridging-Header.h */,
+				44F4201F1BA77A0900ADBB85 /* RangicFsEventStreamWrapper.h */,
+				44F420201BA77A0900ADBB85 /* RangicFsEventStreamWrapper.m */,
+			);
+			name = EventStream;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		44F41FF51BA7175E00ADBB85 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				44F420241BA77A2F00ADBB85 /* Radish-Bridging-Header.h in Headers */,
+				44F420211BA77A0900ADBB85 /* RangicFsEventStreamWrapper.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		44F41FF71BA7175E00ADBB85 /* RangicCore */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 44F420001BA7175E00ADBB85 /* Build configuration list for PBXNativeTarget "RangicCore" */;
+			buildPhases = (
+				44F41FF31BA7175E00ADBB85 /* Sources */,
+				44F41FF41BA7175E00ADBB85 /* Frameworks */,
+				44F41FF51BA7175E00ADBB85 /* Headers */,
+				44F41FF61BA7175E00ADBB85 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RangicCore;
+			productName = Rangic.Cocoa.Core;
+			productReference = 44F41FF81BA7175E00ADBB85 /* RangicCore.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		44F41FEF1BA7175E00ADBB85 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = rangic.com;
+				TargetAttributes = {
+					44F41FF71BA7175E00ADBB85 = {
+						CreatedOnToolsVersion = 7.0;
+					};
+				};
+			};
+			buildConfigurationList = 44F41FF21BA7175E00ADBB85 /* Build configuration list for PBXProject "RangicCore" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 44F41FEE1BA7175E00ADBB85;
+			productRefGroup = 44F41FF91BA7175E00ADBB85 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				44F41FF71BA7175E00ADBB85 /* RangicCore */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		44F41FF61BA7175E00ADBB85 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		44F41FF31BA7175E00ADBB85 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				44F420091BA7194C00ADBB85 /* ProcessInvoker.swift in Sources */,
+				44F4201B1BA7776B00ADBB85 /* BasePreferences.swift in Sources */,
+				44F4200D1BA7195700ADBB85 /* Mutex.swift in Sources */,
+				44F4200C1BA7195700ADBB85 /* Logger.swift in Sources */,
+				44F420071BA7194000ADBB85 /* OrderedDictionary.swift in Sources */,
+				44F420221BA77A0900ADBB85 /* RangicFsEventStreamWrapper.m in Sources */,
+				44F4201D1BA778F000ADBB85 /* JheadInvoker.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		44F41FFE1BA7175E00ADBB85 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		44F41FFF1BA7175E00ADBB85 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		44F420011BA7175E00ADBB85 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = RangicCore/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = RangicCore;
+				PRODUCT_NAME = RangicCore;
+				SWIFT_OBJC_BRIDGING_HEADER = "RangicCore/EventStreams/Radish-Bridging-Header.h";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		44F420021BA7175E00ADBB85 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = RangicCore/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = RangicCore;
+				PRODUCT_NAME = RangicCore;
+				SWIFT_OBJC_BRIDGING_HEADER = "RangicCore/EventStreams/Radish-Bridging-Header.h";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		44F41FF21BA7175E00ADBB85 /* Build configuration list for PBXProject "RangicCore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				44F41FFE1BA7175E00ADBB85 /* Debug */,
+				44F41FFF1BA7175E00ADBB85 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		44F420001BA7175E00ADBB85 /* Build configuration list for PBXNativeTarget "RangicCore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				44F420011BA7175E00ADBB85 /* Debug */,
+				44F420021BA7175E00ADBB85 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 44F41FEF1BA7175E00ADBB85 /* Project object */;
+}
