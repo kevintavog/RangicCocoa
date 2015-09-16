@@ -2,14 +2,12 @@
 //  RangicCore
 //
 
-import Foundation
-
 public class BasePreferences
 {
     // I'd prefer these set* & *ForKey funcs be accessible only to derived classes...
 
 
-    // Doubles
+    // MARK: Doubles
     static public func setValue(value: Double, key: String)
     {
         NSUserDefaults.standardUserDefaults().setDouble(value, forKey: key)
@@ -25,7 +23,7 @@ public class BasePreferences
         if (!keyExists(key)) { setValue(value, key: key) }
     }
 
-    // Floats
+    // MARK: Floats
     static public func setValue(value: Float, key: String)
     {
         NSUserDefaults.standardUserDefaults().setFloat(value, forKey: key)
@@ -41,7 +39,29 @@ public class BasePreferences
         if (!keyExists(key)) { setValue(value, key: key) }
     }
 
+    // MARK: Strings
+    static public func setValue(value: String, key: String)
+    {
+        NSUserDefaults.standardUserDefaults().setObject(value, forKey: key)
+    }
 
+    static public func stringForKey(key: String) -> String
+    {
+        if let obj = NSUserDefaults.standardUserDefaults().objectForKey(key) {
+            if let str = obj as? NSString {
+                return str as String
+            }
+        }
+        return ""
+    }
+
+    static public func setDefaultValue(value: String, key: String)
+    {
+        if (!keyExists(key)) { setValue(value, key: key) }
+    }
+
+
+    // MARK: Helpers
     static public func keyExists(key: String) -> Bool
     {
         return NSUserDefaults.standardUserDefaults().objectForKey(key) != nil

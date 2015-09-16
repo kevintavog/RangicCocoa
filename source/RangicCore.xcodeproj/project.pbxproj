@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4451CEEB1BA79C5C00D09540 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4451CEEA1BA79C5C00D09540 /* Quartz.framework */; };
+		4451CEED1BA79C9400D09540 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4451CEEC1BA79C9400D09540 /* AVFoundation.framework */; };
 		44734C4C1BA7839100C6675C /* CachedLookupProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44734C471BA7839100C6675C /* CachedLookupProvider.swift */; settings = {ASSET_TAGS = (); }; };
 		44734C4D1BA7839100C6675C /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44734C481BA7839100C6675C /* Location.swift */; settings = {ASSET_TAGS = (); }; };
 		44734C4E1BA7839100C6675C /* LookupProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44734C491BA7839100C6675C /* LookupProvider.swift */; settings = {ASSET_TAGS = (); }; };
@@ -37,6 +39,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4451CEEA1BA79C5C00D09540 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
+		4451CEEC1BA79C9400D09540 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		44734C471BA7839100C6675C /* CachedLookupProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CachedLookupProvider.swift; path = Location/CachedLookupProvider.swift; sourceTree = "<group>"; };
 		44734C481BA7839100C6675C /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Location.swift; path = Location/Location.swift; sourceTree = "<group>"; };
 		44734C491BA7839100C6675C /* LookupProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LookupProvider.swift; path = Location/LookupProvider.swift; sourceTree = "<group>"; };
@@ -73,6 +77,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4451CEED1BA79C9400D09540 /* AVFoundation.framework in Frameworks */,
+				4451CEEB1BA79C5C00D09540 /* Quartz.framework in Frameworks */,
 				4475F76F1BA7916F00087AEE /* Async.framework in Frameworks */,
 				44EBE0011BA784CC00AD679A /* Alamofire.framework in Frameworks */,
 				44F420151BA72F4D00ADBB85 /* Foundation.framework in Frameworks */,
@@ -82,6 +88,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4451CEF41BA79D4300D09540 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4451CEEC1BA79C9400D09540 /* AVFoundation.framework */,
+				4451CEEA1BA79C5C00D09540 /* Quartz.framework */,
+				44EBE0001BA784CC00AD679A /* Alamofire.framework */,
+				4475F76E1BA7916F00087AEE /* Async.framework */,
+				44F420141BA72F4D00ADBB85 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		44734C461BA782FA00C6675C /* Location */ = {
 			isa = PBXGroup;
 			children = (
@@ -128,9 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				44F41FFA1BA7175E00ADBB85 /* RangicCore */,
-				44EBE0001BA784CC00AD679A /* Alamofire.framework */,
-				4475F76E1BA7916F00087AEE /* Async.framework */,
-				44F420141BA72F4D00ADBB85 /* Foundation.framework */,
+				4451CEF41BA79D4300D09540 /* Frameworks */,
 				44F41FF91BA7175E00ADBB85 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -325,6 +341,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -371,6 +388,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
