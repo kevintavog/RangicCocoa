@@ -9,12 +9,25 @@
 /* Begin PBXBuildFile section */
 		4451CEEB1BA79C5C00D09540 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4451CEEA1BA79C5C00D09540 /* Quartz.framework */; };
 		4451CEED1BA79C9400D09540 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4451CEEC1BA79C9400D09540 /* AVFoundation.framework */; };
-		44734C4C1BA7839100C6675C /* CachedLookupProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44734C471BA7839100C6675C /* CachedLookupProvider.swift */; settings = {ASSET_TAGS = (); }; };
+		44734C4C1BA7839100C6675C /* MemoryCacheLookupProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44734C471BA7839100C6675C /* MemoryCacheLookupProvider.swift */; settings = {ASSET_TAGS = (); }; };
 		44734C4D1BA7839100C6675C /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44734C481BA7839100C6675C /* Location.swift */; settings = {ASSET_TAGS = (); }; };
 		44734C4E1BA7839100C6675C /* LookupProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44734C491BA7839100C6675C /* LookupProvider.swift */; settings = {ASSET_TAGS = (); }; };
 		44734C4F1BA7839100C6675C /* Placename.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44734C4A1BA7839100C6675C /* Placename.swift */; settings = {ASSET_TAGS = (); }; };
 		44734C501BA7839100C6675C /* OpenMapLookupProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44734C4B1BA7839100C6675C /* OpenMapLookupProvider.swift */; settings = {ASSET_TAGS = (); }; };
 		4475F76F1BA7916F00087AEE /* Async.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4475F76E1BA7916F00087AEE /* Async.framework */; };
+		44D749C81BAC759100DE90B1 /* PersistentCacheLookupProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D749C71BAC759100DE90B1 /* PersistentCacheLookupProvider.swift */; settings = {ASSET_TAGS = (); }; };
+		44D749D51BAC810B00DE90B1 /* FMDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D749CA1BAC810B00DE90B1 /* FMDatabase.h */; settings = {ASSET_TAGS = (); }; };
+		44D749D61BAC810B00DE90B1 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D749CB1BAC810B00DE90B1 /* FMDatabase.m */; settings = {ASSET_TAGS = (); }; };
+		44D749D71BAC810B00DE90B1 /* FMDatabaseAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D749CC1BAC810B00DE90B1 /* FMDatabaseAdditions.h */; settings = {ASSET_TAGS = (); }; };
+		44D749D81BAC810B00DE90B1 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D749CD1BAC810B00DE90B1 /* FMDatabaseAdditions.m */; settings = {ASSET_TAGS = (); }; };
+		44D749D91BAC810B00DE90B1 /* FMDatabasePool.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D749CE1BAC810B00DE90B1 /* FMDatabasePool.h */; settings = {ASSET_TAGS = (); }; };
+		44D749DA1BAC810B00DE90B1 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D749CF1BAC810B00DE90B1 /* FMDatabasePool.m */; settings = {ASSET_TAGS = (); }; };
+		44D749DB1BAC810B00DE90B1 /* FMDatabaseQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D749D01BAC810B00DE90B1 /* FMDatabaseQueue.h */; settings = {ASSET_TAGS = (); }; };
+		44D749DC1BAC810B00DE90B1 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D749D11BAC810B00DE90B1 /* FMDatabaseQueue.m */; settings = {ASSET_TAGS = (); }; };
+		44D749DD1BAC810B00DE90B1 /* FMDB.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D749D21BAC810B00DE90B1 /* FMDB.h */; settings = {ASSET_TAGS = (); }; };
+		44D749DE1BAC810B00DE90B1 /* FMResultSet.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D749D31BAC810B00DE90B1 /* FMResultSet.h */; settings = {ASSET_TAGS = (); }; };
+		44D749DF1BAC810B00DE90B1 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D749D41BAC810B00DE90B1 /* FMResultSet.m */; settings = {ASSET_TAGS = (); }; };
+		44D749E11BAC820E00DE90B1 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 44D749E01BAC820E00DE90B1 /* libsqlite3.0.tbd */; };
 		44EBE0011BA784CC00AD679A /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44EBE0001BA784CC00AD679A /* Alamofire.framework */; };
 		44EBE0041BA7857000AD679A /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EBE0031BA7857000AD679A /* SwiftyJSON.swift */; settings = {ASSET_TAGS = (); }; };
 		44EBE00A1BA7891000AD679A /* jhead in Resources */ = {isa = PBXBuildFile; fileRef = 44EBE0081BA7891000AD679A /* jhead */; settings = {ASSET_TAGS = (); }; };
@@ -35,18 +48,31 @@
 		44F4201D1BA778F000ADBB85 /* JheadInvoker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F4201C1BA778F000ADBB85 /* JheadInvoker.swift */; settings = {ASSET_TAGS = (); }; };
 		44F420211BA77A0900ADBB85 /* RangicFsEventStreamWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 44F4201F1BA77A0900ADBB85 /* RangicFsEventStreamWrapper.h */; settings = {ASSET_TAGS = (); }; };
 		44F420221BA77A0900ADBB85 /* RangicFsEventStreamWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 44F420201BA77A0900ADBB85 /* RangicFsEventStreamWrapper.m */; settings = {ASSET_TAGS = (); }; };
-		44F420241BA77A2F00ADBB85 /* Radish-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = 44F420231BA77A2F00ADBB85 /* Radish-Bridging-Header.h */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		44426F9D1BAC90C700C8EC2F /* RangicCore-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RangicCore-Bridging-Header.h"; sourceTree = "<group>"; };
 		4451CEEA1BA79C5C00D09540 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		4451CEEC1BA79C9400D09540 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		44734C471BA7839100C6675C /* CachedLookupProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CachedLookupProvider.swift; path = Location/CachedLookupProvider.swift; sourceTree = "<group>"; };
+		44734C471BA7839100C6675C /* MemoryCacheLookupProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemoryCacheLookupProvider.swift; path = Location/MemoryCacheLookupProvider.swift; sourceTree = "<group>"; };
 		44734C481BA7839100C6675C /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Location.swift; path = Location/Location.swift; sourceTree = "<group>"; };
 		44734C491BA7839100C6675C /* LookupProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LookupProvider.swift; path = Location/LookupProvider.swift; sourceTree = "<group>"; };
 		44734C4A1BA7839100C6675C /* Placename.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Placename.swift; path = Location/Placename.swift; sourceTree = "<group>"; };
 		44734C4B1BA7839100C6675C /* OpenMapLookupProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenMapLookupProvider.swift; path = Location/OpenMapLookupProvider.swift; sourceTree = "<group>"; };
 		4475F76E1BA7916F00087AEE /* Async.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Async.framework; path = Carthage/Build/Mac/Async.framework; sourceTree = "<group>"; };
+		44D749C71BAC759100DE90B1 /* PersistentCacheLookupProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentCacheLookupProvider.swift; sourceTree = "<group>"; };
+		44D749CA1BAC810B00DE90B1 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMDatabase.h; path = External/fmdb/FMDatabase.h; sourceTree = "<group>"; };
+		44D749CB1BAC810B00DE90B1 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMDatabase.m; path = External/fmdb/FMDatabase.m; sourceTree = "<group>"; };
+		44D749CC1BAC810B00DE90B1 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMDatabaseAdditions.h; path = External/fmdb/FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		44D749CD1BAC810B00DE90B1 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMDatabaseAdditions.m; path = External/fmdb/FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		44D749CE1BAC810B00DE90B1 /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMDatabasePool.h; path = External/fmdb/FMDatabasePool.h; sourceTree = "<group>"; };
+		44D749CF1BAC810B00DE90B1 /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMDatabasePool.m; path = External/fmdb/FMDatabasePool.m; sourceTree = "<group>"; };
+		44D749D01BAC810B00DE90B1 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMDatabaseQueue.h; path = External/fmdb/FMDatabaseQueue.h; sourceTree = "<group>"; };
+		44D749D11BAC810B00DE90B1 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMDatabaseQueue.m; path = External/fmdb/FMDatabaseQueue.m; sourceTree = "<group>"; };
+		44D749D21BAC810B00DE90B1 /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMDB.h; path = External/fmdb/FMDB.h; sourceTree = "<group>"; };
+		44D749D31BAC810B00DE90B1 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMResultSet.h; path = External/fmdb/FMResultSet.h; sourceTree = "<group>"; };
+		44D749D41BAC810B00DE90B1 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMResultSet.m; path = External/fmdb/FMResultSet.m; sourceTree = "<group>"; };
+		44D749E01BAC820E00DE90B1 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		44EBE0001BA784CC00AD679A /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/Mac/Alamofire.framework; sourceTree = "<group>"; };
 		44EBE0031BA7857000AD679A /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = External/SwiftyJSON.swift; sourceTree = "<group>"; };
 		44EBE0081BA7891000AD679A /* jhead */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = jhead; path = Executables/jhead; sourceTree = "<group>"; };
@@ -69,7 +95,6 @@
 		44F4201C1BA778F000ADBB85 /* JheadInvoker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JheadInvoker.swift; path = Process/JheadInvoker.swift; sourceTree = "<group>"; };
 		44F4201F1BA77A0900ADBB85 /* RangicFsEventStreamWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RangicFsEventStreamWrapper.h; path = EventStreams/RangicFsEventStreamWrapper.h; sourceTree = "<group>"; };
 		44F420201BA77A0900ADBB85 /* RangicFsEventStreamWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RangicFsEventStreamWrapper.m; path = EventStreams/RangicFsEventStreamWrapper.m; sourceTree = "<group>"; };
-		44F420231BA77A2F00ADBB85 /* Radish-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Radish-Bridging-Header.h"; path = "EventStreams/Radish-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44D749E11BAC820E00DE90B1 /* libsqlite3.0.tbd in Frameworks */,
 				4451CEED1BA79C9400D09540 /* AVFoundation.framework in Frameworks */,
 				4451CEEB1BA79C5C00D09540 /* Quartz.framework in Frameworks */,
 				4475F76F1BA7916F00087AEE /* Async.framework in Frameworks */,
@@ -91,6 +117,7 @@
 		4451CEF41BA79D4300D09540 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				44D749E01BAC820E00DE90B1 /* libsqlite3.0.tbd */,
 				4451CEEC1BA79C9400D09540 /* AVFoundation.framework */,
 				4451CEEA1BA79C5C00D09540 /* Quartz.framework */,
 				44EBE0001BA784CC00AD679A /* Alamofire.framework */,
@@ -103,18 +130,38 @@
 		44734C461BA782FA00C6675C /* Location */ = {
 			isa = PBXGroup;
 			children = (
-				44734C471BA7839100C6675C /* CachedLookupProvider.swift */,
+				44734C471BA7839100C6675C /* MemoryCacheLookupProvider.swift */,
 				44734C481BA7839100C6675C /* Location.swift */,
 				44734C491BA7839100C6675C /* LookupProvider.swift */,
 				44734C4A1BA7839100C6675C /* Placename.swift */,
 				44734C4B1BA7839100C6675C /* OpenMapLookupProvider.swift */,
+				44D749C71BAC759100DE90B1 /* PersistentCacheLookupProvider.swift */,
 			);
 			name = Location;
+			sourceTree = "<group>";
+		};
+		44D749C91BAC80FD00DE90B1 /* fmdb */ = {
+			isa = PBXGroup;
+			children = (
+				44D749CA1BAC810B00DE90B1 /* FMDatabase.h */,
+				44D749CB1BAC810B00DE90B1 /* FMDatabase.m */,
+				44D749CC1BAC810B00DE90B1 /* FMDatabaseAdditions.h */,
+				44D749CD1BAC810B00DE90B1 /* FMDatabaseAdditions.m */,
+				44D749CE1BAC810B00DE90B1 /* FMDatabasePool.h */,
+				44D749CF1BAC810B00DE90B1 /* FMDatabasePool.m */,
+				44D749D01BAC810B00DE90B1 /* FMDatabaseQueue.h */,
+				44D749D11BAC810B00DE90B1 /* FMDatabaseQueue.m */,
+				44D749D21BAC810B00DE90B1 /* FMDB.h */,
+				44D749D31BAC810B00DE90B1 /* FMResultSet.h */,
+				44D749D41BAC810B00DE90B1 /* FMResultSet.m */,
+			);
+			name = fmdb;
 			sourceTree = "<group>";
 		};
 		44EBE0021BA7856100AD679A /* External */ = {
 			isa = PBXGroup;
 			children = (
+				44D749C91BAC80FD00DE90B1 /* fmdb */,
 				44EBE0031BA7857000AD679A /* SwiftyJSON.swift */,
 			);
 			name = External;
@@ -171,6 +218,7 @@
 				44F420051BA7191900ADBB85 /* Process */,
 				44F420041BA718F800ADBB85 /* Utilities */,
 				44F41FFD1BA7175E00ADBB85 /* Info.plist */,
+				44426F9D1BAC90C700C8EC2F /* RangicCore-Bridging-Header.h */,
 			);
 			path = RangicCore;
 			sourceTree = "<group>";
@@ -206,7 +254,6 @@
 		44F4201E1BA7795300ADBB85 /* EventStream */ = {
 			isa = PBXGroup;
 			children = (
-				44F420231BA77A2F00ADBB85 /* Radish-Bridging-Header.h */,
 				44F4201F1BA77A0900ADBB85 /* RangicFsEventStreamWrapper.h */,
 				44F420201BA77A0900ADBB85 /* RangicFsEventStreamWrapper.m */,
 			);
@@ -220,8 +267,13 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				44F420241BA77A2F00ADBB85 /* Radish-Bridging-Header.h in Headers */,
+				44D749DE1BAC810B00DE90B1 /* FMResultSet.h in Headers */,
 				44F420211BA77A0900ADBB85 /* RangicFsEventStreamWrapper.h in Headers */,
+				44D749DB1BAC810B00DE90B1 /* FMDatabaseQueue.h in Headers */,
+				44D749D91BAC810B00DE90B1 /* FMDatabasePool.h in Headers */,
+				44D749D71BAC810B00DE90B1 /* FMDatabaseAdditions.h in Headers */,
+				44D749DD1BAC810B00DE90B1 /* FMDB.h in Headers */,
+				44D749D51BAC810B00DE90B1 /* FMDatabase.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,14 +353,20 @@
 				44734C4F1BA7839100C6675C /* Placename.swift in Sources */,
 				44F4201B1BA7776B00ADBB85 /* BasePreferences.swift in Sources */,
 				44734C4E1BA7839100C6675C /* LookupProvider.swift in Sources */,
+				44D749DF1BAC810B00DE90B1 /* FMResultSet.m in Sources */,
 				44EBE0191BA790A500AD679A /* SupportedMediaTypes.swift in Sources */,
-				44734C4C1BA7839100C6675C /* CachedLookupProvider.swift in Sources */,
+				44734C4C1BA7839100C6675C /* MemoryCacheLookupProvider.swift in Sources */,
 				44F4200D1BA7195700ADBB85 /* Mutex.swift in Sources */,
+				44D749D61BAC810B00DE90B1 /* FMDatabase.m in Sources */,
+				44D749DC1BAC810B00DE90B1 /* FMDatabaseQueue.m in Sources */,
+				44D749D81BAC810B00DE90B1 /* FMDatabaseAdditions.m in Sources */,
 				44734C4D1BA7839100C6675C /* Location.swift in Sources */,
 				44EBE0151BA790A500AD679A /* FileMediaData.swift in Sources */,
+				44D749DA1BAC810B00DE90B1 /* FMDatabasePool.m in Sources */,
 				44EBE00D1BA7904D00AD679A /* CoreNotifications.swift in Sources */,
 				44EBE0161BA790A500AD679A /* MediaData.swift in Sources */,
 				44F4200C1BA7195700ADBB85 /* Logger.swift in Sources */,
+				44D749C81BAC759100DE90B1 /* PersistentCacheLookupProvider.swift in Sources */,
 				44F420071BA7194000ADBB85 /* OrderedDictionary.swift in Sources */,
 				44EBE0141BA790A500AD679A /* FileExifProvider.swift in Sources */,
 				44EBE0181BA790A500AD679A /* MediaProvider.swift in Sources */,
@@ -427,7 +485,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = RangicCore;
 				PRODUCT_NAME = RangicCore;
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "RangicCore/EventStreams/Radish-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "RangicCore/RangicCore-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -452,7 +510,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = RangicCore;
 				PRODUCT_NAME = RangicCore;
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "RangicCore/EventStreams/Radish-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "RangicCore/RangicCore-Bridging-Header.h";
 			};
 			name = Release;
 		};
