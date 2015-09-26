@@ -60,7 +60,7 @@ public class Location
         let minutesInt = Int(minutesDouble)
         let seconds = (minutesDouble - Double(minutesInt)) * 60.0
 
-        return String(format: "%.2d° %.2d' %.2f", degrees, minutesInt, seconds)
+        return String(format: "%.2d° %.2d' %.2f\"", degrees, minutesInt, seconds)
     }
 
     public func placenameAsString() -> String

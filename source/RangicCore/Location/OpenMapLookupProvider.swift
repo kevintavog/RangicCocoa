@@ -11,7 +11,12 @@ public class OpenMapLookupProvider: LookupProvider
     static private let useFake = false
     static private let fakeJson = "{\"place_id\":\"23990896\",\"licence\":\"Data \\u00a9 OpenStreetMap contributors, ODbL 1.0. http://www.openstreetmap.org/copyright\",\"osm_type\":\"node\",\"osm_id\":\"2327716570\",\"lat\":\"47.6114432\",\"lon\":\"-122.3492363\",\"display_name\":\"2225, Alaskan Way, Belltown, Seattle, King County, Washington, 98121, United States of America\",\"address\":{\"house_number\":\"2225\",\"road\":\"Alaskan Way\",\"suburb\":\"Belltown\",\"city\":\"Seattle\",\"county\":\"King County\",\"state\":\"Washington\",\"postcode\":\"98121\",\"country\":\"United States of America\",\"country_code\":\"us\"}}"
     static private let fakeData = fakeJson.dataUsingEncoding(NSUTF8StringEncoding)
+    static public var BaseLocationLookup = "http://open.mapquestapi.com"
+    static public let DefaultLocationLookup = "http://open.mapquestapi.com"
 
+    public init()
+    {
+    }
 
     /// Synchronously resolves latitude/longitude into a dictionary of component names. "DisplayName" is a single string while the rest of
     /// the items are address details, ordered from most detailed to least detailed
@@ -46,9 +51,17 @@ public class OpenMapLookupProvider: LookupProvider
 
     private func asyncLookup(latitude: Double, longitude: Double, completion: (placename: OrderedDictionary<String,String>) -> ())
     {
+        if OpenMapLookupProvider.BaseLocationLookup.characters.count == 0 {
+            OpenMapLookupProvider.BaseLocationLookup = OpenMapLookupProvider.DefaultLocationLookup
+        }
+
+        if OpenMapLookupProvider.BaseLocationLookup == OpenMapLookupProvider.DefaultLocationLookup {
+            Logger.log("Looking up via \(OpenMapLookupProvider.BaseLocationLookup): \(latitude), \(longitude)")
+        }
+
         Alamofire.request(
             .GET,
-            "http://open.mapquestapi.com/nominatim/v1/reverse",
+            "\(OpenMapLookupProvider.BaseLocationLookup)/nominatim/v1/reverse",
             parameters: [
                 "key": "Uw7GOgmBu6TY9KGcTNoqJWO7Y5J6JSxg",
                 "format": "json",
@@ -72,12 +85,30 @@ public class OpenMapLookupProvider: LookupProvider
     private func errorToDictionary(response: NSHTTPURLResponse?, data: NSData?, error: ErrorType?) -> OrderedDictionary<String,String>
     {
         let message = NSString(data:data!, encoding:NSUTF8StringEncoding) as! String
-        Logger.log("reverse geocode failed with code: \(response!.statusCode), '\(message)'")
+        if error != nil {
+            Logger.log("reverse geocode failed with error: \(error!._code) - \(error!._domain)")
 
-        var result = OrderedDictionary<String,String>()
-        result["apiStatusCode"] = String(response!.statusCode)
-        result["apiMessage"] = message
-        return result
+            var result = OrderedDictionary<String,String>()
+            result["apiStatusCode"] = String(error!._code)
+            result["apiMessage"] = error!._domain
+            return result
+        }
+        else if response != nil {
+            Logger.log("reverse geocode failed with code: \(response!.statusCode), '\(message)'")
+
+            var result = OrderedDictionary<String,String>()
+            result["apiStatusCode"] = String(response!.statusCode)
+            result["apiMessage"] = message
+            return result
+        }
+        else {
+            Logger.log("reverse geocode failed with unknown error")
+
+            var result = OrderedDictionary<String,String>()
+            result["apiMessage"] = "reverse geocode failed with unknown error"
+            return result
+
+        }
     }
 
     static public func dictionaryToResponse(dictionary: OrderedDictionary<String,String>) -> String

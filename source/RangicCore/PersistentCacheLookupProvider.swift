@@ -9,7 +9,7 @@ public class PersistentCacheLookupProvider: LookupProvider
 
     public func lookup(latitude: Double, longitude: Double) -> OrderedDictionary<String,String>
     {
-        let key = Location.toDms(latitude, longitude: longitude)
+        let key = "\(latitude), \(longitude)"
         if let result = PersistentCacheLookupProvider.getDataForKey(key) {
             return result
         }
