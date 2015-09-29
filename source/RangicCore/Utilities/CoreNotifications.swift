@@ -22,4 +22,9 @@ public class CoreNotifications
     {
         NSNotificationCenter.defaultCenter().addObserver(observer, selector: selector, name: name, object: object)
     }
+
+    static public func removeObserver(observer: AnyObject, name: String, object: AnyObject?)
+    {
+        NSNotificationCenter.defaultCenter().removeObserver(observer, name: name, object: object)
+    }
 }
