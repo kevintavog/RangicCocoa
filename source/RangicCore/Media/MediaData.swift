@@ -45,8 +45,8 @@ public class MediaData
 
     public func locationString() -> String
     {
-        if location != nil {
-            return "\(location.toDms())"
+        if let l = location {
+            return "\(l.toDms())"
         }
         else {
             return ""
@@ -55,8 +55,8 @@ public class MediaData
 
     public func keywordsString() -> String
     {
-        if keywords != nil {
-            return keywords.joinWithSeparator(", ")
+        if let k = keywords {
+            return k.joinWithSeparator(", ")
         }
         else {
             return ""
@@ -77,8 +77,8 @@ public class MediaData
     {
         var details = [MediaDataDetail]()
 
-        if location != nil {
-            if let components = location!.asPlacename()?.components {
+        if let l = location {
+            if let components = l.asPlacename()?.components {
                 details.append(MediaDataDetail(category: "Placename", name: nil, value: nil))
                 for key in components.keys {
                     let value = components[key]

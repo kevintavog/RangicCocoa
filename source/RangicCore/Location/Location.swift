@@ -6,8 +6,8 @@ import Foundation
 
 public class Location
 {
-    var latitude: Double
-    var longitude: Double
+    public private(set) var latitude: Double
+    public private(set)  var longitude: Double
     private var placename: Placename?
     static private let lookupProvider: LookupProvider = MemoryCacheLookupProvider()
 
@@ -63,13 +63,13 @@ public class Location
         return String(format: "%.2d° %.2d' %.2f\"", degrees, minutesInt, seconds)
     }
 
-    public func placenameAsString() -> String
+    public func placenameAsString(filter: PlaceNameFilter = .Detailed) -> String
     {
         if !hasPlacename() {
             self.placename = Placename(components: Location.lookupProvider.lookup(latitude, longitude: longitude))
         }
 
-        return (placename?.name(.Detailed))!
+        return (placename?.name(filter))!
     }
 
     public func asPlacename() -> Placename?

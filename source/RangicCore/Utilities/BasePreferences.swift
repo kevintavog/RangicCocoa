@@ -60,6 +60,22 @@ public class BasePreferences
         if (!keyExists(key)) { setValue(value, key: key) }
     }
 
+    // MARK: Ints
+    static public func setValue(value: Int, key: String)
+    {
+        NSUserDefaults.standardUserDefaults().setInteger(value, forKey: key)
+    }
+
+    static public func intForKey(key: String) -> Int
+    {
+        return NSUserDefaults.standardUserDefaults().integerForKey(key)
+    }
+
+    static public func setDefaultValue(value: Int, key: String)
+    {
+        if (!keyExists(key)) { setValue(value, key: key) }
+    }
+    
 
     // MARK: Helpers
     static public func keyExists(key: String) -> Bool
