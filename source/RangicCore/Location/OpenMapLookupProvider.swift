@@ -13,6 +13,7 @@ public class OpenMapLookupProvider: LookupProvider
     static private let fakeData = fakeJson.dataUsingEncoding(NSUTF8StringEncoding)
     static public var BaseLocationLookup = "http://open.mapquestapi.com"
     static public let DefaultLocationLookup = "http://open.mapquestapi.com"
+    static public var timeoutInSeconds: Double = 5.0
 
     public init()
     {
@@ -59,7 +60,13 @@ public class OpenMapLookupProvider: LookupProvider
             Logger.log("Looking up via \(OpenMapLookupProvider.BaseLocationLookup): \(latitude), \(longitude)")
         }
 
-        Alamofire.request(
+//        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+//        configuration.timeoutIntervalForRequest = OpenMapLookupProvider.timeoutInSeconds
+//        configuration.timeoutIntervalForResource = OpenMapLookupProvider.timeoutInSeconds
+//        let manager = Alamofire.Manager(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
+        let manager = Alamofire.Manager.sharedInstance
+
+        manager.request(
             .GET,
             "\(OpenMapLookupProvider.BaseLocationLookup)/nominatim/v1/reverse",
             parameters: [
