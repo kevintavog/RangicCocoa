@@ -16,7 +16,9 @@ public class FileMediaData : MediaData
         fileMediaData.timestamp = fileTimestamp
         fileMediaData.fileTimestamp = fileTimestamp
 
+        var hasImageData = false
         if let imageMetadata = ImageMetadata(url: url) {
+            hasImageData = true
             if let timestamp = imageMetadata.timestamp {
                 fileMediaData.timestamp = timestamp
             }
@@ -24,11 +26,13 @@ public class FileMediaData : MediaData
             fileMediaData.location = imageMetadata.location
         }
 
-        if let videoMetadata = VideoMetadata(filename: url.path!) {
-            if let timestamp = videoMetadata.timestamp {
-                fileMediaData.timestamp = timestamp
+        if !hasImageData {
+            if let videoMetadata = VideoMetadata(filename: url.path!) {
+                if let timestamp = videoMetadata.timestamp {
+                    fileMediaData.timestamp = timestamp
+                }
+                fileMediaData.location = videoMetadata.location
             }
-            fileMediaData.location = videoMetadata.location
         }
 
         return fileMediaData
