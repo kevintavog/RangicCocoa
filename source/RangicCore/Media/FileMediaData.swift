@@ -32,6 +32,7 @@ public class FileMediaData : MediaData
                     fileMediaData.timestamp = timestamp
                 }
                 fileMediaData.location = videoMetadata.location
+                fileMediaData.keywords = videoMetadata.keywords
             }
         }
 

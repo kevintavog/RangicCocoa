@@ -13,8 +13,9 @@ public class VideoMetadata
     private var uuidData = [String: String]()
 
 
-    public var location: Location? = nil
-    public var timestamp: NSDate? = nil
+    public private(set) var location: Location? = nil
+    public private(set) var timestamp: NSDate? = nil
+    public private(set) var keywords: [String]? = nil
 
     // duration seconds (float/double)
 
@@ -144,6 +145,8 @@ public class VideoMetadata
                 // Add namespaces to get xpath to work
                 xmlDoc.rootElement()?.addNamespace(NSXMLNode.namespaceWithName("exif", stringValue: "http://ns.adobe.com/exif/1.0/") as! NSXMLNode)
                 xmlDoc.rootElement()?.addNamespace(NSXMLNode.namespaceWithName("xmp", stringValue: "http://ns.adobe.com/xap/1.0/") as! NSXMLNode)
+                xmlDoc.rootElement()?.addNamespace(NSXMLNode.namespaceWithName("dc", stringValue: "http://purl.org/dc/elements/1.1/") as! NSXMLNode)
+                xmlDoc.rootElement()?.addNamespace(NSXMLNode.namespaceWithName("rdf", stringValue: "http://www.w3.org/1999/02/22-rdf-syntax-ns#") as! NSXMLNode)
 
 
                 let exifNodes = try xmlDoc.nodesForXPath("//exif:*")
@@ -155,6 +158,20 @@ public class VideoMetadata
                 for node in xmpNodes {
                     uuidData[node.localName!] = node.stringValue!
                 }
+
+                var subjectItems = [String]()
+                let subjectNodes = try xmlDoc.nodesForXPath(".//dc:subject/rdf:Bag")
+                for node in subjectNodes {
+                    for child in node.children! {
+                        Logger.log("Adding subject: \(child.stringValue!)")
+                        subjectItems.append(child.stringValue!)
+                    }
+                }
+
+                if subjectItems.count > 0 {
+                    keywords = subjectItems
+                }
+
             } catch let error {
                 Logger.log("Exception parsing uuid xml: \(error)")
             }

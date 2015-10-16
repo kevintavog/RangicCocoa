@@ -187,7 +187,6 @@
 			isa = PBXGroup;
 			children = (
 				44F8575A1BD05C0F00CC9185 /* DataReader.swift */,
-				44F8575B1BD05C0F00CC9185 /* VideoMetadata.swift */,
 				44EBE00E1BA790A500AD679A /* FileExifProvider.swift */,
 				44EBE00F1BA790A500AD679A /* FileMediaData.swift */,
 				445915731BD056AE001DC93A /* ImageMetadata.swift */,
@@ -195,6 +194,7 @@
 				44EBE0111BA790A500AD679A /* MediaDataDetail.swift */,
 				44EBE0121BA790A500AD679A /* MediaProvider.swift */,
 				44EBE0131BA790A500AD679A /* SupportedMediaTypes.swift */,
+				44F8575B1BD05C0F00CC9185 /* VideoMetadata.swift */,
 			);
 			name = Media;
 			sourceTree = "<group>";
