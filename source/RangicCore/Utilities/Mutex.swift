@@ -1,5 +1,5 @@
 //
-//  Radish
+//  RangicCore
 //
 
 import Foundation
