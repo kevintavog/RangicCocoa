@@ -40,7 +40,7 @@ public class PersistentCacheLookupProvider: LookupProvider
                     }
                 }
                 else {
-                    Logger.log("Error querying for '\(key)': \(db.lastErrorMessage())")
+                    Logger.error("Error querying for '\(key)': \(db.lastErrorMessage())")
                 }
             }
         }
@@ -54,12 +54,12 @@ public class PersistentCacheLookupProvider: LookupProvider
             db.inDatabase() {
                 db in
                 let json = OpenMapLookupProvider.dictionaryToResponse(components)
-                Logger.log("Storing placename for '\(key)'")
+                Logger.debug("Storing placename for '\(key)'")
                 let arguments = ["key":key, "json":json]
                 if (!db.executeUpdate(
                             "INSERT INTO LocationCache (geoLocation, fullPlacename) VALUES(:key, :json)",
                             withParameterDictionary: arguments)) {
-                    Logger.log("Error storing '\(key)': \(db.lastErrorMessage())' (\(json))")
+                    Logger.error("Error storing '\(key)': \(db.lastErrorMessage())' (\(json))")
                 }
             }
         }
@@ -82,14 +82,14 @@ public class PersistentCacheLookupProvider: LookupProvider
         let appSupportFolder = NSFileManager.defaultManager().URLsForDirectory(.ApplicationSupportDirectory, inDomains: .UserDomainMask).first!
         let parentFolder = NSString.pathWithComponents([appSupportFolder.path!, "Rangic", "Location"])
         let dbPath = NSString.pathWithComponents([parentFolder, "location.cache"])
-        Logger.log("Opening cache from \(dbPath)")
+        Logger.info("Opening cache from \(dbPath)")
 
         if !NSFileManager.defaultManager().fileExistsAtPath(parentFolder) {
-            Logger.log("Creating location cache folder: \(parentFolder)")
+            Logger.info("Creating location cache folder: \(parentFolder)")
             do {
                 try NSFileManager.defaultManager().createDirectoryAtPath(parentFolder, withIntermediateDirectories: true, attributes: nil)
             } catch let error {
-                Logger.log("Failed creating location cache folder: \(error)")
+                Logger.error("Failed creating location cache folder: \(error)")
                 return nil
             }
         }
@@ -99,7 +99,7 @@ public class PersistentCacheLookupProvider: LookupProvider
                 return dbQueue
             }
         } else {
-            Logger.log("Failed creating cache at \(dbPath)")
+            Logger.error("Failed creating cache at \(dbPath)")
         }
         return nil
     }
@@ -110,11 +110,11 @@ public class PersistentCacheLookupProvider: LookupProvider
         dbQueue?.inDatabase {
             db in
             if !db.tableExists("LocationCache") {
-                Logger.log("Creating cache schema")
+                Logger.info("Creating cache schema")
                 if !db.executeUpdate(
                         "CREATE TABLE IF NOT EXISTS LocationCache (geoLocation TEXT PRIMARY KEY, fullPlacename TEXT)",
                         withArgumentsInArray:nil) {
-                    Logger.log("Failed creating cache tables: \(db.lastErrorMessage()!)")
+                    Logger.error("Failed creating cache tables: \(db.lastErrorMessage()!)")
                 }
             } else {
                 successful = true

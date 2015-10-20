@@ -73,7 +73,7 @@ public class FileExifProvider
             return process.output
         }
         else {
-            Logger.log("exiftool failed: \(process.exitCode); error: '\(process.error)'")
+            Logger.error("exiftool failed: \(process.exitCode); error: '\(process.error)'")
         }
 
         return ""

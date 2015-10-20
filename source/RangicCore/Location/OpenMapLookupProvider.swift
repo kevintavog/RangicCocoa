@@ -25,7 +25,7 @@ public class OpenMapLookupProvider: LookupProvider
     {
         let mutex = Mutex()
 
-        Logger.log("OpenMap lookup: \(latitude), \(longitude)")
+        Logger.debug("OpenMap lookup: \(latitude), \(longitude)")
         var result: OrderedDictionary<String,String>? = nil
 
         if OpenMapLookupProvider.useFake {
@@ -57,7 +57,7 @@ public class OpenMapLookupProvider: LookupProvider
         }
 
         if OpenMapLookupProvider.BaseLocationLookup == OpenMapLookupProvider.DefaultLocationLookup {
-            Logger.log("Looking up via \(OpenMapLookupProvider.BaseLocationLookup): \(latitude), \(longitude)")
+            Logger.info("Looking up via \(OpenMapLookupProvider.BaseLocationLookup): \(latitude), \(longitude)")
         }
 
 //        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
@@ -93,7 +93,7 @@ public class OpenMapLookupProvider: LookupProvider
     {
         let message = NSString(data:data!, encoding:NSUTF8StringEncoding) as! String
         if error != nil {
-            Logger.log("reverse geocode failed with error: \(error!._code) - \(error!._domain)")
+            Logger.error("reverse geocode failed with error: \(error!._code) - \(error!._domain)")
 
             var result = OrderedDictionary<String,String>()
             result["apiStatusCode"] = String(error!._code)
@@ -101,7 +101,7 @@ public class OpenMapLookupProvider: LookupProvider
             return result
         }
         else if response != nil {
-            Logger.log("reverse geocode failed with code: \(response!.statusCode), '\(message)'")
+            Logger.error("reverse geocode failed with code: \(response!.statusCode), '\(message)'")
 
             var result = OrderedDictionary<String,String>()
             result["apiStatusCode"] = String(response!.statusCode)
@@ -109,7 +109,7 @@ public class OpenMapLookupProvider: LookupProvider
             return result
         }
         else {
-            Logger.log("reverse geocode failed with unknown error")
+            Logger.error("reverse geocode failed with unknown error")
 
             var result = OrderedDictionary<String,String>()
             result["apiMessage"] = "reverse geocode failed with unknown error"
@@ -147,7 +147,7 @@ public class OpenMapLookupProvider: LookupProvider
 
         let json = JSON(data:NSData(data: data!))
         if let geoError = json["error"].string {
-            Logger.log("reverse geocode failed with message: '\(geoError)'")
+            Logger.error("reverse geocode failed with message: '\(geoError)'")
             result["geoError"] = geoError
         }
         else {
@@ -174,7 +174,7 @@ public class OpenMapLookupProvider: LookupProvider
                         }
 
                         if !matched {
-                            Logger.log("Failed matching detail value: '\(trimmedValue)' (\(address))")
+                            Logger.warn("Failed matching detail value: '\(trimmedValue)' (\(address))")
                         }
                     }
                 }

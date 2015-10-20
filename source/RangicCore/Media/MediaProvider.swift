@@ -139,7 +139,7 @@ public class MediaProvider
 
     private func rescanFolder(path: String)
     {
-        Logger.log("RescanFolder: \(path)")
+        Logger.info("RescanFolder: \(path)")
     }
 
     private func addFile(url: NSURL, mediaType: SupportedMediaTypes.MediaType)
@@ -161,7 +161,7 @@ public class MediaProvider
             mediaFiles.removeAtIndex(index)
         }
         else {
-            Logger.log("Unable to remove '\(url)' - cannot find in media files")
+            Logger.warn("Unable to remove '\(url)' - cannot find in media files")
         }
     }
 
@@ -171,7 +171,7 @@ public class MediaProvider
             mediaFiles[index] = FileMediaData.create(url, mediaType: mediaType)
         }
         else {
-            Logger.log("Updated file '\(url)' not in list, adding it")
+            Logger.info("Updated file '\(url)' not in list, adding it")
             addFile(url, mediaType: mediaType)
             mediaFiles.sortInPlace(isOrderedBefore)
         }

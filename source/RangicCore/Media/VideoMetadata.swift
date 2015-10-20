@@ -64,7 +64,7 @@ public class VideoMetadata
                     offset += atom.length
                 }
                 else {
-                    Logger.log("Failed reading atom at \(offset)")
+                    Logger.warn("Failed reading atom at \(offset)")
                     break
                 }
             }
@@ -88,7 +88,7 @@ public class VideoMetadata
                 }
 
             } catch let error {
-                Logger.log("Error moov parsing location (\(moovLocation)): \(error)")
+                Logger.error("Error parsing moov location (\(moovLocation)): \(error)")
             }
         }
 
@@ -163,7 +163,7 @@ public class VideoMetadata
                 let subjectNodes = try xmlDoc.nodesForXPath(".//dc:subject/rdf:Bag")
                 for node in subjectNodes {
                     for child in node.children! {
-                        Logger.log("Adding subject: \(child.stringValue!)")
+                        Logger.debug("Adding subject: \(child.stringValue!)")
                         subjectItems.append(child.stringValue!)
                     }
                 }
@@ -173,7 +173,7 @@ public class VideoMetadata
                 }
 
             } catch let error {
-                Logger.log("Exception parsing uuid xml: \(error)")
+                Logger.error("Exception parsing uuid xml: \(error)")
             }
         }
     }
@@ -260,10 +260,9 @@ public class VideoMetadata
                     offset += atom.length
                 }
                 else {
-                    Logger.log("Failed reading atom at \(offset)")
+                    Logger.warn("Failed reading atom at \(offset)")
                     break
                 }
-
             }
         }
     }
