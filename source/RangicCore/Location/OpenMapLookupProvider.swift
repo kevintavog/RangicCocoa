@@ -66,9 +66,10 @@ public class OpenMapLookupProvider: LookupProvider
 //        let manager = Alamofire.Manager(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
         let manager = Alamofire.Manager.sharedInstance
 
+        let url = "\(OpenMapLookupProvider.BaseLocationLookup)/nominatim/v1/reverse"
         manager.request(
             .GET,
-            "\(OpenMapLookupProvider.BaseLocationLookup)/nominatim/v1/reverse",
+            url,
             parameters: [
                 "key": "Uw7GOgmBu6TY9KGcTNoqJWO7Y5J6JSxg",
                 "format": "json",
@@ -81,7 +82,7 @@ public class OpenMapLookupProvider: LookupProvider
             .response { _, response, data, error in
 
                 if error != nil {
-                    completion(placename: self.errorToDictionary(response, data: data, error: error))
+                    completion(placename: self.errorToDictionary(url, response: response, data: data, error: error))
                 }
                 else {
                     completion(placename: OpenMapLookupProvider.responseDataToDictionary(data))
@@ -89,11 +90,11 @@ public class OpenMapLookupProvider: LookupProvider
         }
     }
 
-    private func errorToDictionary(response: NSHTTPURLResponse?, data: NSData?, error: ErrorType?) -> OrderedDictionary<String,String>
+    private func errorToDictionary(url: String, response: NSHTTPURLResponse?, data: NSData?, error: ErrorType?) -> OrderedDictionary<String,String>
     {
         let message = NSString(data:data!, encoding:NSUTF8StringEncoding) as! String
         if error != nil {
-            Logger.error("reverse geocode failed with error: \(error!._code) - \(error!._domain)")
+            Logger.error("reverse geocode to (\(url)) failed with error: \(error!._code) - \(error!._domain)")
 
             var result = OrderedDictionary<String,String>()
             result["apiStatusCode"] = String(error!._code)
@@ -101,7 +102,7 @@ public class OpenMapLookupProvider: LookupProvider
             return result
         }
         else if response != nil {
-            Logger.error("reverse geocode failed with code: \(response!.statusCode), '\(message)'")
+            Logger.error("reverse geocode to (\(url)) failed with code: \(response!.statusCode), '\(message)'")
 
             var result = OrderedDictionary<String,String>()
             result["apiStatusCode"] = String(response!.statusCode)
@@ -109,7 +110,7 @@ public class OpenMapLookupProvider: LookupProvider
             return result
         }
         else {
-            Logger.error("reverse geocode failed with unknown error")
+            Logger.error("reverse geocode to (\(url)) failed with unknown error")
 
             var result = OrderedDictionary<String,String>()
             result["apiMessage"] = "reverse geocode failed with unknown error"
@@ -174,7 +175,7 @@ public class OpenMapLookupProvider: LookupProvider
                         }
 
                         if !matched {
-                            Logger.warn("Failed matching detail value: '\(trimmedValue)' (\(address))")
+                            Logger.debug("Failed matching detail value: '\(trimmedValue)' (\(address))")
                         }
                     }
                 }

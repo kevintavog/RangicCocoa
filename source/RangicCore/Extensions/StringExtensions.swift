@@ -12,6 +12,33 @@ extension String
         let rangeIndex = Range(start: startIndex, end: endIndex)
         return self.substringWithRange(rangeIndex)
     }
+
+    public func substringFromOffset(offset: Int) -> String
+    {
+        let startIndex = self.startIndex.advancedBy(offset)
+        return self.substringFromIndex(startIndex)
+    }
+}
+
+extension String
+{
+    public func relativePathFromBase(base: String) -> String
+    {
+        if self.lowercaseString.hasPrefix(base.lowercaseString) {
+            var path = self.substringFromOffset(base.characters.count)
+            if path[path.startIndex] == "/" {
+                path = path.substringFromOffset(1)
+            }
+            return path
+        } else {
+            return self
+        }
+    }
+
+    public func stringByAppendingPath(pathComponent: String) -> String
+    {
+        return NSString(string: self).stringByAppendingPathComponent(pathComponent) as String
+    }
 }
 
 extension String

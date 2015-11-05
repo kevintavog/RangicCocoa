@@ -163,7 +163,6 @@ public class VideoMetadata
                 let subjectNodes = try xmlDoc.nodesForXPath(".//dc:subject/rdf:Bag")
                 for node in subjectNodes {
                     for child in node.children! {
-                        Logger.debug("Adding subject: \(child.stringValue!)")
                         subjectItems.append(child.stringValue!)
                     }
                 }

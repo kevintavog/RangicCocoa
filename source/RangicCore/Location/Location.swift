@@ -63,6 +63,15 @@ public class Location
         return String(format: "%.2d° %.2d' %.2f\"", degrees, minutesInt, seconds)
     }
 
+    public func toDecimalDegrees(humanReadable: Bool) -> String
+    {
+        if humanReadable {
+            return NSString(format: "%.6f, %.6f", latitude, longitude) as String
+        }
+
+        return "\(latitude), \(longitude)"
+    }
+
     public func placenameAsString(filter: PlaceNameFilter = .Detailed) -> String
     {
         if !hasPlacename() {

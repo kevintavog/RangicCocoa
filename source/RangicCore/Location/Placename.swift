@@ -47,7 +47,9 @@ public class Placename
 
             case .Standard:
                 if Placename.acceptedStandardComponents.contains(key) {
-                    parts.append(value)
+                    if !isExcluded(key, value: value) {
+                        parts.append(value)
+                    }
                 }
 
             case .Detailed:

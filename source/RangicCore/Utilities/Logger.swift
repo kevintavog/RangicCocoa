@@ -15,6 +15,7 @@ public class Logger
         fileLogger.logFormatter = RangicLogFormatter()
         fileLogger.rollingFrequency = 24 * 60 * 60
         fileLogger.logFileManager.maximumNumberOfLogFiles = 10
+        fileLogger.maximumFileSize = 20 * 1024 * 1024
         DDLog.addLogger(fileLogger)
     }
 
