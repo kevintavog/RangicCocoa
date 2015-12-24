@@ -11,13 +11,16 @@ public class PersistentCacheLookupProvider: LookupProvider
     {
         let key = "\(latitude), \(longitude)"
         if let result = PersistentCacheLookupProvider.getDataForKey(key) {
-            return result
+            if result.count > 0 {
+                return result
+            }
         }
-        else {
-            let result = PersistentCacheLookupProvider.innerLookupProvider.lookup(latitude, longitude: longitude)
+
+        let result = PersistentCacheLookupProvider.innerLookupProvider.lookup(latitude, longitude: longitude)
+        if result.count > 0 {
             PersistentCacheLookupProvider.storeDataForKey(key, components: result)
-            return result
         }
+        return result
     }
 
 

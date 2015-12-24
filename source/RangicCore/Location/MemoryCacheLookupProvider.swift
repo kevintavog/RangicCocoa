@@ -10,12 +10,13 @@ public class MemoryCacheLookupProvider: LookupProvider
     {
         let key = Location.toDms(latitude, longitude: longitude)
         if let result = MemoryCacheLookupProvider.cache[key] {
-            return result
+            if result.count > 0 {
+                return result
+            }
         }
-        else {
-            let result = MemoryCacheLookupProvider.innerLookupProvider.lookup(latitude, longitude: longitude)
-            MemoryCacheLookupProvider.cache[key] = result
-            return result
-        }
+
+        let result = MemoryCacheLookupProvider.innerLookupProvider.lookup(latitude, longitude: longitude)
+        MemoryCacheLookupProvider.cache[key] = result
+        return result
     }
 }

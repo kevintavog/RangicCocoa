@@ -68,7 +68,7 @@ public class FileExifProvider
 
     static private func runExifTool(filename: String) -> String
     {
-        let process = ProcessInvoker.run("/usr/bin/exiftool", arguments: ["-a", "-j", "-g", filename])
+        let process = ProcessInvoker.run("/usr/local/bin/exiftool", arguments: ["-a", "-j", "-g", filename])
         if process.exitCode == 0 {
             return process.output
         }
