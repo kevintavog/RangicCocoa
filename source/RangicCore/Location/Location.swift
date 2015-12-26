@@ -36,6 +36,11 @@ public class Location
         }
     }
 
+    public var description: String
+    {
+        return toDms()
+    }
+
     public func toDms() -> String
     {
         return Location.toDms(latitude, longitude: longitude)

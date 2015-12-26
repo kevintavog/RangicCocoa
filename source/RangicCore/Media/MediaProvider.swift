@@ -188,6 +188,18 @@ public class MediaProvider
         return nil
     }
 
+    public func itemFromFilePath(filePath: String) -> MediaData?
+    {
+        for mediaData in mediaFiles {
+            if let urlPath = mediaData.url.path {
+                if urlPath == filePath {
+                    return mediaData
+                }
+            }
+        }
+        return nil
+    }
+
     private func getMediaDataIndex(mediaData: MediaData) -> Int
     {
         var lo = 0

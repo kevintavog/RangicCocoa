@@ -131,48 +131,49 @@ public class VideoMetadata
 
             // The atom data is 16 bytes of unknown data followed by XML
             let uuidReader = DataReader(data: getData(uuidAtom))
+            if uuidReader.data.length >= 56 {
+                // Skip the 16 bytes of unknown data
+                uuidReader.readUInt64()
+                uuidReader.readUInt64()
 
-            // Skip the 16 bytes of unknown data
-            uuidReader.readUInt64()
-            uuidReader.readUInt64()
+                // The remaining is xml - atom length - 4 bytes for length - 4 bytes for type - 16 bytes unknown
+                let xmlString = uuidReader.readString(UInt32(uuidAtom.length - 4 - 4 - 16))
 
-            // The remaining is xml - atom length - 4 bytes for length - 4 bytes for type - 16 bytes unknown
-            let xmlString = uuidReader.readString(UInt32(uuidAtom.length - 4 - 4 - 16))
+                do {
+                    let xmlDoc = try NSXMLDocument(XMLString: xmlString, options: 0)
 
-            do {
-                let xmlDoc = try NSXMLDocument(XMLString: xmlString, options: 0)
-
-                // Add namespaces to get xpath to work
-                xmlDoc.rootElement()?.addNamespace(NSXMLNode.namespaceWithName("exif", stringValue: "http://ns.adobe.com/exif/1.0/") as! NSXMLNode)
-                xmlDoc.rootElement()?.addNamespace(NSXMLNode.namespaceWithName("xmp", stringValue: "http://ns.adobe.com/xap/1.0/") as! NSXMLNode)
-                xmlDoc.rootElement()?.addNamespace(NSXMLNode.namespaceWithName("dc", stringValue: "http://purl.org/dc/elements/1.1/") as! NSXMLNode)
-                xmlDoc.rootElement()?.addNamespace(NSXMLNode.namespaceWithName("rdf", stringValue: "http://www.w3.org/1999/02/22-rdf-syntax-ns#") as! NSXMLNode)
+                    // Add namespaces to get xpath to work
+                    xmlDoc.rootElement()?.addNamespace(NSXMLNode.namespaceWithName("exif", stringValue: "http://ns.adobe.com/exif/1.0/") as! NSXMLNode)
+                    xmlDoc.rootElement()?.addNamespace(NSXMLNode.namespaceWithName("xmp", stringValue: "http://ns.adobe.com/xap/1.0/") as! NSXMLNode)
+                    xmlDoc.rootElement()?.addNamespace(NSXMLNode.namespaceWithName("dc", stringValue: "http://purl.org/dc/elements/1.1/") as! NSXMLNode)
+                    xmlDoc.rootElement()?.addNamespace(NSXMLNode.namespaceWithName("rdf", stringValue: "http://www.w3.org/1999/02/22-rdf-syntax-ns#") as! NSXMLNode)
 
 
-                let exifNodes = try xmlDoc.nodesForXPath("//exif:*")
-                for node in exifNodes {
-                    uuidData[node.localName!] = node.stringValue!
-                }
-
-                let xmpNodes = try xmlDoc.nodesForXPath("//xmp:CreateDate")
-                for node in xmpNodes {
-                    uuidData[node.localName!] = node.stringValue!
-                }
-
-                var subjectItems = [String]()
-                let subjectNodes = try xmlDoc.nodesForXPath(".//dc:subject/rdf:Bag")
-                for node in subjectNodes {
-                    for child in node.children! {
-                        subjectItems.append(child.stringValue!)
+                    let exifNodes = try xmlDoc.nodesForXPath("//exif:*")
+                    for node in exifNodes {
+                        uuidData[node.localName!] = node.stringValue!
                     }
-                }
 
-                if subjectItems.count > 0 {
-                    keywords = subjectItems
-                }
+                    let xmpNodes = try xmlDoc.nodesForXPath("//xmp:CreateDate")
+                    for node in xmpNodes {
+                        uuidData[node.localName!] = node.stringValue!
+                    }
 
-            } catch let error {
-                Logger.error("Exception parsing uuid xml: \(error)")
+                    var subjectItems = [String]()
+                    let subjectNodes = try xmlDoc.nodesForXPath(".//dc:subject/rdf:Bag")
+                    for node in subjectNodes {
+                        for child in node.children! {
+                            subjectItems.append(child.stringValue!)
+                        }
+                    }
+
+                    if subjectItems.count > 0 {
+                        keywords = subjectItems
+                    }
+
+                } catch let error {
+                    Logger.error("Exception parsing uuid xml: \(error)")
+                }
             }
         }
     }
@@ -269,8 +270,15 @@ public class VideoMetadata
     private func nextAtom(offset: UInt64) -> VideoAtom?
     {
         let dataLength = fileHandle!.readDataOfLength(4)
+        if dataLength == 0 {
+            return nil
+        }
+
         var length: UInt32 = 0
         dataLength.getBytes(&length, length: 4)
+        if length == 0 {
+            return nil
+        }
 
         let atomType = fileHandle.readDataOfLength(4)
         if let type = String(data: atomType, encoding: NSUTF8StringEncoding) {
