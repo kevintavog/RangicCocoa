@@ -60,7 +60,7 @@ public class PersistentCacheLookupProvider: LookupProvider
                 Logger.debug("Storing placename for '\(key)'")
                 let arguments = ["key":key, "json":json]
                 if (!db.executeUpdate(
-                            "INSERT INTO LocationCache (geoLocation, fullPlacename) VALUES(:key, :json)",
+                            "INSERT OR REPLACE INTO LocationCache (geoLocation, fullPlacename) VALUES(:key, :json)",
                             withParameterDictionary: arguments)) {
                     Logger.error("Error storing '\(key)': \(db.lastErrorMessage())' (\(json))")
                 }
