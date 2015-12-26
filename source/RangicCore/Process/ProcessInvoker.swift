@@ -26,6 +26,7 @@ public class ProcessInvoker
 
     static private func launch(launchPath: String, arguments: [String]) -> (output: String, error: String, exitCode: Int32)
     {
+        Logger.info("launch \(launchPath) \(arguments)")
         let task = NSTask()
         task.launchPath = launchPath
         task.arguments = arguments
@@ -36,7 +37,7 @@ public class ProcessInvoker
         let errorPipe = NSPipe()
         task.standardError = errorPipe
 
-        // This executable may depend on another executable in the same folder - make sure the path is updated
+        // This executable may depend on another executable in the same folder - make sure the path includes the executable folder
         task.environment = ["PATH": (launchPath as NSString).stringByDeletingLastPathComponent]
 
         task.launch()
