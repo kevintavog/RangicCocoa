@@ -29,6 +29,12 @@ class DataReader
         return String(data: subData, encoding: NSUTF8StringEncoding)!
     }
 
+    func readUInt16() -> UInt16
+    {
+        let val: UInt16 = read()
+        return val.bigEndian
+    }
+
     func readUInt32() -> UInt32
     {
         let val: UInt32 = read()

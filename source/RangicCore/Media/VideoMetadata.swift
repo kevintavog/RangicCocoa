@@ -16,8 +16,7 @@ public class VideoMetadata
     public private(set) var location: Location? = nil
     public private(set) var timestamp: NSDate? = nil
     public private(set) var keywords: [String]? = nil
-
-    // duration seconds (float/double)
+    public private(set) var mediaSize: MediaSize? = nil
 
 
     public init?(filename: String)
@@ -72,6 +71,7 @@ public class VideoMetadata
 
         parseUuidAtom()
         parseMetaAtom()
+        parseTrakAtom()
 
 
         // Determine the location
@@ -222,6 +222,61 @@ public class VideoMetadata
         }
     }
 
+    private func parseTrakAtom()
+    {
+        var trakAtoms = [VideoAtom]()
+
+        // 'moov' can have multiple 'trak' atoms, we'll search each trak instance
+        if let moovAtom = getAtom(rootAtoms, atomPath: ["moov"]) {
+            for moovChild in moovAtom.children {
+                if moovChild.type == "trak" {
+                    trakAtoms.append(moovChild)
+                }
+            }
+        }
+
+        // Find 'trak' that has both a video ('vide') 'hdlr' and 'stsd', grab the width & height
+        for trak in trakAtoms {
+            parseAtom(trak.offset + 8, atomLength: trak.length, children: &trak.children)
+            if let hdlrAtom = getAtom(trak.children, atomPath: ["edts", "mdia", "hdlr"]),
+                let stsdAtom = getAtom(trak.children, atomPath: ["edts", "mdia", "minf", "dinf", "stbl", "stsd"]) {
+
+                    let hdlrReader = DataReader(data: getData(hdlrAtom))
+                    hdlrReader.offset = 8
+                    let mediaType = hdlrReader.readString(4)
+                    if mediaType == "vide" {
+                        let stsdReader = DataReader(data: getData(stsdAtom))
+                        stsdReader.offset = 40
+
+                        let width = stsdReader.readUInt16()
+                        let height = stsdReader.readUInt16()
+
+                        mediaSize = MediaSize(width: Int(width), height: Int(height))
+                        break
+                    }
+            }
+        }
+    }
+
+    private func logTree(atom: VideoAtom, parent: String)
+    {
+        Logger.info("\(parent) offset: \(atom.offset), length: \(atom.length)")
+        let path = "\(parent)\\\(atom.type)"
+        Logger.info("\(path) children are:")
+        logTreeChildren(atom, parent: path)
+    }
+
+    private func logTreeChildren(atom: VideoAtom, parent: String)
+    {
+        if atom.children.count == 0 {
+            parseAtom(atom.offset + 8, atomLength: atom.length, children: &atom.children)
+        }
+
+        for child in atom.children {
+            Logger.info("\(parent)\\\(child.type), @\(child.offset) for \(child.length)")
+        }
+    }
+
     private func getAtom(children: [VideoAtom], atomPath: [String]) -> VideoAtom?
     {
         for child in children {
@@ -234,6 +289,15 @@ public class VideoMetadata
                 }
             }
         }
+
+        #if DEBUG_ATOMS
+        var childNames = [String]()
+        for child in children {
+            childNames.append(child.type)
+        }
+
+        Logger.warn("Unable to find '\(atomPath)' in \(childNames)")
+        #endif
 
         return nil
     }
@@ -328,6 +392,7 @@ class VideoAtom
 
     init(type: String, offset: UInt64, length: UInt64)
     {
+//Logger.warn("atom at \(offset): \(type), \(length) bytes long")
         self.type = type
         self.offset = offset
         self.length = length

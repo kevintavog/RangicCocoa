@@ -14,6 +14,8 @@ public class MediaData
     public var location: Location!
     public var type: SupportedMediaTypes.MediaType!
     public var keywords: [String]!
+    public var mediaSize: MediaSize?
+
 
     static private var dateFormatter: NSDateFormatter? = nil
     private var cachedDetails: [MediaDataDetail]!

@@ -24,6 +24,8 @@ public class FileMediaData : MediaData
             }
             fileMediaData.keywords = imageMetadata.keywords
             fileMediaData.location = imageMetadata.location
+            fileMediaData.mediaSize = imageMetadata.mediaSize
+            
         }
 
         if !hasImageData {
@@ -33,6 +35,7 @@ public class FileMediaData : MediaData
                 }
                 fileMediaData.location = videoMetadata.location
                 fileMediaData.keywords = videoMetadata.keywords
+                fileMediaData.mediaSize = videoMetadata.mediaSize
             }
         }
 

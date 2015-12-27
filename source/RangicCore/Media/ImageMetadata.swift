@@ -9,6 +9,8 @@ public class ImageMetadata
     public var timestamp: NSDate? = nil
     public var location: Location? = nil
     public var keywords: [String]? = nil
+    public var mediaSize: MediaSize? = nil
+
 
     public init?(url: NSURL)
     {
@@ -24,6 +26,13 @@ public class ImageMetadata
             if let rawProperties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil)
             {
                 let properties = rawProperties as Dictionary
+
+                if let imageWidth = properties[kCGImagePropertyPixelWidth],
+                    let imageHeight = properties[kCGImagePropertyPixelHeight] {
+                        let width = imageWidth as? Int
+                        let height = imageHeight as? Int
+                        mediaSize = MediaSize(width: width!, height: height!)
+                }
 
                 // EXIF timestamp (Exif.DateTimeOriginal)
                 if let exifProperties = properties[kCGImagePropertyExifDictionary]
