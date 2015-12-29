@@ -56,7 +56,7 @@ public class FileMediaData : MediaData
         return NSFileManager.defaultManager().fileExistsAtPath(url.path!)
     }
 
-    public override func setFileDateToExifDate()  -> (succeeded:Bool, errorMessage:String)
+    public override func setFileDateToExifDate() -> (succeeded:Bool, errorMessage:String)
     {
         let updatedDates:[String:AnyObject] = [NSFileCreationDate:timestamp, NSFileModificationDate:timestamp]
         do {

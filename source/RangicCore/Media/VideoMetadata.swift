@@ -12,6 +12,7 @@ public class VideoMetadata
     private var moovData = [String: String]()
     private var uuidData = [String: String]()
 
+    private var xmpDate: NSDate? = nil
 
     public private(set) var location: Location? = nil
     public private(set) var timestamp: NSDate? = nil
@@ -113,6 +114,21 @@ public class VideoMetadata
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXXX"
             dateFormatter.timeZone = NSTimeZone(name: "UTC")
             timestamp = dateFormatter.dateFromString(moovDate)
+        }
+
+        if let mvhdAtom = getAtom(rootAtoms, atomPath: ["moov", "mvhd"]) {
+            // The created date is 4 bytes into the data of the atom; the date is the number
+            // of seconds since Jan 1, 1904
+
+            // 66 years + 17 leap days
+            let secondsBetween1904And1970 = UInt32(66 * 365 * 24 * 60 * 60) + UInt32(17 * 24 * 60 * 60)
+
+            let mvhdReader = DataReader(data: getData(mvhdAtom))
+            mvhdReader.offset = 4
+            let createSeconds = mvhdReader.readUInt32()
+            if createSeconds >= secondsBetween1904And1970 {
+                timestamp = NSDate(timeIntervalSince1970: NSTimeInterval(createSeconds - secondsBetween1904And1970))
+            }
         }
 
         if timestamp == nil {
