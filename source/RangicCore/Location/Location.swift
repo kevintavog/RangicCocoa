@@ -46,6 +46,27 @@ public class Location
         return Location.toDms(latitude, longitude: longitude)
     }
 
+    public func metersFrom(location: Location) -> Double
+    {
+        return Location.metersBetween(self, location2: location)
+    }
+
+    static public func metersBetween(location1: Location, location2: Location) -> Double
+    {
+        let lat1rad = location1.latitude * M_PI/180
+        let lon1rad = location1.longitude * M_PI/180
+        let lat2rad = location2.latitude * M_PI/180
+        let lon2rad = location2.longitude * M_PI/180
+
+        let dLat = lat2rad - lat1rad
+        let dLon = lon2rad - lon1rad
+        let a = sin(dLat/2) * sin(dLat/2) + sin(dLon/2) * sin(dLon/2) * cos(lat1rad) * cos(lat2rad)
+        let c = 2 * asin(sqrt(a))
+        let R = 6372.8
+        
+        return (R * c) * 1000.0
+    }
+
     static public func toDms(latitude: Double, longitude: Double) -> String
     {
         let latitudeNorthOrSouth = latitude < 0 ? "S" : "N"
