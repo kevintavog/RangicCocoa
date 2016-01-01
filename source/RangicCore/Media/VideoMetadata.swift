@@ -11,6 +11,7 @@ public class VideoMetadata
 
     private var moovData = [String: String]()
     private var uuidData = [String: String]()
+    private var xmpAtomData = [String: String]()
 
     private var xmpDate: NSDate? = nil
 
@@ -73,37 +74,33 @@ public class VideoMetadata
         parseUuidAtom()
         parseMetaAtom()
         parseTrakAtom()
+        parseXmpAtom()
 
 
         // Determine the location
-        if let moovLocation = moovData["com.apple.quicktime.location.ISO6709"] {
-            do {
-                let regex = try NSRegularExpression(pattern: "([\\+-]\\d+\\.\\d+)", options: .CaseInsensitive)
-                let matches = regex.matchesInString(moovLocation, options: .WithoutAnchoringBounds, range: NSMakeRange(0, moovLocation.characters.count))
-                if matches.count >= 2 {
-                    if let latitude = Double(moovLocation.substringWithRange(matches[0].range)) {
-                        if let longitude = Double(moovLocation.substringWithRange(matches[1].range)) {
-                            location = Location(latitude: latitude, longitude: longitude)
-                        }
-                    }
-                }
-
-            } catch let error {
-                Logger.error("Error parsing moov location (\(moovLocation)): \(error)")
-            }
+        if location == nil {
+            location = getLocationFrom(uuidData)
         }
 
         if location == nil {
-            if let uuidLatitude = uuidData["GPSLatitude"] {
-                if let uuidLongitude = uuidData["GPSLongitude"] {
+            location = getLocationFrom(xmpAtomData)
+        }
 
-                    let latMatches = parseUuidLatLong(uuidLatitude)
-                    let lonMatches = parseUuidLatLong(uuidLongitude)
+        if location == nil {
+            if let moovLocation = moovData["com.apple.quicktime.location.ISO6709"] {
+                do {
+                    let regex = try NSRegularExpression(pattern: "([\\+-]\\d+\\.\\d+)", options: .CaseInsensitive)
+                    let matches = regex.matchesInString(moovLocation, options: .WithoutAnchoringBounds, range: NSMakeRange(0, moovLocation.characters.count))
+                    if matches.count >= 2 {
+                        if let latitude = Double(moovLocation.substringWithRange(matches[0].range)) {
+                            if let longitude = Double(moovLocation.substringWithRange(matches[1].range)) {
+                                location = Location(latitude: latitude, longitude: longitude)
+                            }
+                        }
+                    }
 
-                    let latitude = convertToGeo(latMatches[0], minutesAndSeconds: latMatches[1])
-                    let longitude = convertToGeo(lonMatches[0], minutesAndSeconds: lonMatches[1])
-
-                    location = Location(latitude: latitude, latitudeReference: latMatches[2], longitude: longitude, longitudeReference: lonMatches[2])
+                } catch let error {
+                    Logger.error("Error parsing moov location (\(moovLocation)): \(error)")
                 }
             }
         }
@@ -141,6 +138,24 @@ public class VideoMetadata
         }
     }
 
+    private func getLocationFrom(data: [String:String]) -> Location?
+    {
+        if let dataLatitude = data["GPSLatitude"] {
+            if let dataLongitude = data["GPSLongitude"] {
+
+                let latMatches = parseUuidLatLong(dataLatitude)
+                let lonMatches = parseUuidLatLong(dataLongitude)
+
+                let latitude = convertToGeo(latMatches[0], minutesAndSeconds: latMatches[1])
+                let longitude = convertToGeo(lonMatches[0], minutesAndSeconds: lonMatches[1])
+
+                return Location(latitude: latitude, latitudeReference: latMatches[2], longitude: longitude, longitudeReference: lonMatches[2])
+            }
+        }
+
+        return nil
+    }
+
     private func parseUuidAtom()
     {
         if let uuidAtom = getAtom(rootAtoms, atomPath: ["uuid"]) {
@@ -154,43 +169,17 @@ public class VideoMetadata
 
                 // The remaining is xml - atom length - 4 bytes for length - 4 bytes for type - 16 bytes unknown
                 let xmlString = uuidReader.readString(UInt32(uuidAtom.length - 4 - 4 - 16))
-
-                do {
-                    let xmlDoc = try NSXMLDocument(XMLString: xmlString, options: 0)
-
-                    // Add namespaces to get xpath to work
-                    xmlDoc.rootElement()?.addNamespace(NSXMLNode.namespaceWithName("exif", stringValue: "http://ns.adobe.com/exif/1.0/") as! NSXMLNode)
-                    xmlDoc.rootElement()?.addNamespace(NSXMLNode.namespaceWithName("xmp", stringValue: "http://ns.adobe.com/xap/1.0/") as! NSXMLNode)
-                    xmlDoc.rootElement()?.addNamespace(NSXMLNode.namespaceWithName("dc", stringValue: "http://purl.org/dc/elements/1.1/") as! NSXMLNode)
-                    xmlDoc.rootElement()?.addNamespace(NSXMLNode.namespaceWithName("rdf", stringValue: "http://www.w3.org/1999/02/22-rdf-syntax-ns#") as! NSXMLNode)
-
-
-                    let exifNodes = try xmlDoc.nodesForXPath("//exif:*")
-                    for node in exifNodes {
-                        uuidData[node.localName!] = node.stringValue!
-                    }
-
-                    let xmpNodes = try xmlDoc.nodesForXPath("//xmp:CreateDate")
-                    for node in xmpNodes {
-                        uuidData[node.localName!] = node.stringValue!
-                    }
-
-                    var subjectItems = [String]()
-                    let subjectNodes = try xmlDoc.nodesForXPath(".//dc:subject/rdf:Bag")
-                    for node in subjectNodes {
-                        for child in node.children! {
-                            subjectItems.append(child.stringValue!)
-                        }
-                    }
-
-                    if subjectItems.count > 0 {
-                        keywords = subjectItems
-                    }
-
-                } catch let error {
-                    Logger.error("Exception parsing uuid xml: \(error)")
-                }
+                uuidData = parseXml(xmlString)
             }
+        }
+    }
+
+    private func parseXmpAtom()
+    {
+        if let xmpAtom = getAtom(rootAtoms, atomPath: ["moov", "udta", "XMP_"]) {
+            let xmpReader = DataReader(data: getData(xmpAtom))
+            let xmlString = xmpReader.readString(UInt32(xmpAtom.length - 4 - 4))
+            xmpAtomData = parseXml(xmlString)
         }
     }
 
@@ -272,6 +261,47 @@ public class VideoMetadata
                     }
             }
         }
+    }
+
+    private func parseXml(xmlString: String) -> [String:String]
+    {
+        var data = [String:String]()
+        do {
+            let xmlDoc = try NSXMLDocument(XMLString: xmlString, options: 0)
+
+            // Add namespaces to get xpath to work
+            xmlDoc.rootElement()?.addNamespace(NSXMLNode.namespaceWithName("exif", stringValue: "http://ns.adobe.com/exif/1.0/") as! NSXMLNode)
+            xmlDoc.rootElement()?.addNamespace(NSXMLNode.namespaceWithName("xmp", stringValue: "http://ns.adobe.com/xap/1.0/") as! NSXMLNode)
+            xmlDoc.rootElement()?.addNamespace(NSXMLNode.namespaceWithName("dc", stringValue: "http://purl.org/dc/elements/1.1/") as! NSXMLNode)
+            xmlDoc.rootElement()?.addNamespace(NSXMLNode.namespaceWithName("rdf", stringValue: "http://www.w3.org/1999/02/22-rdf-syntax-ns#") as! NSXMLNode)
+
+
+            let exifNodes = try xmlDoc.nodesForXPath("//exif:*")
+            for node in exifNodes {
+                data[node.localName!] = node.stringValue!
+            }
+
+            let xmpNodes = try xmlDoc.nodesForXPath("//xmp:CreateDate")
+            for node in xmpNodes {
+                data[node.localName!] = node.stringValue!
+            }
+
+            var subjectItems = [String]()
+            let subjectNodes = try xmlDoc.nodesForXPath(".//dc:subject/rdf:Bag")
+            for node in subjectNodes {
+                for child in node.children! {
+                    subjectItems.append(child.stringValue!)
+                }
+            }
+
+            if subjectItems.count > 0 {
+                keywords = subjectItems
+            }
+
+        } catch let error {
+            Logger.error("Exception parsing xml: \(error)\n\"\(xmlString)\"")
+        }
+        return data
     }
 
     private func logTree(atom: VideoAtom, parent: String)
