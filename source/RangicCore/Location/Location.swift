@@ -4,7 +4,7 @@
 
 import Foundation
 
-public class Location
+public class Location : Hashable
 {
     public private(set) var latitude: Double
     public private(set)  var longitude: Double
@@ -119,4 +119,11 @@ public class Location
     {
         return placename != nil
     }
+
+    public var hashValue: Int { get { return 17 &* latitude.hashValue &* longitude.hashValue } }
+}
+
+public func ==(lhs: Location, rhs: Location) -> Bool
+{
+    return lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude
 }
