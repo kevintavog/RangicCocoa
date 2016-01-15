@@ -144,14 +144,18 @@ public class MediaProvider
 
     private func addFile(url: NSURL, mediaType: SupportedMediaTypes.MediaType)
     {
-        let mediaData = FileMediaData.create(url, mediaType: mediaType)
-        let index = getMediaDataIndex(mediaData)
-        if index < 0 {
-            mediaFiles.insert(mediaData, atIndex: -index)
-        }
-        else {
-            mediaFiles.removeAtIndex(index)
-            mediaFiles.insert(mediaData, atIndex: index)
+        if let index = getFileIndex(url) {
+            mediaFiles[index].reload()
+        } else {
+            let mediaData = FileMediaData.create(url, mediaType: mediaType)
+            let index = getMediaDataIndex(mediaData)
+            if index < 0 {
+                mediaFiles.insert(mediaData, atIndex: -index)
+            }
+            else {
+                mediaFiles.removeAtIndex(index)
+                mediaFiles.insert(mediaData, atIndex: index)
+            }
         }
     }
 
@@ -168,7 +172,7 @@ public class MediaProvider
     private func updateFile(url: NSURL, mediaType: SupportedMediaTypes.MediaType)
     {
         if let index = getFileIndex(url) {
-            mediaFiles[index] = FileMediaData.create(url, mediaType: mediaType)
+            mediaFiles[index].reload()
         }
         else {
             Logger.info("Updated file '\(url)' not in list, adding it")

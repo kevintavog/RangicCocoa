@@ -20,7 +20,7 @@ public class FileExifProvider
 
                     let path = "\(childKey).\(grandChildKey)"
                     if includeInProperties.contains(path) {
-                        result = addSpecialProperty(result, name: grandChildKey, value: grandChildValue.stringValue)
+                        result = addSpecialProperty(result, name: grandChildKey, value: getJsonValue(grandChildValue))
                     }
 
                     if excludeProperties.contains(childKey) {
@@ -43,12 +43,25 @@ public class FileExifProvider
                         addedCategory = true
                     }
 
-                    result.append(MediaDataDetail(category: nil, name: grandChildKey, value: grandChildValue.stringValue))
+                    result.append(MediaDataDetail(category: nil, name: grandChildKey, value: getJsonValue(grandChildValue)))
                 }
             }
         }
 
         return result
+    }
+
+    static private func getJsonValue(json: JSON) -> String
+    {
+        if json.type == .Array {
+            var val = [String]()
+            let array = json.arrayValue
+            for v in array {
+                val.append(v.stringValue)
+            }
+            return val.joinWithSeparator(", ")
+        }
+        return json.stringValue
     }
 
     static private func addSpecialProperty(var allProperties: [MediaDataDetail], name: String, value: String) -> [MediaDataDetail]

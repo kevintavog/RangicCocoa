@@ -96,4 +96,10 @@ public class MediaData
     {
         return (false, "Not implemented")
     }
+
+    public func reload()
+    {
+        cachedDetails = nil
+        Logger.error("reload not supported by MediaData derivative")
+    }
 }

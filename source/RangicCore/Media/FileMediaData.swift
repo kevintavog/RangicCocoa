@@ -5,41 +5,46 @@ public class FileMediaData : MediaData
 {
     public static func create(url: NSURL, mediaType: SupportedMediaTypes.MediaType) -> FileMediaData
     {
+        let fileMediaData = FileMediaData()
+        fileMediaData.url = url
+        fileMediaData.type = mediaType
+
+        fileMediaData.reload()
+
+        return fileMediaData
+    }
+
+    public override func reload()
+    {
         var value:AnyObject?
         try! url.getResourceValue(&value, forKey: NSURLContentModificationDateKey)
         let fileTimestamp = value as! NSDate?
 
-        let fileMediaData = FileMediaData()
-        fileMediaData.url = url
-        fileMediaData.name = url.lastPathComponent!
-        fileMediaData.type = mediaType
-        fileMediaData.timestamp = fileTimestamp
-        fileMediaData.fileTimestamp = fileTimestamp
+        name = url.lastPathComponent!
+        timestamp = fileTimestamp
+        self.fileTimestamp = fileTimestamp
 
         var hasImageData = false
         if let imageMetadata = ImageMetadata(url: url) {
             hasImageData = true
             if let timestamp = imageMetadata.timestamp {
-                fileMediaData.timestamp = timestamp
+                self.timestamp = timestamp
             }
-            fileMediaData.keywords = imageMetadata.keywords
-            fileMediaData.location = imageMetadata.location
-            fileMediaData.mediaSize = imageMetadata.mediaSize
-            
+            keywords = imageMetadata.keywords
+            location = imageMetadata.location
+            mediaSize = imageMetadata.mediaSize
         }
 
         if !hasImageData {
             if let videoMetadata = VideoMetadata(filename: url.path!) {
                 if let timestamp = videoMetadata.timestamp {
-                    fileMediaData.timestamp = timestamp
+                    self.timestamp = timestamp
                 }
-                fileMediaData.location = videoMetadata.location
-                fileMediaData.keywords = videoMetadata.keywords
-                fileMediaData.mediaSize = videoMetadata.mediaSize
+                location = videoMetadata.location
+                keywords = videoMetadata.keywords
+                mediaSize = videoMetadata.mediaSize
             }
         }
-
-        return fileMediaData
     }
 
     internal override func loadDetails() -> [MediaDataDetail]
