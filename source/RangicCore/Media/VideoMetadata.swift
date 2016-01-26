@@ -19,6 +19,8 @@ public class VideoMetadata
     public private(set) var timestamp: NSDate? = nil
     public private(set) var keywords: [String]? = nil
     public private(set) var mediaSize: MediaSize? = nil
+    public private(set) var rotation: Int? = nil
+    public private(set) var compatibleBrands = [String]()
 
 
     public init?(filename: String)
@@ -71,6 +73,7 @@ public class VideoMetadata
             }
         }
 
+        parseFtypAtom()
         parseUuidAtom()
         parseMetaAtom()
         parseTrakAtom()
@@ -174,6 +177,24 @@ public class VideoMetadata
         }
     }
 
+    private func parseFtypAtom()
+    {
+        if let ftypAtom = getAtom(rootAtoms, atomPath: ["ftyp"]) {
+            // FTYP data is:
+            //      4 bytes: major brand
+            //      4 bytes: minor version
+            //      4 bytes EACH: compatible brands
+            let ftypReader = DataReader(data: getData(ftypAtom))
+
+            let majorBrandAndMinorVersion = 8
+            ftypReader.offset = majorBrandAndMinorVersion
+
+            while ftypReader.offset < ftypReader.data.length {
+                compatibleBrands.append(ftypReader.readString(4))
+            }
+        }
+    }
+
     private func parseXmpAtom()
     {
         if let xmpAtom = getAtom(rootAtoms, atomPath: ["moov", "udta", "XMP_"]) {
@@ -243,6 +264,19 @@ public class VideoMetadata
         // Find 'trak' that has both a video ('vide') 'hdlr' and 'stsd', grab the width & height
         for trak in trakAtoms {
             parseAtom(trak.offset + 8, atomLength: trak.length, children: &trak.children)
+
+            if let tkhdAtom = getAtom(trak.children, atomPath: ["tkhd"]) {
+                let tkhdReader = DataReader(data: getData(tkhdAtom))
+                tkhdReader.offset = 40
+                let widthScale = asFloat32(tkhdReader.readUInt32())
+                let widthRotation = asFloat32(tkhdReader.readUInt32())
+                var floatRotation = atan2(widthRotation, widthScale) * 180.0 / Float(M_PI)
+                if floatRotation < 0 {
+                    floatRotation += 360
+                }
+                rotation = Int(round(floatRotation))
+            }
+
             if let hdlrAtom = getAtom(trak.children, atomPath: ["edts", "mdia", "hdlr"]),
                 let stsdAtom = getAtom(trak.children, atomPath: ["edts", "mdia", "minf", "dinf", "stbl", "stsd"]) {
 
@@ -260,6 +294,21 @@ public class VideoMetadata
                         break
                     }
             }
+        }
+    }
+
+    private func asFloat32(number: UInt32) -> Float32
+    {
+        switch number {
+        case 0xFFFF0000:
+            return -1
+        case 0x00010000:
+            return 1
+        case 0x00000000:
+            return 0
+        default:
+            Logger.error("Unexpected UInt32->Float32 conversion: \(number)")
+            return Float32.quietNaN
         }
     }
 
@@ -425,7 +474,20 @@ public class VideoMetadata
         pieces.append(geo.substringFromIndex(geo.endIndex.predecessor()))
         return pieces
     }
-    
+
+    private func byteArrayToString(data: NSData, offset: Int, length: Int) -> String
+    {
+        let str = NSMutableString(capacity: length * 3)
+        var byte: UInt8 = 0
+        for index in offset..<offset+length {
+            data.getBytes(&byte, range: NSMakeRange(index, 1))
+            str.appendFormat("%02X", byte)
+            if ((index + 1) % 8) == 0 {
+                str.appendString(" ")
+            }
+        }
+        return str as String
+    }
 }
 
 class VideoAtom

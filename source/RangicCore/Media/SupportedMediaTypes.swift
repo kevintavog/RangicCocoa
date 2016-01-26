@@ -10,6 +10,8 @@ public class SupportedMediaTypes
         case Image, Video, Unknown
     }
 
+    static public var includeRawImages = false
+
     static private var imageTypes:[String]? = nil
     static private var videoTypes:[String]? = nil
 
@@ -72,7 +74,7 @@ public class SupportedMediaTypes
             // Filter out the slow-loading RAW iamge types; this preference can be exposed if it's ever important
             for cgType in cgImageTypes {
                 let type = cgType as! String
-                if !type.containsString("raw") {
+                if includeRawImages || !type.containsString("raw") {
                     imageTypes?.append(type)
                 }
             }

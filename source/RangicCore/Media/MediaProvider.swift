@@ -120,12 +120,17 @@ public class MediaProvider
                 removeFile(url)
             }
             else {
+                let fileExists = NSFileManager.defaultManager().fileExistsAtPath(url.path!)
                 switch eventType {
                 case .Created:
-                    addFile(url, mediaType: mediaType)
+                    if fileExists {
+                        addFile(url, mediaType: mediaType)
+                    }
 
                 case .Updated:
-                    updateFile(url, mediaType: mediaType)
+                    if fileExists {
+                        updateFile(url, mediaType: mediaType)
+                    }
 
                 case .Removed:
                     break

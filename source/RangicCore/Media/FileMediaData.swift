@@ -23,6 +23,7 @@ public class FileMediaData : MediaData
         name = url.lastPathComponent!
         timestamp = fileTimestamp
         self.fileTimestamp = fileTimestamp
+        compatibleBrands = [String]()
 
         var hasImageData = false
         if let imageMetadata = ImageMetadata(url: url) {
@@ -43,6 +44,8 @@ public class FileMediaData : MediaData
                 location = videoMetadata.location
                 keywords = videoMetadata.keywords
                 mediaSize = videoMetadata.mediaSize
+                rotation = videoMetadata.rotation
+                compatibleBrands = videoMetadata.compatibleBrands
             }
         }
     }

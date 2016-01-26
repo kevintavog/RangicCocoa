@@ -15,6 +15,8 @@ public class MediaData
     public var type: SupportedMediaTypes.MediaType!
     public var keywords: [String]!
     public var mediaSize: MediaSize?
+    public var rotation: Int?
+    public var compatibleBrands: [String]!
 
 
     static private var dateFormatter: NSDateFormatter? = nil
@@ -54,6 +56,8 @@ public class MediaData
             return ""
         }
     }
+
+    public var nameWithoutExtension: String { return NSString(string: name!).stringByDeletingPathExtension }
 
     public func keywordsString() -> String
     {

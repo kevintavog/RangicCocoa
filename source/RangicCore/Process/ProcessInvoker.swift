@@ -42,9 +42,9 @@ public class ProcessInvoker
 
         task.launch()
 
-        let output = String(data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: NSUTF8StringEncoding)
-        let error = String(data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: NSUTF8StringEncoding)
-        return (output!, error!, task.terminationStatus)
+        let output = String(data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: NSUTF8StringEncoding) ?? ""
+        let error = String(data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: NSUTF8StringEncoding) ?? ""
+        return (output, error, task.terminationStatus)
     }
 
     // If you want to do this asynchronously: http://stackoverflow.com/questions/29548811/real-time-nstask-output-to-nstextview-with-swift
