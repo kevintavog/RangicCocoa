@@ -70,9 +70,8 @@ public class FileMediaData : MediaData
         do {
             try NSFileManager.defaultManager().setAttributes(updatedDates, ofItemAtPath: url.path!)
 
-            var value:AnyObject?
-            try! url.getResourceValue(&value, forKey: NSURLContentModificationDateKey)
-            let date = value as! NSDate?
+            let attrs = try NSFileManager.defaultManager().attributesOfItemAtPath(url.path!)
+            let date = attrs[NSFileCreationDate] as! NSDate?
             fileTimestamp = date
         }
         catch let error as NSError {
