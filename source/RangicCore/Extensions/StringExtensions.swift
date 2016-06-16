@@ -9,8 +9,7 @@ extension String
     {
         let startIndex = self.startIndex.advancedBy(range.location)
         let endIndex = startIndex.advancedBy(range.length)
-        let rangeIndex = Range(start: startIndex, end: endIndex)
-        return self.substringWithRange(rangeIndex)
+        return self.substringWithRange(startIndex..<endIndex)
     }
 
     public func substringFromOffset(offset: Int) -> String

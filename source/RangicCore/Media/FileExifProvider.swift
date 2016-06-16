@@ -64,19 +64,20 @@ public class FileExifProvider
         return json.stringValue
     }
 
-    static private func addSpecialProperty(var allProperties: [MediaDataDetail], name: String, value: String) -> [MediaDataDetail]
+    static private func addSpecialProperty(allProperties: [MediaDataDetail], name: String, value: String) -> [MediaDataDetail]
     {
-        if allProperties.count < 1 {
-            allProperties.append(MediaDataDetail(category: specialProperty, name: nil, value: nil))
-            allProperties.append(MediaDataDetail(category: nil, name: name, value: value))
-            return allProperties
+        var props = allProperties
+        if props.count < 1 {
+            props.append(MediaDataDetail(category: specialProperty, name: nil, value: nil))
+            props.append(MediaDataDetail(category: nil, name: name, value: value))
+            return props
         }
-        else if allProperties[0].category != specialProperty {
-            allProperties.insert(MediaDataDetail(category: specialProperty, name: nil, value: nil), atIndex: 0)
+        else if props[0].category != specialProperty {
+            props.insert(MediaDataDetail(category: specialProperty, name: nil, value: nil), atIndex: 0)
         }
 
-        allProperties.insert(MediaDataDetail(category: nil, name: name, value: value), atIndex: 1)
-        return allProperties
+        props.insert(MediaDataDetail(category: nil, name: name, value: value), atIndex: 1)
+        return props
     }
 
     static private func runExifTool(filename: String) -> String
