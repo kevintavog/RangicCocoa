@@ -2,52 +2,52 @@
 //  RangicCore
 //
 
-public class BasePreferences
+open class BasePreferences
 {
     // I'd prefer these set* & *ForKey funcs be accessible only to derived classes...
 
 
     // MARK: Doubles
-    static public func setValue(value: Double, key: String)
+    static open func setValue(_ value: Double, key: String)
     {
-        NSUserDefaults.standardUserDefaults().setDouble(value, forKey: key)
+        UserDefaults.standard.set(value, forKey: key)
     }
 
-    static public func doubleForKey(key: String) -> Double
+    static open func doubleForKey(_ key: String) -> Double
     {
-        return NSUserDefaults.standardUserDefaults().doubleForKey(key)
+        return UserDefaults.standard.double(forKey: key)
     }
 
-    static public func setDefaultValue(value: Double, key: String)
+    static open func setDefaultValue(_ value: Double, key: String)
     {
         if (!keyExists(key)) { setValue(value, key: key) }
     }
 
     // MARK: Floats
-    static public func setValue(value: Float, key: String)
+    static open func setValue(_ value: Float, key: String)
     {
-        NSUserDefaults.standardUserDefaults().setFloat(value, forKey: key)
+        UserDefaults.standard.set(value, forKey: key)
     }
 
-    static public func floatForKey(key: String) -> Float
+    static open func floatForKey(_ key: String) -> Float
     {
-        return NSUserDefaults.standardUserDefaults().floatForKey(key)
+        return UserDefaults.standard.float(forKey: key)
     }
 
-    static public func setDefaultValue(value: Float, key: String)
+    static open func setDefaultValue(_ value: Float, key: String)
     {
         if (!keyExists(key)) { setValue(value, key: key) }
     }
 
     // MARK: Strings
-    static public func setValue(value: String, key: String)
+    static open func setValue(_ value: String, key: String)
     {
-        NSUserDefaults.standardUserDefaults().setObject(value, forKey: key)
+        UserDefaults.standard.set(value, forKey: key)
     }
 
-    static public func stringForKey(key: String) -> String
+    static open func stringForKey(_ key: String) -> String
     {
-        if let obj = NSUserDefaults.standardUserDefaults().objectForKey(key) {
+        if let obj = UserDefaults.standard.object(forKey: key) {
             if let str = obj as? NSString {
                 return str as String
             }
@@ -55,32 +55,32 @@ public class BasePreferences
         return ""
     }
 
-    static public func setDefaultValue(value: String, key: String)
+    static open func setDefaultValue(_ value: String, key: String)
     {
         if (!keyExists(key)) { setValue(value, key: key) }
     }
 
     // MARK: Ints
-    static public func setValue(value: Int, key: String)
+    static open func setValue(_ value: Int, key: String)
     {
-        NSUserDefaults.standardUserDefaults().setInteger(value, forKey: key)
+        UserDefaults.standard.set(value, forKey: key)
     }
 
-    static public func intForKey(key: String) -> Int
+    static open func intForKey(_ key: String) -> Int
     {
-        return NSUserDefaults.standardUserDefaults().integerForKey(key)
+        return UserDefaults.standard.integer(forKey: key)
     }
 
-    static public func setDefaultValue(value: Int, key: String)
+    static open func setDefaultValue(_ value: Int, key: String)
     {
         if (!keyExists(key)) { setValue(value, key: key) }
     }
     
 
     // MARK: Helpers
-    static public func keyExists(key: String) -> Bool
+    static open func keyExists(_ key: String) -> Bool
     {
-        return NSUserDefaults.standardUserDefaults().objectForKey(key) != nil
+        return UserDefaults.standard.object(forKey: key) != nil
     }
 
 }

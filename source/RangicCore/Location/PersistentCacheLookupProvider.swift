@@ -1,13 +1,13 @@
 //
 //
 
-public class PersistentCacheLookupProvider: LookupProvider
+open class PersistentCacheLookupProvider: LookupProvider
 {
-    static private let innerLookupProvider: LookupProvider = OpenMapLookupProvider()
-    static private var creationAttempted = false
-    static private var databaseInstance: FMDatabaseQueue? = nil
+    static fileprivate let innerLookupProvider: LookupProvider = OpenMapLookupProvider()
+    static fileprivate var creationAttempted = false
+    static fileprivate var databaseInstance: FMDatabaseQueue? = nil
 
-    public func lookup(latitude: Double, longitude: Double) -> OrderedDictionary<String,String>
+    open func lookup(_ latitude: Double, longitude: Double) -> OrderedDictionary<String,String>
     {
         let key = "\(latitude), \(longitude)"
         if let result = PersistentCacheLookupProvider.getDataForKey(key) {
@@ -25,7 +25,7 @@ public class PersistentCacheLookupProvider: LookupProvider
 
 
     // MARK: Database get/store
-    static private func getDataForKey(key: String) -> OrderedDictionary<String,String>?
+    static fileprivate func getDataForKey(_ key: String) -> OrderedDictionary<String,String>?
     {
         var result: OrderedDictionary<String,String>? = nil
 
@@ -33,17 +33,17 @@ public class PersistentCacheLookupProvider: LookupProvider
             db.inDatabase() {
                 db in
                 let arguments = ["key":key]
-                if let resultSet = db.executeQuery(
+                if let resultSet = db?.executeQuery(
                             "SELECT fullPlacename FROM LocationCache WHERE geoLocation = :key",
                             withParameterDictionary: arguments) {
                     while resultSet.next() {
-                        if let fullPlacename = resultSet.stringForColumn("fullPlacename") {
-                            result = OpenMapLookupProvider.responseDataToDictionary(fullPlacename.dataUsingEncoding(NSUTF8StringEncoding)!)
+                        if let fullPlacename = resultSet.string(forColumn: "fullPlacename") {
+                            result = OpenMapLookupProvider.responseDataToDictionary(fullPlacename.data(using: String.Encoding.utf8)!)
                         }
                     }
                 }
                 else {
-                    Logger.error("Error querying for '\(key)': \(db.lastErrorMessage())")
+                    Logger.error("Error querying for '\(key)': \(db?.lastErrorMessage())")
                 }
             }
         }
@@ -51,7 +51,7 @@ public class PersistentCacheLookupProvider: LookupProvider
         return result
     }
 
-    static private func storeDataForKey(key: String, components: OrderedDictionary<String,String>)
+    static fileprivate func storeDataForKey(_ key: String, components: OrderedDictionary<String,String>)
     {
         if let db = getDatabaseQueue() {
             db.inDatabase() {
@@ -59,10 +59,10 @@ public class PersistentCacheLookupProvider: LookupProvider
                 let json = OpenMapLookupProvider.dictionaryToResponse(components)
                 Logger.debug("Storing placename for '\(key)'")
                 let arguments = ["key":key, "json":json]
-                if (!db.executeUpdate(
-                            "INSERT OR REPLACE INTO LocationCache (geoLocation, fullPlacename) VALUES(:key, :json)",
-                            withParameterDictionary: arguments)) {
-                    Logger.error("Error storing '\(key)': \(db.lastErrorMessage())' (\(json))")
+                if (!(db?.executeUpdate(
+                    "INSERT OR REPLACE INTO LocationCache (geoLocation, fullPlacename) VALUES(:key, :json)",
+                    withParameterDictionary: arguments))!) {
+                    Logger.error("Error storing '\(key)': \(db?.lastErrorMessage())' (\(json))")
                 }
             }
         }
@@ -70,7 +70,7 @@ public class PersistentCacheLookupProvider: LookupProvider
 
 
     // MARK: Database Open/Create
-    static private func getDatabaseQueue() -> FMDatabaseQueue?
+    static fileprivate func getDatabaseQueue() -> FMDatabaseQueue?
     {
         if databaseInstance == nil && creationAttempted == false {
             databaseInstance = openDatabase()
@@ -80,17 +80,17 @@ public class PersistentCacheLookupProvider: LookupProvider
         return databaseInstance
     }
 
-    static private func openDatabase() -> FMDatabaseQueue?
+    static fileprivate func openDatabase() -> FMDatabaseQueue?
     {
-        let appSupportFolder = NSFileManager.defaultManager().URLsForDirectory(.ApplicationSupportDirectory, inDomains: .UserDomainMask).first!
-        let parentFolder = NSString.pathWithComponents([appSupportFolder.path!, "Rangic", "Location"])
-        let dbPath = NSString.pathWithComponents([parentFolder, "location.cache"])
+        let appSupportFolder = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+        let parentFolder = NSString.path(withComponents: [appSupportFolder.path, "Rangic", "Location"])
+        let dbPath = NSString.path(withComponents: [parentFolder, "location.cache"])
         Logger.info("Opening cache from \(dbPath)")
 
-        if !NSFileManager.defaultManager().fileExistsAtPath(parentFolder) {
+        if !FileManager.default.fileExists(atPath: parentFolder) {
             Logger.info("Creating location cache folder: \(parentFolder)")
             do {
-                try NSFileManager.defaultManager().createDirectoryAtPath(parentFolder, withIntermediateDirectories: true, attributes: nil)
+                try FileManager.default.createDirectory(atPath: parentFolder, withIntermediateDirectories: true, attributes: nil)
             } catch let error {
                 Logger.error("Failed creating location cache folder: \(error)")
                 return nil
@@ -107,17 +107,17 @@ public class PersistentCacheLookupProvider: LookupProvider
         return nil
     }
 
-    static private func ensureTablesExist(dbQueue: FMDatabaseQueue?) -> Bool
+    static fileprivate func ensureTablesExist(_ dbQueue: FMDatabaseQueue?) -> Bool
     {
         var successful = false
         dbQueue?.inDatabase {
             db in
-            if !db.tableExists("LocationCache") {
+            if !(db?.tableExists("LocationCache"))! {
                 Logger.info("Creating cache schema")
-                if !db.executeUpdate(
+                if !(db?.executeUpdate(
                         "CREATE TABLE IF NOT EXISTS LocationCache (geoLocation TEXT PRIMARY KEY, fullPlacename TEXT)",
-                        withArgumentsInArray:nil) {
-                    Logger.error("Failed creating cache tables: \(db.lastErrorMessage()!)")
+                        withArgumentsIn:nil))! {
+                    Logger.error("Failed creating cache tables: \(db?.lastErrorMessage()!)")
                 }
             } else {
                 successful = true

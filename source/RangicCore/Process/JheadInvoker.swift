@@ -4,14 +4,14 @@
 
 import Foundation
 
-public class JheadInvoker
+open class JheadInvoker
 {
-    public let processInvoker: ProcessInvoker
+    open let processInvoker: ProcessInvoker
 
-    static public func autoRotate(files: [String]) -> JheadInvoker
+    static open func autoRotate(_ files: [String]) -> JheadInvoker
     {
-        let bundlePath = NSBundle(forClass:object_getClass(JheadInvoker)).resourcePath! as NSString
-        let launchPath = bundlePath.stringByAppendingPathComponent("jhead")
+        let bundlePath = Bundle(for:object_getClass(JheadInvoker.self)).resourcePath! as NSString
+        let launchPath = bundlePath.appendingPathComponent("jhead")
 
         var args = ["-q", "-autorot", "-ft"]
         for f in files {
@@ -22,7 +22,7 @@ public class JheadInvoker
         return JheadInvoker(processInvoker: process)
     }
 
-    private init(processInvoker: ProcessInvoker)
+    fileprivate init(processInvoker: ProcessInvoker)
     {
         self.processInvoker = processInvoker
     }

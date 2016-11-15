@@ -4,9 +4,9 @@
 
 import Foundation
 
-public class MediaProvider
+open class MediaProvider
 {
-    public var mediaFiles:[MediaData] = []
+    open var mediaFiles:[MediaData] = []
 
     var folders:[String] = []
     var folderWatcher:[RangicFsEventStreamWrapper] = []
@@ -15,7 +15,7 @@ public class MediaProvider
     {
     }
 
-    public func setFileDatesToExifDates(files: [MediaData]) -> (allSucceeded:Bool, failedFiles:[MediaData], errorMessage: String)
+    open func setFileDatesToExifDates(_ files: [MediaData]) -> (allSucceeded:Bool, failedFiles:[MediaData], errorMessage: String)
     {
         var response = (allSucceeded: true, failedFiles: [MediaData](), errorMessage: "")
 
@@ -36,7 +36,7 @@ public class MediaProvider
         return response
     }
 
-    public func clear()
+    open func clear()
     {
         folders = []
         mediaFiles = []
@@ -45,45 +45,45 @@ public class MediaProvider
         CoreNotifications.postNotification(CoreNotifications.MediaProvider.Cleared, object: self)
     }
 
-    public func addFolder(folderName:String)
+    open func addFolder(_ folderName:String)
     {
         addFolder(folderName, notifyOnLoad:true)
     }
 
-    private func addFolder(folderName:String, notifyOnLoad:Bool)
+    fileprivate func addFolder(_ folderName:String, notifyOnLoad:Bool)
     {
         if (folders.contains(folderName)) {
             return
         }
 
-        if NSFileManager.defaultManager().fileExistsAtPath(folderName) {
+        if FileManager.default.fileExists(atPath: folderName) {
             if let files = getFiles(folderName) {
                 folders.append(folderName)
 
                 for f in files {
-                    let mediaType = SupportedMediaTypes.getTypeFromFileExtension(((f.path!) as NSString).pathExtension)
-                    if mediaType == SupportedMediaTypes.MediaType.Image || mediaType == SupportedMediaTypes.MediaType.Video {
+                    let mediaType = SupportedMediaTypes.getTypeFromFileExtension(((f.path) as NSString).pathExtension)
+                    if mediaType == SupportedMediaTypes.MediaType.image || mediaType == SupportedMediaTypes.MediaType.video {
                         mediaFiles.append(FileMediaData.create(f, mediaType: mediaType))
                     }
                 }
             }
 
-            mediaFiles.sortInPlace( { (m1:MediaData, m2:MediaData) -> Bool in
-                return m1.timestamp!.compare(m2.timestamp!) == NSComparisonResult.OrderedAscending })
+            mediaFiles.sort( by: { (m1:MediaData, m2:MediaData) -> Bool in
+                return m1.timestamp!.compare(m2.timestamp! as Date) == ComparisonResult.orderedAscending })
 
             CoreNotifications.postNotification(CoreNotifications.MediaProvider.UpdatedNotification, object: self)
 
             folderWatcher.append(RangicFsEventStreamWrapper(path: folderName, callback: { (numEvents, typeArray, pathArray) -> () in
                 var eventTypes = [RangicFsEventType]()
                 for index in 0..<Int(numEvents) {
-                    eventTypes.append(typeArray[index] as RangicFsEventType)
+                    eventTypes.append((typeArray?[index])! as RangicFsEventType)
                 }
                 self.processFileSystemEvents(Int(numEvents), eventTypes: eventTypes, pathArray: pathArray as! [String])
             }))
         }
     }
 
-    public func refresh()
+    open func refresh()
     {
         let allFolders = folders
         clear()
@@ -95,7 +95,7 @@ public class MediaProvider
         CoreNotifications.postNotification(CoreNotifications.MediaProvider.UpdatedNotification, object: self)
     }
 
-    private func processFileSystemEvents(numEvents: Int, eventTypes: [RangicFsEventType], pathArray: [String])
+    fileprivate func processFileSystemEvents(_ numEvents: Int, eventTypes: [RangicFsEventType], pathArray: [String])
     {
         for index in 0..<numEvents {
             processOneFileSystemEvent(eventTypes[index], path: pathArray[index])
@@ -104,23 +104,23 @@ public class MediaProvider
         CoreNotifications.postNotification(CoreNotifications.MediaProvider.UpdatedNotification, object: self)
     }
 
-    private func processOneFileSystemEvent(eventType: RangicFsEventType, path: String)
+    fileprivate func processOneFileSystemEvent(_ eventType: RangicFsEventType, path: String)
     {
         if eventType == .RescanFolder {
             rescanFolder(path)
         }
         else {
             let mediaType = SupportedMediaTypes.getTypeFromFileExtension((path as NSString).pathExtension)
-            if mediaType == .Unknown {
+            if mediaType == .unknown {
                 return
             }
 
-            let url = NSURL(fileURLWithPath: path)
+            let url = URL(fileURLWithPath: path)
             if eventType == .Removed {
                 removeFile(url)
             }
             else {
-                let fileExists = NSFileManager.defaultManager().fileExistsAtPath(url.path!)
+                let fileExists = FileManager.default.fileExists(atPath: url.path)
                 switch eventType {
                 case .Created:
                     if fileExists {
@@ -142,12 +142,12 @@ public class MediaProvider
         }
     }
 
-    private func rescanFolder(path: String)
+    fileprivate func rescanFolder(_ path: String)
     {
         Logger.info("RescanFolder: \(path)")
     }
 
-    private func addFile(url: NSURL, mediaType: SupportedMediaTypes.MediaType)
+    fileprivate func addFile(_ url: URL, mediaType: SupportedMediaTypes.MediaType)
     {
         if let index = getFileIndex(url) {
             mediaFiles[index].reload()
@@ -155,26 +155,26 @@ public class MediaProvider
             let mediaData = FileMediaData.create(url, mediaType: mediaType)
             let index = getMediaDataIndex(mediaData)
             if index < 0 {
-                mediaFiles.insert(mediaData, atIndex: -index)
+                mediaFiles.insert(mediaData, at: -index)
             }
             else {
-                mediaFiles.removeAtIndex(index)
-                mediaFiles.insert(mediaData, atIndex: index)
+                mediaFiles.remove(at: index)
+                mediaFiles.insert(mediaData, at: index)
             }
         }
     }
 
-    private func removeFile(url: NSURL)
+    fileprivate func removeFile(_ url: URL)
     {
         if let index = getFileIndex(url) {
-            mediaFiles.removeAtIndex(index)
+            mediaFiles.remove(at: index)
         }
         else {
             Logger.warn("Unable to remove '\(url)' - cannot find in media files")
         }
     }
 
-    private func updateFile(url: NSURL, mediaType: SupportedMediaTypes.MediaType)
+    fileprivate func updateFile(_ url: URL, mediaType: SupportedMediaTypes.MediaType)
     {
         if let index = getFileIndex(url) {
             mediaFiles[index].reload()
@@ -182,13 +182,13 @@ public class MediaProvider
         else {
             Logger.info("Updated file '\(url)' not in list, adding it")
             addFile(url, mediaType: mediaType)
-            mediaFiles.sortInPlace(isOrderedBefore)
+            mediaFiles.sort(by: isOrderedBefore)
         }
     }
 
-    public func getFileIndex(url: NSURL) -> Int?
+    open func getFileIndex(_ url: URL) -> Int?
     {
-        for (index, mediaData) in mediaFiles.enumerate() {
+        for (index, mediaData) in mediaFiles.enumerated() {
             if mediaData.url == url {
                 return index
             }
@@ -197,27 +197,26 @@ public class MediaProvider
         return nil
     }
 
-    public func itemFromFilePath(filePath: String) -> MediaData?
+    open func itemFromFilePath(_ filePath: String) -> MediaData?
     {
         for mediaData in mediaFiles {
-            if let urlPath = mediaData.url.path {
-                if urlPath == filePath {
-                    return mediaData
-                }
+            let urlPath = mediaData.url.path
+            if urlPath == filePath {
+                return mediaData
             }
         }
         return nil
     }
 
-    private func getMediaDataIndex(mediaData: MediaData) -> Int
+    fileprivate func getMediaDataIndex(_ mediaData: MediaData) -> Int
     {
         var lo = 0
         var hi = mediaFiles.count - 1
         while lo <= hi {
             let mid = (lo + hi) / 2
 
-            let midPath = mediaFiles[mid].url.path!
-            if midPath.compare(mediaData.url.path!, options: NSStringCompareOptions.CaseInsensitiveSearch) == NSComparisonResult.OrderedSame {
+            let midPath = mediaFiles[mid].url.path
+            if midPath.compare(mediaData.url.path, options: NSString.CompareOptions.caseInsensitive) == ComparisonResult.orderedSame {
                 return mid
             }
 
@@ -232,33 +231,33 @@ public class MediaProvider
         return -lo // not found, would be inserted at position lo
     }
 
-    private func isOrderedBefore(m1: MediaData, m2: MediaData) -> Bool
+    fileprivate func isOrderedBefore(_ m1: MediaData, m2: MediaData) -> Bool
     {
-        let dateComparison = m1.timestamp!.compare(m2.timestamp!)
+        let dateComparison = m1.timestamp!.compare(m2.timestamp! as Date)
         switch dateComparison {
-        case .OrderedAscending:
+        case .orderedAscending:
             return true
-        case .OrderedDescending:
+        case .orderedDescending:
             return false
-        case .OrderedSame:
+        case .orderedSame:
             switch m1.name.compare(m2.name) {
-            case .OrderedAscending:
+            case .orderedAscending:
                 return true
-            case .OrderedDescending:
+            case .orderedDescending:
                 return false
-            case .OrderedSame:
+            case .orderedSame:
                 return true
             }
         }
     }
 
-    private func getFiles(folderName:String) -> [NSURL]?
+    fileprivate func getFiles(_ folderName:String) -> [URL]?
     {
         do {
-            return try NSFileManager.defaultManager().contentsOfDirectoryAtURL(
-                NSURL(fileURLWithPath: folderName),
-                includingPropertiesForKeys: [NSURLContentModificationDateKey],
-                options:NSDirectoryEnumerationOptions.SkipsHiddenFiles)
+            return try FileManager.default.contentsOfDirectory(
+                at: URL(fileURLWithPath: folderName),
+                includingPropertiesForKeys: [URLResourceKey.contentModificationDateKey],
+                options:FileManager.DirectoryEnumerationOptions.skipsHiddenFiles)
         }
         catch {
             return nil

@@ -2,11 +2,11 @@
 //  Radish
 //
 
-public class MediaDataDetail
+open class MediaDataDetail
 {
-    public let category: String?
-    public let name: String?
-    public let value: String?
+    open let category: String?
+    open let name: String?
+    open let value: String?
 
     init(category: String?, name: String?, value: String?)
     {

@@ -2,36 +2,36 @@
 //  RangicCore
 //
 
-public class VideoMetadata
+open class VideoMetadata
 {
-    private var fileHandle: NSFileHandle! = nil
-    private var fileLength: UInt64! = 0
+    fileprivate var fileHandle: FileHandle! = nil
+    fileprivate var fileLength: UInt64! = 0
 
-    private var rootAtoms = [VideoAtom]()
+    fileprivate var rootAtoms = [VideoAtom]()
 
-    private var moovData = [String: String]()
-    private var uuidData = [String: String]()
-    private var xmpAtomData = [String: String]()
+    fileprivate var moovData = [String: String]()
+    fileprivate var uuidData = [String: String]()
+    fileprivate var xmpAtomData = [String: String]()
 
-    private var xmpDate: NSDate? = nil
+    fileprivate var xmpDate: Date? = nil
 
-    public private(set) var location: Location? = nil
-    public private(set) var timestamp: NSDate? = nil
-    public private(set) var keywords: [String]? = nil
-    public private(set) var mediaSize: MediaSize? = nil
-    public private(set) var rotation: Int? = nil
-    public private(set) var compatibleBrands = [String]()
+    open fileprivate(set) var location: Location? = nil
+    open fileprivate(set) var timestamp: Date? = nil
+    open fileprivate(set) var keywords: [String]? = nil
+    open fileprivate(set) var mediaSize: MediaSize? = nil
+    open fileprivate(set) var rotation: Int? = nil
+    open fileprivate(set) var compatibleBrands = [String]()
 
 
     public init?(filename: String)
     {
-        fileHandle = NSFileHandle(forReadingAtPath: filename)
+        fileHandle = FileHandle(forReadingAtPath: filename)
         if fileHandle == nil {
             return nil
         }
 
         do {
-            let attr : NSDictionary? = try NSFileManager.defaultManager().attributesOfItemAtPath(filename)
+            let attr : NSDictionary? = try FileManager.default.attributesOfItem(atPath: filename) as NSDictionary?
             if attr != nil {
                 fileLength = attr!.fileSize()
             }
@@ -52,7 +52,7 @@ public class VideoMetadata
         }
     }
 
-    private func parse()
+    fileprivate func parse()
     {
         // Parse the top-level atoms; we'll drill down as needed later
         var offset: UInt64 = 0
@@ -60,7 +60,7 @@ public class VideoMetadata
             rootAtoms.append(firstAtom)
             offset += firstAtom.length
             while offset < fileLength {
-                fileHandle.seekToFileOffset(offset)
+                fileHandle.seek(toFileOffset: offset)
                 if let atom = nextAtom(offset) {
                     rootAtoms.append(atom)
                     parseAtom(offset + 8, atomLength: atom.length, children: &atom.children)
@@ -92,8 +92,8 @@ public class VideoMetadata
         if location == nil {
             if let moovLocation = moovData["com.apple.quicktime.location.ISO6709"] {
                 do {
-                    let regex = try NSRegularExpression(pattern: "([\\+-]\\d+\\.\\d+)", options: .CaseInsensitive)
-                    let matches = regex.matchesInString(moovLocation, options: .WithoutAnchoringBounds, range: NSMakeRange(0, moovLocation.characters.count))
+                    let regex = try NSRegularExpression(pattern: "([\\+-]\\d+\\.\\d+)", options: .caseInsensitive)
+                    let matches = regex.matches(in: moovLocation, options: .withoutAnchoringBounds, range: NSMakeRange(0, moovLocation.characters.count))
                     if matches.count >= 2 {
                         if let latitude = Double(moovLocation.substringWithRange(matches[0].range)) {
                             if let longitude = Double(moovLocation.substringWithRange(matches[1].range)) {
@@ -110,10 +110,10 @@ public class VideoMetadata
 
         // Determine the (creation) timestamp
         if let moovDate = moovData["com.apple.quicktime.creationdate"] {
-            let dateFormatter = NSDateFormatter()
+            let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssXXXX"
-            dateFormatter.timeZone = NSTimeZone(name: "UTC")
-            timestamp = dateFormatter.dateFromString(moovDate)
+            dateFormatter.timeZone = TimeZone(identifier: "UTC")
+            timestamp = dateFormatter.date(from: moovDate)
         }
 
         if let mvhdAtom = getAtom(rootAtoms, atomPath: ["moov", "mvhd"]) {
@@ -123,25 +123,25 @@ public class VideoMetadata
             // 66 years + 17 leap days
             let secondsBetween1904And1970 = UInt32(66 * 365 * 24 * 60 * 60) + UInt32(17 * 24 * 60 * 60)
 
-            let mvhdReader = DataReader(data: getData(mvhdAtom))
+            let mvhdReader = DataReader(data: getData(mvhdAtom) as NSData)
             mvhdReader.offset = 4
             let createSeconds = mvhdReader.readUInt32()
             if createSeconds >= secondsBetween1904And1970 {
-                timestamp = NSDate(timeIntervalSince1970: NSTimeInterval(createSeconds - secondsBetween1904And1970))
+                timestamp = Date(timeIntervalSince1970: TimeInterval(createSeconds - secondsBetween1904And1970))
             }
         }
 
         if timestamp == nil {
             if let uuidDate = uuidData["CreateDate"] {
-                let dateFormatter = NSDateFormatter()
+                let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-                dateFormatter.timeZone = NSTimeZone(name: "UTC")
-                timestamp = dateFormatter.dateFromString(uuidDate)
+                dateFormatter.timeZone = TimeZone(identifier: "UTC")
+                timestamp = dateFormatter.date(from: uuidDate)
             }
         }
     }
 
-    private func getLocationFrom(data: [String:String]) -> Location?
+    fileprivate func getLocationFrom(_ data: [String:String]) -> Location?
     {
         if let dataLatitude = data["GPSLatitude"] {
             if let dataLongitude = data["GPSLongitude"] {
@@ -159,64 +159,64 @@ public class VideoMetadata
         return nil
     }
 
-    private func parseUuidAtom()
+    fileprivate func parseUuidAtom()
     {
         if let uuidAtom = getAtom(rootAtoms, atomPath: ["uuid"]) {
 
             // The atom data is 16 bytes of unknown data followed by XML
-            let uuidReader = DataReader(data: getData(uuidAtom))
+            let uuidReader = DataReader(data: getData(uuidAtom) as NSData)
             if uuidReader.data.length >= 56 {
                 // Skip the 16 bytes of unknown data
-                uuidReader.readUInt64()
-                uuidReader.readUInt64()
+                let _ = uuidReader.readUInt64()
+                let _ = uuidReader.readUInt64()
 
                 // The remaining is xml - atom length - 4 bytes for length - 4 bytes for type - 16 bytes unknown
-                let xmlString = uuidReader.readString(UInt32(uuidAtom.length - 4 - 4 - 16))
+                let xmlString = uuidReader.readString(length: UInt32(uuidAtom.length - 4 - 4 - 16))
                 uuidData = parseXml(xmlString)
             }
         }
     }
 
-    private func parseFtypAtom()
+    fileprivate func parseFtypAtom()
     {
         if let ftypAtom = getAtom(rootAtoms, atomPath: ["ftyp"]) {
             // FTYP data is:
             //      4 bytes: major brand
             //      4 bytes: minor version
             //      4 bytes EACH: compatible brands
-            let ftypReader = DataReader(data: getData(ftypAtom))
+            let ftypReader = DataReader(data: getData(ftypAtom) as NSData)
 
             let majorBrandAndMinorVersion = 8
             ftypReader.offset = majorBrandAndMinorVersion
 
             while ftypReader.offset < ftypReader.data.length {
-                compatibleBrands.append(ftypReader.readString(4))
+                compatibleBrands.append(ftypReader.readString(length: 4))
             }
         }
     }
 
-    private func parseXmpAtom()
+    fileprivate func parseXmpAtom()
     {
         if let xmpAtom = getAtom(rootAtoms, atomPath: ["moov", "udta", "XMP_"]) {
-            let xmpReader = DataReader(data: getData(xmpAtom))
-            let xmlString = xmpReader.readString(UInt32(xmpAtom.length - 4 - 4))
+            let xmpReader = DataReader(data: getData(xmpAtom) as NSData)
+            let xmlString = xmpReader.readString(length: UInt32(xmpAtom.length - 4 - 4))
             xmpAtomData = parseXml(xmlString)
         }
     }
 
-    private func parseMetaAtom()
+    fileprivate func parseMetaAtom()
     {
         if let keysAtom = getAtom(rootAtoms, atomPath: ["moov", "meta", "keys"]) {
             if let ilstAtom = getAtom(rootAtoms, atomPath: ["moov", "meta", "ilst"]) {
 
                 // Keys are easy - a count of all keys, each item is a length/string combo
-                let keyReader = DataReader(data: getData(keysAtom))
+                let keyReader = DataReader(data: getData(keysAtom) as NSData)
                 let keyCount = Int(keyReader.readUInt64())
                 var keys = [String]()
                 for _ in 1...keyCount {
                     let fullKeyName = keyReader.readLengthAndString()
                     // Skip "mdta'
-                    let keyName = fullKeyName.substringFromIndex(fullKeyName.startIndex.advancedBy(4))
+                    let keyName = fullKeyName.substring(from: fullKeyName.characters.index(fullKeyName.startIndex, offsetBy: 4))
                     keys.append(keyName)
                 }
 
@@ -227,17 +227,17 @@ public class VideoMetadata
                 //      4 bytes     - 'd' 'a' 't' 'a'
                 //      8 bytes     - Unknown, possibly the type
                 //      remaining   - data (dataLength - 16)
-                let valueReader = DataReader(data: getData(ilstAtom))
-                var values = [String](count: Int(keyCount), repeatedValue: "")
+                let valueReader = DataReader(data: getData(ilstAtom) as NSData)
+                var values = [String](repeating: "", count: Int(keyCount))
                 for _ in 1...keyCount {
-                    valueReader.readUInt32()                    // Unknown
+                    let _ = valueReader.readUInt32()                    // Unknown
                     let index = valueReader.readUInt32()
                     let dataLength = valueReader.readUInt32()
-                    valueReader.readUInt32()                    // 'd' 'a' 't' 'a'
-                    valueReader.readUInt64()                    // Unknown, possibly type
-                    let value = valueReader.readString(dataLength - 16)
+                    let _ = valueReader.readUInt32()                    // 'd' 'a' 't' 'a'
+                    let _ = valueReader.readUInt64()                    // Unknown, possibly type
+                    let value = valueReader.readString(length: dataLength - 16)
 
-                    values.insert(value, atIndex: Int(index - 1))
+                    values.insert(value, at: Int(index - 1))
                 }
 
 
@@ -248,7 +248,7 @@ public class VideoMetadata
         }
     }
 
-    private func parseTrakAtom()
+    fileprivate func parseTrakAtom()
     {
         var trakAtoms = [VideoAtom]()
 
@@ -266,7 +266,7 @@ public class VideoMetadata
             parseAtom(trak.offset + 8, atomLength: trak.length, children: &trak.children)
 
             if let tkhdAtom = getAtom(trak.children, atomPath: ["tkhd"]) {
-                let tkhdReader = DataReader(data: getData(tkhdAtom))
+                let tkhdReader = DataReader(data: getData(tkhdAtom) as NSData)
                 tkhdReader.offset = 40
                 let widthScale = asFloat32(tkhdReader.readUInt32())
                 let widthRotation = asFloat32(tkhdReader.readUInt32())
@@ -280,11 +280,11 @@ public class VideoMetadata
             if let hdlrAtom = getAtom(trak.children, atomPath: ["edts", "mdia", "hdlr"]),
                 let stsdAtom = getAtom(trak.children, atomPath: ["edts", "mdia", "minf", "dinf", "stbl", "stsd"]) {
 
-                    let hdlrReader = DataReader(data: getData(hdlrAtom))
+                    let hdlrReader = DataReader(data: getData(hdlrAtom) as NSData)
                     hdlrReader.offset = 8
-                    let mediaType = hdlrReader.readString(4)
+                    let mediaType = hdlrReader.readString(length: 4)
                     if mediaType == "vide" {
-                        let stsdReader = DataReader(data: getData(stsdAtom))
+                        let stsdReader = DataReader(data: getData(stsdAtom) as NSData)
                         stsdReader.offset = 40
 
                         let width = stsdReader.readUInt16()
@@ -297,7 +297,7 @@ public class VideoMetadata
         }
     }
 
-    private func asFloat32(number: UInt32) -> Float32
+    fileprivate func asFloat32(_ number: UInt32) -> Float32
     {
         switch number {
         case 0xFFFF0000:
@@ -308,35 +308,35 @@ public class VideoMetadata
             return 0
         default:
             Logger.error("Unexpected UInt32->Float32 conversion: \(number)")
-            return Float32.quietNaN
+            return Float32.nan
         }
     }
 
-    private func parseXml(xmlString: String) -> [String:String]
+    fileprivate func parseXml(_ xmlString: String) -> [String:String]
     {
         var data = [String:String]()
         do {
-            let xmlDoc = try NSXMLDocument(XMLString: xmlString, options: 0)
+            let xmlDoc = try XMLDocument(xmlString: xmlString, options: 0)
 
             // Add namespaces to get xpath to work
-            xmlDoc.rootElement()?.addNamespace(NSXMLNode.namespaceWithName("exif", stringValue: "http://ns.adobe.com/exif/1.0/") as! NSXMLNode)
-            xmlDoc.rootElement()?.addNamespace(NSXMLNode.namespaceWithName("xmp", stringValue: "http://ns.adobe.com/xap/1.0/") as! NSXMLNode)
-            xmlDoc.rootElement()?.addNamespace(NSXMLNode.namespaceWithName("dc", stringValue: "http://purl.org/dc/elements/1.1/") as! NSXMLNode)
-            xmlDoc.rootElement()?.addNamespace(NSXMLNode.namespaceWithName("rdf", stringValue: "http://www.w3.org/1999/02/22-rdf-syntax-ns#") as! NSXMLNode)
+            xmlDoc.rootElement()?.addNamespace(XMLNode.namespace(withName: "exif", stringValue: "http://ns.adobe.com/exif/1.0/") as! XMLNode)
+            xmlDoc.rootElement()?.addNamespace(XMLNode.namespace(withName: "xmp", stringValue: "http://ns.adobe.com/xap/1.0/") as! XMLNode)
+            xmlDoc.rootElement()?.addNamespace(XMLNode.namespace(withName: "dc", stringValue: "http://purl.org/dc/elements/1.1/") as! XMLNode)
+            xmlDoc.rootElement()?.addNamespace(XMLNode.namespace(withName: "rdf", stringValue: "http://www.w3.org/1999/02/22-rdf-syntax-ns#") as! XMLNode)
 
 
-            let exifNodes = try xmlDoc.nodesForXPath("//exif:*")
+            let exifNodes = try xmlDoc.nodes(forXPath: "//exif:*")
             for node in exifNodes {
                 data[node.localName!] = node.stringValue!
             }
 
-            let xmpNodes = try xmlDoc.nodesForXPath("//xmp:CreateDate")
+            let xmpNodes = try xmlDoc.nodes(forXPath: "//xmp:CreateDate")
             for node in xmpNodes {
                 data[node.localName!] = node.stringValue!
             }
 
             var subjectItems = [String]()
-            let subjectNodes = try xmlDoc.nodesForXPath(".//dc:subject/rdf:Bag")
+            let subjectNodes = try xmlDoc.nodes(forXPath: ".//dc:subject/rdf:Bag")
             for node in subjectNodes {
                 for child in node.children! {
                     subjectItems.append(child.stringValue!)
@@ -353,7 +353,7 @@ public class VideoMetadata
         return data
     }
 
-    private func logTree(atom: VideoAtom, parent: String)
+    fileprivate func logTree(_ atom: VideoAtom, parent: String)
     {
         Logger.info("\(parent) offset: \(atom.offset), length: \(atom.length)")
         let path = "\(parent)\\\(atom.type)"
@@ -361,7 +361,7 @@ public class VideoMetadata
         logTreeChildren(atom, parent: path)
     }
 
-    private func logTreeChildren(atom: VideoAtom, parent: String)
+    fileprivate func logTreeChildren(_ atom: VideoAtom, parent: String)
     {
         if atom.children.count == 0 {
             parseAtom(atom.offset + 8, atomLength: atom.length, children: &atom.children)
@@ -372,7 +372,7 @@ public class VideoMetadata
         }
     }
 
-    private func getAtom(children: [VideoAtom], atomPath: [String]) -> VideoAtom?
+    fileprivate func getAtom(_ children: [VideoAtom], atomPath: [String]) -> VideoAtom?
     {
         for child in children {
             if child.type == atomPath[0] {
@@ -397,18 +397,18 @@ public class VideoMetadata
         return nil
     }
 
-    private func parseAtom(atomOffset: UInt64, atomLength: UInt64, inout children: [VideoAtom])
+    fileprivate func parseAtom(_ atomOffset: UInt64, atomLength: UInt64, children: inout [VideoAtom])
     {
         let atomEnd = atomOffset + atomLength
         var offset = atomOffset
 
-        fileHandle.seekToFileOffset(offset)
+        fileHandle.seek(toFileOffset: offset)
         if let firstAtom = nextAtom(offset) {
             children.append(firstAtom)
 
             offset += firstAtom.length
             while offset < fileLength && offset < atomEnd {
-                fileHandle.seekToFileOffset(offset)
+                fileHandle.seek(toFileOffset: offset)
                 if let atom = nextAtom(offset) {
                     children.append(atom)
 
@@ -426,34 +426,34 @@ public class VideoMetadata
         }
     }
 
-    private func nextAtom(offset: UInt64) -> VideoAtom?
+    fileprivate func nextAtom(_ offset: UInt64) -> VideoAtom?
     {
-        let dataLength = fileHandle!.readDataOfLength(4)
-        if dataLength == 0 {
+        let data = fileHandle!.readData(ofLength: 4)
+        if data.count == 0 {
             return nil
         }
 
         var length: UInt32 = 0
-        dataLength.getBytes(&length, length: 4)
+        (data as NSData).getBytes(&length, length: 4)
         if length == 0 {
             return nil
         }
 
-        let atomType = fileHandle.readDataOfLength(4)
-        if let type = String(data: atomType, encoding: NSUTF8StringEncoding) {
+        let atomType = fileHandle.readData(ofLength: 4)
+        if let type = String(data: atomType, encoding: String.Encoding.utf8) {
             return VideoAtom(type: type, offset: offset, length: UInt64(length.byteSwapped))
         }
 
         return nil
     }
 
-    private func getData(atom: VideoAtom) -> NSData
+    fileprivate func getData(_ atom: VideoAtom) -> Data
     {
-        fileHandle.seekToFileOffset(atom.offset + 8)
-        return fileHandle.readDataOfLength(Int(atom.length - 8))
+        fileHandle.seek(toFileOffset: atom.offset + 8)
+        return fileHandle.readData(ofLength: Int(atom.length - 8))
     }
 
-    private func convertToGeo(degrees: String, minutesAndSeconds: String) -> Double
+    fileprivate func convertToGeo(_ degrees: String, minutesAndSeconds: String) -> Double
     {
         if let degreesNumber = Double(degrees) {
             if let minutesAndSecondsNumber = Double(minutesAndSeconds) {
@@ -465,25 +465,28 @@ public class VideoMetadata
     }
 
     // Splits "47,33.366000N" into ["47", "33.366000", "N"]
-    private func parseUuidLatLong(geo: String) -> [String]
+    fileprivate func parseUuidLatLong(_ geo: String) -> [String]
     {
         var pieces = [String]()
-        let commaIndex = geo.characters.indexOf(",")
-        pieces.append(geo.substringToIndex(commaIndex!))
-        pieces.append(geo.substringWithRange(commaIndex!.advancedBy(1)..<geo.endIndex.predecessor()))
-        pieces.append(geo.substringFromIndex(geo.endIndex.predecessor()))
+        let commaIndex = geo.characters.index(of: ",")
+        pieces.append(geo.substring(to: commaIndex!))
+        
+        let start = geo.characters.index(commaIndex!, offsetBy: 1)
+        let end = geo.characters.index(before: geo.endIndex)
+        pieces.append(geo.substring(with: start..<end ))
+        pieces.append(geo.substring(from: geo.characters.index(before: geo.endIndex)))
         return pieces
     }
 
-    private func byteArrayToString(data: NSData, offset: Int, length: Int) -> String
+    fileprivate func byteArrayToString(_ data: Data, offset: Int, length: Int) -> String
     {
         let str = NSMutableString(capacity: length * 3)
         var byte: UInt8 = 0
         for index in offset..<offset+length {
-            data.getBytes(&byte, range: NSMakeRange(index, 1))
+            (data as NSData).getBytes(&byte, range: NSMakeRange(index, 1))
             str.appendFormat("%02X", byte)
             if ((index + 1) % 8) == 0 {
-                str.appendString(" ")
+                str.append(" ")
             }
         }
         return str as String

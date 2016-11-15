@@ -4,46 +4,46 @@
 
 import Foundation
 
-public class ProcessInvoker
+open class ProcessInvoker
 {
-    public let output: String
-    public let error: String
-    public let exitCode: Int32
+    open let output: String
+    open let error: String
+    open let exitCode: Int32
 
-    static public func run(launchPath: String, arguments: [String]) -> ProcessInvoker
+    static open func run(_ launchPath: String, arguments: [String]) -> ProcessInvoker
     {
         let result = ProcessInvoker.launch(launchPath, arguments: arguments)
         let process = ProcessInvoker(output: result.output, error: result.error, exitCode: result.exitCode)
         return process
     }
 
-    private init(output: String, error: String, exitCode: Int32)
+    fileprivate init(output: String, error: String, exitCode: Int32)
     {
         self.output = output
         self.error = error
         self.exitCode = exitCode
     }
 
-    static private func launch(launchPath: String, arguments: [String]) -> (output: String, error: String, exitCode: Int32)
+    static fileprivate func launch(_ launchPath: String, arguments: [String]) -> (output: String, error: String, exitCode: Int32)
     {
         Logger.info("launch \(launchPath) \(arguments)")
-        let task = NSTask()
+        let task = Process()
         task.launchPath = launchPath
         task.arguments = arguments
 
-        let outputPipe = NSPipe()
+        let outputPipe = Pipe()
         task.standardOutput = outputPipe
 
-        let errorPipe = NSPipe()
+        let errorPipe = Pipe()
         task.standardError = errorPipe
 
         // This executable may depend on another executable in the same folder - make sure the path includes the executable folder
-        task.environment = ["PATH": (launchPath as NSString).stringByDeletingLastPathComponent]
+        task.environment = ["PATH": (launchPath as NSString).deletingLastPathComponent]
 
         task.launch()
 
-        let output = String(data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: NSUTF8StringEncoding) ?? ""
-        let error = String(data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: NSUTF8StringEncoding) ?? ""
+        let output = String(data: outputPipe.fileHandleForReading.readDataToEndOfFile(), encoding: String.Encoding.utf8) ?? ""
+        let error = String(data: errorPipe.fileHandleForReading.readDataToEndOfFile(), encoding: String.Encoding.utf8) ?? ""
         return (output, error, task.terminationStatus)
     }
 

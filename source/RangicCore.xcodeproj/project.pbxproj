@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		440AFCB21DD7C6F1007B1749 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 440AFCB11DD7C6F1007B1749 /* SwiftyJSON.framework */; };
 		4451CEEB1BA79C5C00D09540 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4451CEEA1BA79C5C00D09540 /* Quartz.framework */; };
 		4451CEED1BA79C9400D09540 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4451CEEC1BA79C9400D09540 /* AVFoundation.framework */; };
 		445915741BD056AE001DC93A /* ImageMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445915731BD056AE001DC93A /* ImageMetadata.swift */; };
@@ -33,7 +34,6 @@
 		44D749DF1BAC810B00DE90B1 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D749D41BAC810B00DE90B1 /* FMResultSet.m */; };
 		44D749E11BAC820E00DE90B1 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 44D749E01BAC820E00DE90B1 /* libsqlite3.0.tbd */; };
 		44EBE0011BA784CC00AD679A /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44EBE0001BA784CC00AD679A /* Alamofire.framework */; };
-		44EBE0041BA7857000AD679A /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EBE0031BA7857000AD679A /* SwiftyJSON.swift */; };
 		44EBE00A1BA7891000AD679A /* jhead in Resources */ = {isa = PBXBuildFile; fileRef = 44EBE0081BA7891000AD679A /* jhead */; };
 		44EBE00B1BA7891000AD679A /* jpegtran in Resources */ = {isa = PBXBuildFile; fileRef = 44EBE0091BA7891000AD679A /* jpegtran */; };
 		44EBE00D1BA7904D00AD679A /* CoreNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EBE00C1BA7904D00AD679A /* CoreNotifications.swift */; };
@@ -58,6 +58,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		440AFCB11DD7C6F1007B1749 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
 		44426F9D1BAC90C700C8EC2F /* RangicCore-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RangicCore-Bridging-Header.h"; sourceTree = "<group>"; };
 		4451CEEA1BA79C5C00D09540 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		4451CEEC1BA79C9400D09540 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -85,7 +86,6 @@
 		44D749D41BAC810B00DE90B1 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMResultSet.m; path = External/fmdb/FMResultSet.m; sourceTree = "<group>"; };
 		44D749E01BAC820E00DE90B1 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		44EBE0001BA784CC00AD679A /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/Mac/Alamofire.framework; sourceTree = "<group>"; };
-		44EBE0031BA7857000AD679A /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = External/SwiftyJSON.swift; sourceTree = "<group>"; };
 		44EBE0081BA7891000AD679A /* jhead */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = jhead; path = Executables/jhead; sourceTree = "<group>"; };
 		44EBE0091BA7891000AD679A /* jpegtran */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = jpegtran; path = Executables/jpegtran; sourceTree = "<group>"; };
 		44EBE00C1BA7904D00AD679A /* CoreNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreNotifications.swift; path = Utilities/CoreNotifications.swift; sourceTree = "<group>"; };
@@ -116,6 +116,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				440AFCB21DD7C6F1007B1749 /* SwiftyJSON.framework in Frameworks */,
 				447CA67B1BD5CF4B00CA174C /* CocoaLumberjack.framework in Frameworks */,
 				447CA6771BD5CD4500CA174C /* CocoaLumberjackSwift.framework in Frameworks */,
 				44D749E11BAC820E00DE90B1 /* libsqlite3.0.tbd in Frameworks */,
@@ -133,6 +134,7 @@
 		4451CEF41BA79D4300D09540 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				440AFCB11DD7C6F1007B1749 /* SwiftyJSON.framework */,
 				447CA67A1BD5CF4B00CA174C /* CocoaLumberjack.framework */,
 				447CA6761BD5CD4500CA174C /* CocoaLumberjackSwift.framework */,
 				44D749E01BAC820E00DE90B1 /* libsqlite3.0.tbd */,
@@ -188,7 +190,6 @@
 			isa = PBXGroup;
 			children = (
 				44D749C91BAC80FD00DE90B1 /* fmdb */,
-				44EBE0031BA7857000AD679A /* SwiftyJSON.swift */,
 			);
 			name = External;
 			sourceTree = "<group>";
@@ -336,11 +337,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = rangic.com;
 				TargetAttributes = {
 					44F41FF71BA7175E00ADBB85 = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0810;
 					};
 				};
 			};
@@ -407,7 +409,6 @@
 				44EBE0141BA790A500AD679A /* FileExifProvider.swift in Sources */,
 				44EBE0181BA790A500AD679A /* MediaProvider.swift in Sources */,
 				44F420221BA77A0900ADBB85 /* RangicFsEventStreamWrapper.m in Sources */,
-				44EBE0041BA7857000AD679A /* SwiftyJSON.swift in Sources */,
 				44F4201D1BA778F000ADBB85 /* JheadInvoker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -418,6 +419,7 @@
 		44F41FFE1BA7175E00ADBB85 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -428,14 +430,15 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -465,6 +468,7 @@
 		44F41FFF1BA7175E00ADBB85 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -475,14 +479,15 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -496,6 +501,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -518,11 +524,13 @@
 				INFOPLIST_FILE = RangicCore/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = RangicCore;
 				PRODUCT_NAME = RangicCore;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "RangicCore/RangicCore-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -543,10 +551,12 @@
 				INFOPLIST_FILE = RangicCore/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				PRODUCT_BUNDLE_IDENTIFIER = RangicCore;
 				PRODUCT_NAME = RangicCore;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "RangicCore/RangicCore-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

@@ -3,13 +3,14 @@
 //
 
 import Foundation
+import SwiftyJSON
 
-public class FileExifProvider
+open class FileExifProvider
 {
-    static public func getDetails(filename: String) -> [MediaDataDetail]
+    static open func getDetails(_ filename: String) -> [MediaDataDetail]
     {
         var result = [MediaDataDetail]()
-        let json = JSON(data:NSData(data: runExifTool(filename).dataUsingEncoding(NSUTF8StringEncoding)!))
+        let json = JSON(data:NSData(data: runExifTool(filename).data(using: String.Encoding.utf8)!) as Data)
         if json.count == 1 {
             for (childKey, childValue) in json[0] {
                 var addedCategory = false
@@ -51,20 +52,20 @@ public class FileExifProvider
         return result
     }
 
-    static private func getJsonValue(json: JSON) -> String
+    static fileprivate func getJsonValue(_ json: JSON) -> String
     {
-        if json.type == .Array {
+        if json.type == .array {
             var val = [String]()
             let array = json.arrayValue
             for v in array {
                 val.append(v.stringValue)
             }
-            return val.joinWithSeparator(", ")
+            return val.joined(separator: ", ")
         }
         return json.stringValue
     }
 
-    static private func addSpecialProperty(allProperties: [MediaDataDetail], name: String, value: String) -> [MediaDataDetail]
+    static fileprivate func addSpecialProperty(_ allProperties: [MediaDataDetail], name: String, value: String) -> [MediaDataDetail]
     {
         var props = allProperties
         if props.count < 1 {
@@ -73,14 +74,14 @@ public class FileExifProvider
             return props
         }
         else if props[0].category != specialProperty {
-            props.insert(MediaDataDetail(category: specialProperty, name: nil, value: nil), atIndex: 0)
+            props.insert(MediaDataDetail(category: specialProperty, name: nil, value: nil), at: 0)
         }
 
-        props.insert(MediaDataDetail(category: nil, name: name, value: value), atIndex: 1)
+        props.insert(MediaDataDetail(category: nil, name: name, value: value), at: 1)
         return props
     }
 
-    static private func runExifTool(filename: String) -> String
+    static fileprivate func runExifTool(_ filename: String) -> String
     {
         let process = ProcessInvoker.run("/usr/local/bin/exiftool", arguments: ["-a", "-j", "-g", filename])
         if process.exitCode == 0 {
@@ -93,8 +94,8 @@ public class FileExifProvider
         return ""
     }
 
-    static private let specialProperty = "Properties"
-    static private let includeInProperties: Set<String> =
+    static fileprivate let specialProperty = "Properties"
+    static fileprivate let includeInProperties: Set<String> =
     [
         "File.FileSize",
         "File.FileModifyDate",
@@ -115,13 +116,13 @@ public class FileExifProvider
         "Composite.ImageSize"
     ]
 
-    static private let excludeProperties: Set<String> =
+    static fileprivate let excludeProperties: Set<String> =
     [
         "ExifTool",
         "File"
     ]
 
-    static private let excludeElements: Set<String> =
+    static fileprivate let excludeElements: Set<String> =
     [
         "ICC_Profile.ProfileDescriptionML"
     ]

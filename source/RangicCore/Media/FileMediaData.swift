@@ -1,9 +1,9 @@
 //
 //
 
-public class FileMediaData : MediaData
+open class FileMediaData : MediaData
 {
-    public static func create(url: NSURL, mediaType: SupportedMediaTypes.MediaType) -> FileMediaData
+    open static func create(_ url: URL, mediaType: SupportedMediaTypes.MediaType) -> FileMediaData
     {
         let fileMediaData = FileMediaData()
         fileMediaData.url = url
@@ -14,13 +14,13 @@ public class FileMediaData : MediaData
         return fileMediaData
     }
 
-    public override func reload()
+    open override func reload()
     {
-        var value:AnyObject?
-        try! url.getResourceValue(&value, forKey: NSURLContentModificationDateKey)
-        let fileTimestamp = value as! NSDate?
-
-        name = url.lastPathComponent!
+        var values: URLResourceValues
+        try! values = url.resourceValues(forKeys: [URLResourceKey.contentModificationDateKey])
+        let fileTimestamp = values.contentModificationDate
+        
+        name = url.lastPathComponent
         timestamp = fileTimestamp
         self.fileTimestamp = fileTimestamp
         compatibleBrands = [String]()
@@ -37,7 +37,7 @@ public class FileMediaData : MediaData
         }
 
         if !hasImageData {
-            if let videoMetadata = VideoMetadata(filename: url.path!) {
+            if let videoMetadata = VideoMetadata(filename: url.path) {
                 if let timestamp = videoMetadata.timestamp {
                     self.timestamp = timestamp
                 }
@@ -53,25 +53,25 @@ public class FileMediaData : MediaData
     internal override func loadDetails() -> [MediaDataDetail]
     {
         var base = super.loadDetails()
-        for detail in FileExifProvider.getDetails(url.path!) {
+        for detail in FileExifProvider.getDetails(url.path) {
             base.append(detail)
         }
         return base
     }
 
-    public override func doesExist() -> Bool
+    open override func doesExist() -> Bool
     {
-        return NSFileManager.defaultManager().fileExistsAtPath(url.path!)
+        return FileManager.default.fileExists(atPath: url.path)
     }
 
-    public override func setFileDateToExifDate() -> (succeeded:Bool, errorMessage:String)
+    open override func setFileDateToExifDate() -> (succeeded:Bool, errorMessage:String)
     {
-        let updatedDates:[String:AnyObject] = [NSFileCreationDate:timestamp, NSFileModificationDate:timestamp]
+        let updatedDates:[FileAttributeKey:Any] = [FileAttributeKey.creationDate:timestamp as AnyObject, FileAttributeKey.modificationDate:timestamp as AnyObject]
         do {
-            try NSFileManager.defaultManager().setAttributes(updatedDates, ofItemAtPath: url.path!)
+            try FileManager.default.setAttributes(updatedDates, ofItemAtPath: url.path)
 
-            let attrs = try NSFileManager.defaultManager().attributesOfItemAtPath(url.path!)
-            let date = attrs[NSFileCreationDate] as! NSDate?
+            let attrs = try FileManager.default.attributesOfItem(atPath: url.path)
+            let date = attrs[FileAttributeKey.creationDate] as! Date?
             fileTimestamp = date
         }
         catch let error as NSError {
@@ -84,7 +84,7 @@ public class FileMediaData : MediaData
         return (true, "")
     }
 
-    private override init()
+    fileprivate override init()
     {
         super.init()
     }

@@ -5,15 +5,16 @@
 import Foundation
 
 import Alamofire
+import SwiftyJSON
 
-public class OpenMapLookupProvider: LookupProvider
+open class OpenMapLookupProvider: LookupProvider
 {
-    static private let useFake = false
-    static private let fakeJson = "{\"place_id\":\"23990896\",\"licence\":\"Data \\u00a9 OpenStreetMap contributors, ODbL 1.0. http://www.openstreetmap.org/copyright\",\"osm_type\":\"node\",\"osm_id\":\"2327716570\",\"lat\":\"47.6114432\",\"lon\":\"-122.3492363\",\"display_name\":\"2225, Alaskan Way, Belltown, Seattle, King County, Washington, 98121, United States of America\",\"address\":{\"house_number\":\"2225\",\"road\":\"Alaskan Way\",\"suburb\":\"Belltown\",\"city\":\"Seattle\",\"county\":\"King County\",\"state\":\"Washington\",\"postcode\":\"98121\",\"country\":\"United States of America\",\"country_code\":\"us\"}}"
-    static private let fakeData = fakeJson.dataUsingEncoding(NSUTF8StringEncoding)
-    static public var BaseLocationLookup = "http://open.mapquestapi.com"
-    static public let DefaultLocationLookup = "http://open.mapquestapi.com"
-    static public var timeoutInSeconds: Double = 5.0
+    static fileprivate let useFake = false
+    static fileprivate let fakeJson = "{\"place_id\":\"23990896\",\"licence\":\"Data \\u00a9 OpenStreetMap contributors, ODbL 1.0. http://www.openstreetmap.org/copyright\",\"osm_type\":\"node\",\"osm_id\":\"2327716570\",\"lat\":\"47.6114432\",\"lon\":\"-122.3492363\",\"display_name\":\"2225, Alaskan Way, Belltown, Seattle, King County, Washington, 98121, United States of America\",\"address\":{\"house_number\":\"2225\",\"road\":\"Alaskan Way\",\"suburb\":\"Belltown\",\"city\":\"Seattle\",\"county\":\"King County\",\"state\":\"Washington\",\"postcode\":\"98121\",\"country\":\"United States of America\",\"country_code\":\"us\"}}"
+    static fileprivate let fakeData = fakeJson.data(using: String.Encoding.utf8)
+    static open var BaseLocationLookup = "http://open.mapquestapi.com"
+    static open let DefaultLocationLookup = "http://open.mapquestapi.com"
+    static open var timeoutInSeconds: Double = 5.0
 
     public init()
     {
@@ -21,7 +22,7 @@ public class OpenMapLookupProvider: LookupProvider
 
     /// Synchronously resolves latitude/longitude into a dictionary of component names. "DisplayName" is a single string while the rest of
     /// the items are address details, ordered from most detailed to least detailed
-    public func lookup(latitude: Double, longitude: Double) -> OrderedDictionary<String,String>
+    open func lookup(_ latitude: Double, longitude: Double) -> OrderedDictionary<String,String>
     {
         let mutex = Mutex()
 
@@ -45,12 +46,12 @@ public class OpenMapLookupProvider: LookupProvider
         return result!
     }
 
-    private func fakeLookup(latitude: Double, longitude: Double, completion: (placename: OrderedDictionary<String,String>) -> ())
+    fileprivate func fakeLookup(_ latitude: Double, longitude: Double, completion: (_ placename: OrderedDictionary<String,String>) -> ())
     {
-        completion(placename: OpenMapLookupProvider.responseDataToDictionary(OpenMapLookupProvider.fakeData))
+        completion(OpenMapLookupProvider.responseDataToDictionary(OpenMapLookupProvider.fakeData))
     }
 
-    private func asyncLookup(latitude: Double, longitude: Double, completion: (placename: OrderedDictionary<String,String>) -> ())
+    fileprivate func asyncLookup(_ latitude: Double, longitude: Double, completion: @escaping (_ placename: OrderedDictionary<String,String>) -> ())
     {
         if OpenMapLookupProvider.BaseLocationLookup.characters.count == 0 {
             OpenMapLookupProvider.BaseLocationLookup = OpenMapLookupProvider.DefaultLocationLookup
@@ -64,11 +65,9 @@ public class OpenMapLookupProvider: LookupProvider
 //        configuration.timeoutIntervalForRequest = OpenMapLookupProvider.timeoutInSeconds
 //        configuration.timeoutIntervalForResource = OpenMapLookupProvider.timeoutInSeconds
 //        let manager = Alamofire.Manager(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
-        let manager = Alamofire.Manager.sharedInstance
 
         let url = "\(OpenMapLookupProvider.BaseLocationLookup)/nominatim/v1/reverse"
-        manager.request(
-            .GET,
+        Alamofire.request(
             url,
             parameters: [
                 "key": "Uw7GOgmBu6TY9KGcTNoqJWO7Y5J6JSxg",
@@ -79,20 +78,21 @@ public class OpenMapLookupProvider: LookupProvider
                 "lat": "\(latitude)",
                 "lon": "\(longitude)"])
             .validate()
-            .response { _, response, data, error in
+            .response { response in
 
-                if error != nil {
-                    completion(placename: self.errorToDictionary(url, response: response, data: data, error: error))
+                if response.error != nil {
+                    completion(self.errorToDictionary(url, response: response.response, data: response.data, error: response.error))
                 }
                 else {
-                    completion(placename: OpenMapLookupProvider.responseDataToDictionary(data))
+                    completion(OpenMapLookupProvider.responseDataToDictionary(response.data))
                 }
         }
     }
 
-    private func errorToDictionary(url: String, response: NSHTTPURLResponse?, data: NSData?, error: ErrorType?) -> OrderedDictionary<String,String>
+    fileprivate func errorToDictionary(_ url: String, response: HTTPURLResponse?, data: Data?, error: Error?) -> OrderedDictionary<String,String>
+//    fileprivate func errorToDictionary(_ url: String, response: HTTPURLResponse?, data: Data?, error: Error?) -> OrderedDictionary<String,String>
     {
-        let message = NSString(data:data!, encoding:NSUTF8StringEncoding) as! String
+        let message = NSString(data:data!, encoding:String.Encoding.utf8.rawValue) as! String
         if error != nil {
             Logger.error("reverse geocode to (\(url)) failed with error: \(error!._code) - \(error!._domain)")
 
@@ -119,7 +119,7 @@ public class OpenMapLookupProvider: LookupProvider
         }
     }
 
-    static public func dictionaryToResponse(dictionary: OrderedDictionary<String,String>) -> String
+    static open func dictionaryToResponse(_ dictionary: OrderedDictionary<String,String>) -> String
     {
         var response = [String:AnyObject]()
         var address = [String:AnyObject]()
@@ -127,26 +127,26 @@ public class OpenMapLookupProvider: LookupProvider
         for (key, value) in dictionary.values {
             switch key {
                 case "DisplayName":
-                    response["display_name"] = value
+                    response["display_name"] = value as AnyObject?
                 case "apiStatusCode", "apiMessage", "geoError":
-                    response[key] = value
+                    response[key] = value as AnyObject?
             default:
-                address[key] = value
+                address[key] = value as AnyObject?
             }
         }
 
         if address.count > 0 {
-            response["address"] = address
+            response["address"] = address as AnyObject?
         }
 
-        return JSON(response).rawString(NSUTF8StringEncoding, options:NSJSONWritingOptions(rawValue: 0))!
+        return JSON(response).rawString(String.Encoding.utf8, options:JSONSerialization.WritingOptions(rawValue: 0))!
     }
 
-    static public func responseDataToDictionary(data: NSData?) -> OrderedDictionary<String,String>
+    static open func responseDataToDictionary(_ data: Data?) -> OrderedDictionary<String,String>
     {
         var result = OrderedDictionary<String,String>()
 
-        let json = JSON(data:NSData(data: data!))
+        let json = JSON(data:NSData(data: data!) as Data)
         if let geoError = json["error"].string {
             Logger.error("reverse geocode failed with message: '\(geoError)'")
             result["geoError"] = geoError
@@ -163,8 +163,8 @@ public class OpenMapLookupProvider: LookupProvider
 
                 if displayName != nil {
 
-                    for detailValue in (displayName?.componentsSeparatedByString(","))! {
-                        let trimmedValue = detailValue.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+                    for detailValue in (displayName?.components(separatedBy: ","))! {
+                        let trimmedValue = detailValue.trimmingCharacters(in: CharacterSet.whitespaces)
                         var matched = false
                         for (key, value) in address {
                             if value.stringValue == trimmedValue {
@@ -174,9 +174,9 @@ public class OpenMapLookupProvider: LookupProvider
                             }
                         }
 
-                        if !matched {
-                            Logger.debug("Failed matching detail value: '\(trimmedValue)' (\(address))")
-                        }
+//                        if !matched {
+//                            Logger.verbose("Failed matching detail value: '\(trimmedValue)' (\(address))")
+//                        }
                     }
                 }
                 else {

@@ -16,17 +16,17 @@ class DataReader
     func readString(length: UInt32) -> String
     {
         let length = Int(length)
-        let subData = data.subdataWithRange(NSMakeRange(offset, length))
+        let subData = data.subdata(with: NSMakeRange(offset, length))
         offset += length
-        return String(data: subData, encoding: NSUTF8StringEncoding)!
+        return String(data: subData, encoding: String.Encoding.utf8)!
     }
 
     func readLengthAndString() -> String
     {
         let length = Int(readUInt32()) - 4
-        let subData = data.subdataWithRange(NSMakeRange(offset, length))
+        let subData = data.subdata(with: NSMakeRange(offset, length))
         offset += length
-        return String(data: subData, encoding: NSUTF8StringEncoding)!
+        return String(data: subData, encoding: String.Encoding.utf8)!
     }
 
     func readUInt16() -> UInt16
@@ -49,9 +49,9 @@ class DataReader
 
     func read<T>() -> T
     {
-        let size = sizeof(T)
-        let subData = data.subdataWithRange(NSMakeRange(offset, size))
+        let size = MemoryLayout<T>.size
+        let subData = data.subdata(with: NSMakeRange(offset, size))
         offset += size
-        return UnsafePointer<T>(subData.bytes).memory
+        return subData.withUnsafeBytes { (ptr: UnsafePointer<T>) -> T in return ptr.pointee }
     }
 }

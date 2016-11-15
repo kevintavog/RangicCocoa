@@ -2,26 +2,26 @@
 //  RangicCore
 //
 
-public class ImageMetadata
+open class ImageMetadata
 {
-    static private var dateFormatter: NSDateFormatter?
+    static fileprivate var dateFormatter: DateFormatter?
 
-    public var timestamp: NSDate? = nil
-    public var location: Location? = nil
-    public var keywords: [String]? = nil
-    public var mediaSize: MediaSize? = nil
+    open var timestamp: Date? = nil
+    open var location: Location? = nil
+    open var keywords: [String]? = nil
+    open var mediaSize: MediaSize? = nil
 
 
-    public init?(url: NSURL)
+    public init?(url: URL)
     {
         if (ImageMetadata.dateFormatter == nil)
         {
-            ImageMetadata.dateFormatter = NSDateFormatter()
+            ImageMetadata.dateFormatter = DateFormatter()
             ImageMetadata.dateFormatter!.dateFormat = "yyyy:MM:dd HH:mm:ss"
         }
 
 
-        if let imageSource = CGImageSourceCreateWithURL(url, nil)
+        if let imageSource = CGImageSourceCreateWithURL(url as CFURL, nil)
         {
             if let rawProperties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil)
             {
@@ -37,21 +37,21 @@ public class ImageMetadata
                 // EXIF timestamp (Exif.DateTimeOriginal)
                 if let exifProperties = properties[kCGImagePropertyExifDictionary]
                 {
-                    if let dateTimeDigitized = exifProperties.valueForKey(kCGImagePropertyExifDateTimeDigitized as String)
+                    if let dateTimeOriginal = exifProperties.value(forKey: kCGImagePropertyExifDateTimeOriginal as String)
                     {
-                        timestamp = ImageMetadata.dateFormatter!.dateFromString(dateTimeDigitized as! String)
+                        timestamp = ImageMetadata.dateFormatter!.date(from: dateTimeOriginal as! String)
                     }
-                    else if let dateTimeOriginal = exifProperties.valueForKey(kCGImagePropertyExifDateTimeOriginal as String)
+                    else if let dateTimeDigitized = exifProperties.value(forKey: kCGImagePropertyExifDateTimeDigitized as String)
                     {
-                        timestamp = ImageMetadata.dateFormatter!.dateFromString(dateTimeOriginal as! String)
+                        timestamp = ImageMetadata.dateFormatter!.date(from: dateTimeDigitized as! String)
                     }
                     else
                     {
                         if let tiffProperties = properties[kCGImagePropertyTIFFDictionary]
                         {
-                            if let dateTime = tiffProperties.valueForKey(kCGImagePropertyTIFFDateTime as String)
+                            if let dateTime = tiffProperties.value(forKey: kCGImagePropertyTIFFDateTime as String)
                             {
-                                timestamp = ImageMetadata.dateFormatter!.dateFromString(dateTime as! String)
+                                timestamp = ImageMetadata.dateFormatter!.date(from: dateTime as! String)
                             }
                         }
                     }
@@ -60,7 +60,7 @@ public class ImageMetadata
                 // keywords (IPTC.Keywords)
                 if let iptcProperties = properties[kCGImagePropertyIPTCDictionary]
                 {
-                    if let iptcKeywords = iptcProperties.valueForKey(kCGImagePropertyIPTCKeywords as String)
+                    if let iptcKeywords = iptcProperties.value(forKey: kCGImagePropertyIPTCKeywords as String)
                     {
                         keywords = iptcKeywords as? [String]
                     }
@@ -69,10 +69,10 @@ public class ImageMetadata
                 // location (GPS.Latitude, LatitudeRef, Longitude, LongitudeRef)
                 if let gpsProperties = properties[kCGImagePropertyGPSDictionary]
                 {
-                    if let latitude = gpsProperties.valueForKey(kCGImagePropertyGPSLatitude as String),
-                        latitudeRef = gpsProperties.valueForKey(kCGImagePropertyGPSLatitudeRef as String),
-                        longitude = gpsProperties.valueForKey(kCGImagePropertyGPSLongitude as String),
-                        longitudeRef = gpsProperties.valueForKey(kCGImagePropertyGPSLongitudeRef as String)
+                    if let latitude = gpsProperties.value(forKey: kCGImagePropertyGPSLatitude as String),
+                        let latitudeRef = gpsProperties.value(forKey: kCGImagePropertyGPSLatitudeRef as String),
+                        let longitude = gpsProperties.value(forKey: kCGImagePropertyGPSLongitude as String),
+                        let longitudeRef = gpsProperties.value(forKey: kCGImagePropertyGPSLongitudeRef as String)
                     {
                         location = Location(
                             latitude: latitude as! Double,

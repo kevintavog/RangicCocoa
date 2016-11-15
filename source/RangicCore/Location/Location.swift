@@ -4,12 +4,12 @@
 
 import Foundation
 
-public class Location : Hashable
+open class Location : Hashable
 {
-    public private(set) var latitude: Double
-    public private(set)  var longitude: Double
-    private var placename: Placename?
-    static private let lookupProvider: LookupProvider = MemoryCacheLookupProvider()
+    open fileprivate(set) var latitude: Double
+    open fileprivate(set)  var longitude: Double
+    fileprivate var placename: Placename?
+    static fileprivate let lookupProvider: LookupProvider = MemoryCacheLookupProvider()
 
 
     public init(latitude:Double, longitude:Double)
@@ -36,22 +36,22 @@ public class Location : Hashable
         }
     }
 
-    public var description: String
+    open var description: String
     {
         return toDms()
     }
 
-    public func toDms() -> String
+    open func toDms() -> String
     {
         return Location.toDms(latitude, longitude: longitude)
     }
 
-    public func metersFrom(location: Location) -> Double
+    open func metersFrom(_ location: Location) -> Double
     {
         return Location.metersBetween(self, location2: location)
     }
 
-    static public func metersBetween(location1: Location, location2: Location) -> Double
+    static open func metersBetween(_ location1: Location, location2: Location) -> Double
     {
         let lat1rad = location1.latitude * M_PI/180
         let lon1rad = location1.longitude * M_PI/180
@@ -67,14 +67,14 @@ public class Location : Hashable
         return (R * c) * 1000.0
     }
 
-    static public func toDms(latitude: Double, longitude: Double) -> String
+    static open func toDms(_ latitude: Double, longitude: Double) -> String
     {
         let latitudeNorthOrSouth = latitude < 0 ? "S" : "N"
         let longitudeEastOrWest = longitude < 0 ? "W" : "E"
         return "\(toDms(latitude)) \(latitudeNorthOrSouth), \(toDms(longitude)) \(longitudeEastOrWest)"
     }
 
-    static private func toDms(geo: Double) -> String
+    static fileprivate func toDms(_ geo: Double) -> String
     {
         var g = geo
         if (g < 0.0) {
@@ -89,7 +89,7 @@ public class Location : Hashable
         return String(format: "%.2d° %.2d' %.2f\"", degrees, minutesInt, seconds)
     }
 
-    public func toDecimalDegrees(humanReadable: Bool) -> String
+    open func toDecimalDegrees(_ humanReadable: Bool) -> String
     {
         if humanReadable {
             return NSString(format: "%.6f, %.6f", latitude, longitude) as String
@@ -98,7 +98,7 @@ public class Location : Hashable
         return "\(latitude), \(longitude)"
     }
 
-    public func placenameAsString(filter: PlaceNameFilter = .Detailed) -> String
+    open func placenameAsString(_ filter: PlaceNameFilter = .detailed) -> String
     {
         if !hasPlacename() {
             self.placename = Placename(components: Location.lookupProvider.lookup(latitude, longitude: longitude))
@@ -107,7 +107,7 @@ public class Location : Hashable
         return (placename?.name(filter))!
     }
 
-    public func asPlacename() -> Placename?
+    open func asPlacename() -> Placename?
     {
         if !hasPlacename() {
             self.placename = Placename(components: Location.lookupProvider.lookup(latitude, longitude: longitude))
@@ -115,12 +115,12 @@ public class Location : Hashable
         return placename
     }
 
-    public func hasPlacename() -> Bool
+    open func hasPlacename() -> Bool
     {
         return placename != nil
     }
 
-    public var hashValue: Int { get { return 17 &* latitude.hashValue &* longitude.hashValue } }
+    open var hashValue: Int { get { return 17 &* latitude.hashValue &* longitude.hashValue } }
 }
 
 public func ==(lhs: Location, rhs: Location) -> Bool

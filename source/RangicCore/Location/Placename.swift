@@ -1,39 +1,39 @@
 //
 //
 
-public class Placename
+open class Placename
 {
-    public let components: OrderedDictionary<String,String>
+    open let components: OrderedDictionary<String,String>
 
     public init(components: OrderedDictionary<String,String>)
     {
         self.components = components
     }
 
-    public func name(filter: PlaceNameFilter, countryFirst: Bool = false) -> String
+    open func name(_ filter: PlaceNameFilter, countryFirst: Bool = false) -> String
     {
         var parts = [String]()
 
-        if filter == .Standard {
+        if filter == .standard {
             let siteName = getFirstMatch(Placename.prioritizedSiteComponent)
             let city = getFirstMatch(Placename.prioritizedCityNameComponent)
             if siteName != nil {
-                parts.append(siteName)
+                parts.append(siteName!)
             }
             if city != nil {
-                parts.append(city)
+                parts.append(city!)
             }
         }
 
         for key in components.keys {
             let value = components[key]!
             switch filter {
-            case .None:
+            case .none:
                 if key != "DisplayName" {
                     parts.append(value)
                 }
 
-            case .Minimal:
+            case .minimal:
                 if key != "country_code" {
                     if key == "county" {
                         if !components.keys.contains("city") {
@@ -45,14 +45,14 @@ public class Placename
                     }
                 }
 
-            case .Standard:
+            case .standard:
                 if Placename.acceptedStandardComponents.contains(key) {
                     if !isExcluded(key, value: value) {
                         parts.append(value)
                     }
                 }
 
-            case .Detailed:
+            case .detailed:
                 if Placename.acceptedDetailedComponents.contains(key) {
                     parts.append(value)
                 }
@@ -64,13 +64,13 @@ public class Placename
         }
 
         if countryFirst {
-            parts = parts.reverse()
+            parts = parts.reversed()
         }
 
-        return parts.joinWithSeparator(", ")
+        return parts.joined(separator: ", ")
     }
 
-    private func getFirstMatch(prioritizedList: [String]) -> String!
+    fileprivate func getFirstMatch(_ prioritizedList: [String]) -> String!
     {
         for key in prioritizedList {
             if let value = components[key] {
@@ -80,7 +80,7 @@ public class Placename
         return nil
     }
 
-    private func isExcluded(key: String, value: String) -> Bool
+    fileprivate func isExcluded(_ key: String, value: String) -> Bool
     {
         if let excludedValues = Placename.fieldExclusions[key] {
             return excludedValues.contains(value)
@@ -89,13 +89,13 @@ public class Placename
     }
 
 
-    private static let acceptedStandardComponents: Set<String> =
+    fileprivate static let acceptedStandardComponents: Set<String> =
     [
         "state",
         "country"
     ]
 
-    private static let acceptedDetailedComponents: Set<String> =
+    fileprivate static let acceptedDetailedComponents: Set<String> =
     [
         "state",
         "country",
@@ -174,7 +174,7 @@ public class Placename
     ]
 
     // For 'cityname'
-    private static let prioritizedCityNameComponent: [String] =
+    fileprivate static let prioritizedCityNameComponent: [String] =
     [
         "city",
         "city_district",    // Perhaps shortest of this & city?
@@ -188,7 +188,7 @@ public class Placename
     ]
 
     // For the point of interest / site / building
-    private static let prioritizedSiteComponent: [String] =
+    fileprivate static let prioritizedSiteComponent: [String] =
     [
         "playground",
 
@@ -249,7 +249,7 @@ public class Placename
         "nature_reserve"
     ]
 
-    static private let fieldExclusions: [String: Set<String>] =
+    static fileprivate let fieldExclusions: [String: Set<String>] =
     [
         "country" : [ "United States of America", "United Kingdom" ]
     ]
@@ -258,5 +258,5 @@ public class Placename
 
 public enum PlaceNameFilter
 {
-    case None, Minimal, Standard, Detailed
+    case none, minimal, standard, detailed
 }

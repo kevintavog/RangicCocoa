@@ -1,12 +1,12 @@
 //
 //
 
-public class MemoryCacheLookupProvider: LookupProvider
+open class MemoryCacheLookupProvider: LookupProvider
 {
-    static private var cache = Dictionary<String, OrderedDictionary<String,String>>()
-    static private let innerLookupProvider: LookupProvider = PersistentCacheLookupProvider()
+    static fileprivate var cache = Dictionary<String, OrderedDictionary<String,String>>()
+    static fileprivate let innerLookupProvider: LookupProvider = PersistentCacheLookupProvider()
 
-    public func lookup(latitude: Double, longitude: Double) -> OrderedDictionary<String,String>
+    open func lookup(_ latitude: Double, longitude: Double) -> OrderedDictionary<String,String>
     {
         let key = Location.toDms(latitude, longitude: longitude)
         if let result = MemoryCacheLookupProvider.cache[key] {

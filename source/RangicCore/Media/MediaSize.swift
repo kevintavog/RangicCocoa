@@ -2,10 +2,10 @@
 //  MediaSize.swift
 //
 
-public class MediaSize
+open class MediaSize
 {
-    public private(set) var width: Int
-    public private(set) var height: Int
+    open fileprivate(set) var width: Int
+    open fileprivate(set) var height: Int
 
     public init(width: Int, height: Int)
     {
@@ -13,7 +13,7 @@ public class MediaSize
         self.height = height
     }
 
-    public var description: String
+    open var description: String
     {
         return "\(width) x \(height)"
     }

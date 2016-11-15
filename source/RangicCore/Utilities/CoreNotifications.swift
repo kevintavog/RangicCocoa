@@ -4,32 +4,32 @@
 
 import Foundation
 
-public class CoreNotifications
+open class CoreNotifications
 {
-    public class MediaProvider
+    open class MediaProvider
     {
-        static public let Cleared = "MediaProvider.Cleared"
-        static public let UpdatedNotification = "MediaProvider.UpdatedNotification"
-        static public let DetailsAvailable = "MediaProvider.DetailsAvailable"
+        static open let Cleared = "MediaProvider.Cleared"
+        static open let UpdatedNotification = "MediaProvider.UpdatedNotification"
+        static open let DetailsAvailable = "MediaProvider.DetailsAvailable"
     }
 
-    static public func postNotification(notification: String, object: AnyObject? = nil, userInfo: [NSObject : AnyObject]? = nil)
+    static open func postNotification(_ notification: String, object: AnyObject? = nil, userInfo: [AnyHashable: Any]? = nil)
     {
-        NSNotificationCenter.defaultCenter().postNotificationName(notification, object: object, userInfo: userInfo)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: notification), object: object, userInfo: userInfo)
     }
 
-    static public func addObserver(observer: AnyObject, selector: Selector, name: String, object: AnyObject?)
+    static open func addObserver(_ observer: AnyObject, selector: Selector, name: String, object: AnyObject?)
     {
-        NSNotificationCenter.defaultCenter().addObserver(observer, selector: selector, name: name, object: object)
+        NotificationCenter.default.addObserver(observer, selector: selector, name: NSNotification.Name(rawValue: name), object: object)
     }
 
-    static public func removeObserver(observer: AnyObject, name: String, object: AnyObject?)
+    static open func removeObserver(_ observer: AnyObject, name: String, object: AnyObject?)
     {
-        NSNotificationCenter.defaultCenter().removeObserver(observer, name: name, object: object)
+        NotificationCenter.default.removeObserver(observer, name: NSNotification.Name(rawValue: name), object: object)
     }
 
-    static public func removeObserver(observer: AnyObject, object: AnyObject?)
+    static open func removeObserver(_ observer: AnyObject, object: AnyObject?)
     {
-        NSNotificationCenter.defaultCenter().removeObserver(observer, name: nil, object: object)
+        NotificationCenter.default.removeObserver(observer, name: nil, object: object)
     }
 }

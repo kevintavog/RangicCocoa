@@ -5,25 +5,25 @@
 import Foundation
 import Async
 
-public class MediaData
+open class MediaData
 {
-    public var name: String!
-    public var url: NSURL!
-    public var timestamp: NSDate!
-    public var fileTimestamp: NSDate!
-    public var location: Location!
-    public var type: SupportedMediaTypes.MediaType!
-    public var keywords: [String]!
-    public var mediaSize: MediaSize?
-    public var rotation: Int?
-    public var compatibleBrands: [String]!
+    open var name: String!
+    open var url: URL!
+    open var timestamp: Date!
+    open var fileTimestamp: Date!
+    open var location: Location!
+    open var type: SupportedMediaTypes.MediaType!
+    open var keywords: [String]!
+    open var mediaSize: MediaSize?
+    open var rotation: Int?
+    open var compatibleBrands: [String]!
 
 
-    static private var dateFormatter: NSDateFormatter? = nil
-    private var cachedDetails: [MediaDataDetail]!
+    static fileprivate var dateFormatter: DateFormatter? = nil
+    fileprivate var cachedDetails: [MediaDataDetail]!
 
 
-    public var details: [MediaDataDetail]!
+    open var details: [MediaDataDetail]!
     {
         get {
             if cachedDetails == nil {
@@ -37,17 +37,17 @@ public class MediaData
         }
     }
 
-    public func doesExist() -> Bool
+    open func doesExist() -> Bool
     {
         return true
     }
 
-    public func doFileAndExifTimestampsMatch() -> Bool
+    open func doFileAndExifTimestampsMatch() -> Bool
     {
         return timestamp == fileTimestamp
     }
 
-    public func locationString() -> String
+    open func locationString() -> String
     {
         if let l = location {
             return "\(l.toDms())"
@@ -57,26 +57,26 @@ public class MediaData
         }
     }
 
-    public var nameWithoutExtension: String { return NSString(string: name!).stringByDeletingPathExtension }
+    open var nameWithoutExtension: String { return NSString(string: name!).deletingPathExtension }
 
-    public func keywordsString() -> String
+    open func keywordsString() -> String
     {
         if let k = keywords {
-            return k.joinWithSeparator(", ")
+            return k.joined(separator: ", ")
         }
         else {
             return ""
         }
     }
 
-    public func formattedTime() -> String
+    open func formattedTime() -> String
     {
         if MediaData.dateFormatter == nil {
-            MediaData.dateFormatter = NSDateFormatter()
+            MediaData.dateFormatter = DateFormatter()
             MediaData.dateFormatter!.dateFormat = "yyyy-MM-dd HH:mm:ss"
         }
 
-        return MediaData.dateFormatter!.stringFromDate(timestamp!)
+        return MediaData.dateFormatter!.string(from: timestamp!)
     }
 
     internal func loadDetails() -> [MediaDataDetail]
@@ -96,12 +96,12 @@ public class MediaData
         return details
     }
 
-    public func setFileDateToExifDate() -> (succeeded:Bool, errorMessage:String)
+    open func setFileDateToExifDate() -> (succeeded:Bool, errorMessage:String)
     {
         return (false, "Not implemented")
     }
 
-    public func reload()
+    open func reload()
     {
         cachedDetails = nil
         Logger.error("reload not supported by MediaData derivative")
