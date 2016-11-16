@@ -21,7 +21,10 @@ open class FindAPhotoMediaData : MediaData
     open static func create(_ json:JSON, host: String) -> FindAPhotoMediaData
     {
         let fpMediaData = FindAPhotoMediaData()
-        
+
+        // Hack - assume all media is rotated properly. It speeds up loading due to using NSImage versus CGImage, essentially
+        fpMediaData.rotation = 1
+
         fpMediaData.name = json["imageName"].stringValue
         fpMediaData.url = URL(string: host.appending(json["mediaURL"].stringValue))
         fpMediaData.timestamp = getDateFormatter().date(from: json["createdDate"].stringValue)

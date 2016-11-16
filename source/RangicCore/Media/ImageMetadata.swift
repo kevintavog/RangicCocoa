@@ -10,6 +10,7 @@ open class ImageMetadata
     open var location: Location? = nil
     open var keywords: [String]? = nil
     open var mediaSize: MediaSize? = nil
+    open var orientation: Int = 1
 
 
     public init?(url: URL)
@@ -55,6 +56,10 @@ open class ImageMetadata
                             }
                         }
                     }
+                }
+
+                if let imageOrientation = properties[kCGImagePropertyOrientation] {
+                    orientation = imageOrientation as! Int
                 }
 
                 // keywords (IPTC.Keywords)

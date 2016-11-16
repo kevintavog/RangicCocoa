@@ -37,6 +37,7 @@ open class FileMediaData : MediaData
             keywords = imageMetadata.keywords
             location = imageMetadata.location
             mediaSize = imageMetadata.mediaSize
+            rotation = imageMetadata.orientation
         }
 
         if !hasImageData {
