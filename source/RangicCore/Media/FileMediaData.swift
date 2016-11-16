@@ -3,6 +3,9 @@
 
 open class FileMediaData : MediaData
 {
+    fileprivate let BytesForSignature = 2 * 1024
+
+    
     open static func create(_ url: URL, mediaType: SupportedMediaTypes.MediaType) -> FileMediaData
     {
         let fileMediaData = FileMediaData()
@@ -84,6 +87,38 @@ open class FileMediaData : MediaData
         return (true, "")
     }
 
+    override func getMediaSignature() -> String
+    {
+        do {
+            let attrs: NSDictionary? = try FileManager.default.attributesOfItem(atPath: url.path) as NSDictionary?
+            let length = attrs!.fileSize()
+            if let fileHandle = FileHandle(forReadingAtPath: url.path) {
+                let startOfFile = fileHandle.readData(ofLength: BytesForSignature)
+                fileHandle.seek(toFileOffset: length - UInt64(BytesForSignature))
+                let endOfFile = fileHandle.readData(ofLength: BytesForSignature)
+                
+                let data = NSMutableData(data: startOfFile)
+                data.append(endOfFile)
+                
+                var digest = [UInt8](repeating: 0, count: Int(CC_SHA1_DIGEST_LENGTH))
+                CC_SHA1(data.bytes, CC_LONG(data.length), &digest)
+                
+                let output = NSMutableString(capacity: Int(9 + CC_SHA1_DIGEST_LENGTH))
+                output.appendFormat("%08X-", length)
+                for byte in digest {
+                    output.appendFormat("%02x", byte)
+                }
+                return output as String
+            }
+        } catch let error {
+            Logger.error("Failed getting signature for \(url.path): \(error)")
+            return ""
+        }
+        
+        return ""
+
+    }
+    
     fileprivate override init()
     {
         super.init()

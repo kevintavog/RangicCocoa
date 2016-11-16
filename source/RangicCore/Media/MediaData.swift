@@ -18,10 +18,26 @@ open class MediaData
     open var rotation: Int?
     open var compatibleBrands: [String]!
 
+    open var mediaSignature: String {
+        get {
+            if !signaturePopulated {
+                cachedMediaSignature = getMediaSignature()
+                signaturePopulated = true
+            }
+            return cachedMediaSignature!
+        }
+    }
 
     static fileprivate var dateFormatter: DateFormatter? = nil
     fileprivate var cachedDetails: [MediaDataDetail]!
+    fileprivate var signaturePopulated = false
+    fileprivate var cachedMediaSignature: String?
 
+    open var parentPath: String
+    {
+        let pathComponents = (url!.path as NSString).pathComponents
+        return pathComponents.count >= 2 ? pathComponents[pathComponents.count - 2] : ""
+    }
 
     open var details: [MediaDataDetail]!
     {
@@ -105,5 +121,11 @@ open class MediaData
     {
         cachedDetails = nil
         Logger.error("reload not supported by MediaData derivative")
+    }
+    
+    func getMediaSignature() -> String
+    {
+        Logger.error("Your subclass must implement 'getMediaSignature'")
+        return "Your subclass must implement 'getMediaSignature'"
     }
 }

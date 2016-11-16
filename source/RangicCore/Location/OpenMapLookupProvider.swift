@@ -1,5 +1,4 @@
 //
-//  Radish
 //
 
 import Foundation
@@ -90,7 +89,6 @@ open class OpenMapLookupProvider: LookupProvider
     }
 
     fileprivate func errorToDictionary(_ url: String, response: HTTPURLResponse?, data: Data?, error: Error?) -> OrderedDictionary<String,String>
-//    fileprivate func errorToDictionary(_ url: String, response: HTTPURLResponse?, data: Data?, error: Error?) -> OrderedDictionary<String,String>
     {
         let message = NSString(data:data!, encoding:String.Encoding.utf8.rawValue) as! String
         if error != nil {
@@ -115,7 +113,6 @@ open class OpenMapLookupProvider: LookupProvider
             var result = OrderedDictionary<String,String>()
             result["apiMessage"] = "reverse geocode failed with unknown error"
             return result
-
         }
     }
 
