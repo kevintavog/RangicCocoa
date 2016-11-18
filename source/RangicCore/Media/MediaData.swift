@@ -5,6 +5,18 @@
 import Foundation
 import Async
 
+public enum ImageOrientation : Int
+{
+    case topLeft = 1,
+        topRight = 2,
+        bottomRight = 3,
+        bottomLeft = 4,
+        leftTop = 5,
+        rightTop = 6,
+        rightBottom = 7,
+        leftBottom = 8
+}
+
 open class MediaData
 {
     open var name: String!
