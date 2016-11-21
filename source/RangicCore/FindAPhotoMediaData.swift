@@ -20,19 +20,27 @@ open class FindAPhotoMediaData : MediaData
 
     open static func create(_ json:JSON, host: String) -> FindAPhotoMediaData
     {
+        var normalizedHost = host
+        if normalizedHost.characters.last == "/" {
+            normalizedHost = normalizedHost.substring(to: normalizedHost.index(before: normalizedHost.endIndex))
+        }
+
         let fpMediaData = FindAPhotoMediaData()
 
         // Hack - assume all media is rotated properly. It speeds up loading due to using NSImage versus CGImage, essentially
         fpMediaData.rotation = 1
 
         fpMediaData.name = json["imageName"].stringValue
-        fpMediaData.url = URL(string: host.appending(json["mediaURL"].stringValue))
+        fpMediaData.url = URL(string: normalizedHost.appending(json["mediaURL"].stringValue))
         fpMediaData.timestamp = getDateFormatter().date(from: json["createdDate"].stringValue)
         fpMediaData.fileTimestamp = fpMediaData.timestamp
-        fpMediaData.location = Location(latitude: json["latitude"].doubleValue, longitude: json["longitude"].doubleValue)
         fpMediaData.keywords = json["keywords"].arrayObject as! [String]!
         fpMediaData.path = json["path"].stringValue
         fpMediaData.signature = json["signature"].string
+
+        if json["latitude"].exists() && json["longitude"].exists() {
+            fpMediaData.location = Location(latitude: json["latitude"].doubleValue, longitude: json["longitude"].doubleValue)
+        }
 
         switch json["mediaType"].stringValue {
         case "image":

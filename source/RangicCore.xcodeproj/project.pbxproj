@@ -54,6 +54,8 @@
 		44F4201D1BA778F000ADBB85 /* JheadInvoker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F4201C1BA778F000ADBB85 /* JheadInvoker.swift */; };
 		44F420211BA77A0900ADBB85 /* RangicFsEventStreamWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 44F4201F1BA77A0900ADBB85 /* RangicFsEventStreamWrapper.h */; };
 		44F420221BA77A0900ADBB85 /* RangicFsEventStreamWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 44F420201BA77A0900ADBB85 /* RangicFsEventStreamWrapper.m */; };
+		44F7104E1DE3595100B75B72 /* FileMediaRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F7104D1DE3595100B75B72 /* FileMediaRepository.swift */; };
+		44F710501DE3598C00B75B72 /* FindAPhotoMediaRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F7104F1DE3598C00B75B72 /* FindAPhotoMediaRepository.swift */; };
 		44F8575C1BD05C0F00CC9185 /* DataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F8575A1BD05C0F00CC9185 /* DataReader.swift */; };
 		44F8575D1BD05C0F00CC9185 /* VideoMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F8575B1BD05C0F00CC9185 /* VideoMetadata.swift */; };
 		44F8575F1BD05C1E00CC9185 /* PersistentCacheLookupProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F8575E1BD05C1E00CC9185 /* PersistentCacheLookupProvider.swift */; };
@@ -110,6 +112,8 @@
 		44F4201C1BA778F000ADBB85 /* JheadInvoker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JheadInvoker.swift; path = Process/JheadInvoker.swift; sourceTree = "<group>"; };
 		44F4201F1BA77A0900ADBB85 /* RangicFsEventStreamWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RangicFsEventStreamWrapper.h; path = EventStreams/RangicFsEventStreamWrapper.h; sourceTree = "<group>"; };
 		44F420201BA77A0900ADBB85 /* RangicFsEventStreamWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RangicFsEventStreamWrapper.m; path = EventStreams/RangicFsEventStreamWrapper.m; sourceTree = "<group>"; };
+		44F7104D1DE3595100B75B72 /* FileMediaRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FileMediaRepository.swift; path = Media/FileMediaRepository.swift; sourceTree = "<group>"; };
+		44F7104F1DE3598C00B75B72 /* FindAPhotoMediaRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FindAPhotoMediaRepository.swift; path = Media/FindAPhotoMediaRepository.swift; sourceTree = "<group>"; };
 		44F8575A1BD05C0F00CC9185 /* DataReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataReader.swift; path = Media/DataReader.swift; sourceTree = "<group>"; };
 		44F8575B1BD05C0F00CC9185 /* VideoMetadata.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoMetadata.swift; path = Media/VideoMetadata.swift; sourceTree = "<group>"; };
 		44F8575E1BD05C1E00CC9185 /* PersistentCacheLookupProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PersistentCacheLookupProvider.swift; path = Location/PersistentCacheLookupProvider.swift; sourceTree = "<group>"; };
@@ -213,6 +217,8 @@
 				44F8575A1BD05C0F00CC9185 /* DataReader.swift */,
 				44EBE00E1BA790A500AD679A /* FileExifProvider.swift */,
 				44EBE00F1BA790A500AD679A /* FileMediaData.swift */,
+				44F7104D1DE3595100B75B72 /* FileMediaRepository.swift */,
+				44F7104F1DE3598C00B75B72 /* FindAPhotoMediaRepository.swift */,
 				445915731BD056AE001DC93A /* ImageMetadata.swift */,
 				44EBE0101BA790A500AD679A /* MediaData.swift */,
 				44EBE0111BA790A500AD679A /* MediaDataDetail.swift */,
@@ -414,9 +420,11 @@
 				44A8506F1BD029DC0051CECA /* StringExtensions.swift in Sources */,
 				44734C4D1BA7839100C6675C /* Location.swift in Sources */,
 				44EBE0151BA790A500AD679A /* FileMediaData.swift in Sources */,
+				44F7104E1DE3595100B75B72 /* FileMediaRepository.swift in Sources */,
 				44936FD51DDB7BDF0011DAE1 /* FindAPhotoResults.swift in Sources */,
 				44F8575D1BD05C0F00CC9185 /* VideoMetadata.swift in Sources */,
 				44D749DA1BAC810B00DE90B1 /* FMDatabasePool.m in Sources */,
+				44F710501DE3598C00B75B72 /* FindAPhotoMediaRepository.swift in Sources */,
 				44EBE00D1BA7904D00AD679A /* CoreNotifications.swift in Sources */,
 				44EBE0161BA790A500AD679A /* MediaData.swift in Sources */,
 				44F4200C1BA7195700ADBB85 /* Logger.swift in Sources */,

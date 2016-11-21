@@ -20,6 +20,7 @@ open class FindAPhotoResults
     private var searchText: String
     private var properties: String
     private var first:Int
+    private var count:Int
 
 
     
@@ -29,13 +30,22 @@ open class FindAPhotoResults
         results.search(first: first, count: count, properties: FindAPhotoResults.DefaultMediaDataProperties, completion: completion)
     }
 
+    // Don't make a call to the server - return the item if it's present locally
+    open func getLocalItem(_ index: Int) -> MediaData?
+    {
+        if index >= first && index < first + items.count {
+            return items[index - first]
+        }
+        return nil
+    }
+
     open func itemAtIndex(index: Int, completion: @escaping(_ mediaData: MediaData?) -> ())
     {
-        if index >= first && index <= first + items.count {
-            completion(items[index - first])
+        if let mediaData = getLocalItem(index) {
+            completion(mediaData)
         } else {
             // The index isn't in our items, do another search
-            self.search(first: index, count: 1, properties: self.properties, completion: { (result: FindAPhotoResults) -> () in
+            self.search(first: index, count: self.count, properties: self.properties, completion: { (result: FindAPhotoResults) -> () in
                 if self.hasError {
                     completion(nil)
                 } else {
@@ -50,6 +60,7 @@ open class FindAPhotoResults
         self.host = host
         self.searchText = searchText
         self.first = -1
+        self.count = 0
         self.properties = FindAPhotoResults.DefaultMediaDataProperties
     }
 
@@ -58,8 +69,11 @@ open class FindAPhotoResults
         Logger.debug("FindAPhoto search: \(host) - '\(searchText)', first: \(first), count: \(count)")
         self.properties = properties
 
+        if host.characters.last != "/" {
+            host.append("/")
+        }
 
-        let url = "\(host)/api/search"
+        let url = "\(host)api/search"
         let parameters = [
             "q": "\(searchText)",
             "first": "\(first)",
@@ -75,6 +89,7 @@ open class FindAPhotoResults
                 }
                 else {
                     self.first = first
+                    self.count = count
                     self.handleData(response.data)
                 }
 
