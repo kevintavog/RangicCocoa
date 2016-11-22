@@ -40,6 +40,9 @@ open class MediaData
         }
     }
 
+    open var thumbUrl: URL { get { return url! } }
+
+
     static fileprivate var dateFormatter: DateFormatter? = nil
     fileprivate var cachedDetails: [MediaDataDetail]!
     fileprivate var signaturePopulated = false
@@ -57,7 +60,7 @@ open class MediaData
             if cachedDetails == nil {
                 Async.background {
                     self.cachedDetails = self.loadDetails()
-                    CoreNotifications.postNotification(CoreNotifications.MediaProvider.DetailsAvailable, object: self, userInfo: nil)
+                    CoreNotifications.postNotification(MediaProvider.Notifications.DetailsAvailable, object: self, userInfo: nil)
                 }
                 return [MediaDataDetail]()
             }

@@ -7,6 +7,7 @@ open class FindAPhotoMediaData : MediaData
 {
     fileprivate var signature:String?
     fileprivate var path:String?
+    fileprivate var mediaThumbUrl:URL?
     
     static var dateFormatter: DateFormatter? = nil
     static func getDateFormatter() -> DateFormatter
@@ -37,6 +38,7 @@ open class FindAPhotoMediaData : MediaData
         fpMediaData.keywords = json["keywords"].arrayObject as! [String]!
         fpMediaData.path = json["path"].stringValue
         fpMediaData.signature = json["signature"].string
+        fpMediaData.mediaThumbUrl = URL(string: normalizedHost.appending(json["thumbURL"].stringValue))
 
         if json["latitude"].exists() && json["longitude"].exists() {
             fpMediaData.location = Location(latitude: json["latitude"].doubleValue, longitude: json["longitude"].doubleValue)
@@ -70,6 +72,8 @@ open class FindAPhotoMediaData : MediaData
     {
         return signature!
     }
+
+    override open var thumbUrl: URL { get { return mediaThumbUrl! } }
 
     fileprivate override init()
     {

@@ -20,6 +20,13 @@ public protocol MediaRepository
 
 open class MediaProvider
 {
+    open class Notifications
+    {
+        static open let Cleared = "MediaProvider.Cleared"
+        static open let UpdatedNotification = "MediaProvider.UpdatedNotification"
+        static open let DetailsAvailable = "MediaProvider.DetailsAvailable"
+    }
+
     fileprivate var repository: MediaRepository = FileMediaRepository()
 
     public init()
@@ -52,14 +59,14 @@ open class MediaProvider
     open func setFileDatesToExifDates(_ files: [MediaData]) -> (allSucceeded:Bool, failedFiles:[MediaData], errorMessage: String)
     {
         var response = repository.setFileDatesToExifDates(files)
-        CoreNotifications.postNotification(CoreNotifications.MediaProvider.UpdatedNotification, object: self)
+        CoreNotifications.postNotification(MediaProvider.Notifications.UpdatedNotification, object: self)
         return response
     }
 
     open func clear()
     {
         repository.clear()
-        CoreNotifications.postNotification(CoreNotifications.MediaProvider.Cleared, object: self)
+        CoreNotifications.postNotification(MediaProvider.Notifications.Cleared, object: self)
     }
 
     open func addFolder(_ folderName:String)
@@ -71,7 +78,7 @@ open class MediaProvider
     open func refresh()
     {
         repository.refresh()
-        CoreNotifications.postNotification(CoreNotifications.MediaProvider.UpdatedNotification, object: self)
+        CoreNotifications.postNotification(MediaProvider.Notifications.UpdatedNotification, object: self)
     }
 
     open func getFileIndex(_ url: URL) -> Int?

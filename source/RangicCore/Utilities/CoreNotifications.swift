@@ -1,18 +1,10 @@
 //
-//  RangicCore
 //
 
 import Foundation
 
 open class CoreNotifications
 {
-    open class MediaProvider
-    {
-        static open let Cleared = "MediaProvider.Cleared"
-        static open let UpdatedNotification = "MediaProvider.UpdatedNotification"
-        static open let DetailsAvailable = "MediaProvider.DetailsAvailable"
-    }
-
     static open func postNotification(_ notification: String, object: AnyObject? = nil, userInfo: [AnyHashable: Any]? = nil)
     {
         NotificationCenter.default.post(name: Notification.Name(rawValue: notification), object: object, userInfo: userInfo)

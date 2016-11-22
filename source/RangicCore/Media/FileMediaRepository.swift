@@ -1,35 +1,38 @@
 //
 //
 
-class FileMediaRepository : MediaRepository
+open class FileMediaRepository : MediaRepository
 {
-    open var mediaFiles:[MediaData] = []
+    fileprivate var mediaFiles:[MediaData] = []
     
     var folders:[String] = []
     var folderWatcher:[RangicFsEventStreamWrapper] = []
 
+    public init() {
+    }
+    
 
-    var mediaCount: Int { get { return mediaFiles.count } }
+    open var mediaCount: Int { get { return mediaFiles.count } }
 
-    func enumerated() -> EnumeratedSequence<Array<MediaData>> {
+    open func enumerated() -> EnumeratedSequence<Array<MediaData>> {
         return mediaFiles.enumerated()
     }
 
-    func itemAtIndex(index: Int, completion: @escaping(_ mediaData: MediaData?) -> ()) {
+    open func itemAtIndex(index: Int, completion: @escaping(_ mediaData: MediaData?) -> ()) {
         completion(getMedia(index))
     }
 
-    func getMedia(_ index: Int) -> MediaData? {
+    open func getMedia(_ index: Int) -> MediaData? {
         return mediaFiles[index]
     }
 
-    func clear() {
+    open func clear() {
         folders = []
         mediaFiles = []
         folderWatcher = []
     }
 
-    func refresh() {
+    open func refresh() {
         let allFolders = folders
         clear()
         
@@ -38,7 +41,7 @@ class FileMediaRepository : MediaRepository
         }
     }
     
-    func addFolder(_ folderName:String, notifyOnLoad:Bool)
+    open func addFolder(_ folderName:String, notifyOnLoad:Bool)
     {
         if (folders.contains(folderName)) {
             return
@@ -59,7 +62,7 @@ class FileMediaRepository : MediaRepository
             mediaFiles.sort( by: { (m1:MediaData, m2:MediaData) -> Bool in
                 return m1.timestamp!.compare(m2.timestamp! as Date) == ComparisonResult.orderedAscending })
             
-            CoreNotifications.postNotification(CoreNotifications.MediaProvider.UpdatedNotification, object: self)
+            sendNotification(MediaProvider.Notifications.UpdatedNotification)
             
             folderWatcher.append(RangicFsEventStreamWrapper(path: folderName, callback: { (numEvents, typeArray, pathArray) -> () in
                 var eventTypes = [RangicFsEventType]()
@@ -71,7 +74,7 @@ class FileMediaRepository : MediaRepository
         }
     }
 
-    func setFileDatesToExifDates(_ files: [MediaData]) -> (allSucceeded:Bool, failedFiles:[MediaData], errorMessage: String)
+    open func setFileDatesToExifDates(_ files: [MediaData]) -> (allSucceeded:Bool, failedFiles:[MediaData], errorMessage: String)
     {
         var response = (allSucceeded: true, failedFiles: [MediaData](), errorMessage: "")
 
@@ -91,7 +94,7 @@ class FileMediaRepository : MediaRepository
         return response
     }
 
-    func getFileIndex(_ url: URL) -> Int?
+    open func getFileIndex(_ url: URL) -> Int?
     {
         for (index, mediaData) in mediaFiles.enumerated() {
             if mediaData.url == url {
@@ -102,7 +105,7 @@ class FileMediaRepository : MediaRepository
         return nil
     }
     
-    func itemFromFilePath(_ filePath: String) -> MediaData?
+    open func itemFromFilePath(_ filePath: String) -> MediaData?
     {
         for mediaData in mediaFiles {
             let urlPath = mediaData.url.path
@@ -114,13 +117,18 @@ class FileMediaRepository : MediaRepository
     }
 
     //---------------------------
+    func sendNotification(_ notification: String)
+    {
+        CoreNotifications.postNotification(notification, object: nil)
+    }
+
     fileprivate func processFileSystemEvents(_ numEvents: Int, eventTypes: [RangicFsEventType], pathArray: [String])
     {
         for index in 0..<numEvents {
             processOneFileSystemEvent(eventTypes[index], path: pathArray[index])
         }
         
-        CoreNotifications.postNotification(CoreNotifications.MediaProvider.UpdatedNotification, object: self)
+        sendNotification(MediaProvider.Notifications.UpdatedNotification)
     }
     
     fileprivate func processOneFileSystemEvent(_ eventType: RangicFsEventType, path: String)

@@ -24,7 +24,7 @@ open class FindAPhotoMediaRepository : MediaRepository
                     self.totalMatches = result.totalMatches!
                 }
 
-                CoreNotifications.postNotification(CoreNotifications.MediaProvider.UpdatedNotification, object: self)
+                self.sendNotification(MediaProvider.Notifications.UpdatedNotification)
         })
     }
 
@@ -73,5 +73,11 @@ open class FindAPhotoMediaRepository : MediaRepository
     {
         Logger.warn("FindAPhotoMediaRepository.itemFromFilePath not implemented")
         return nil
+    }
+
+    //---------------------------
+    func sendNotification(_ notification: String)
+    {
+        CoreNotifications.postNotification(notification, object: self)
     }
 }
