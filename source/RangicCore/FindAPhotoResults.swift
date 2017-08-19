@@ -26,7 +26,7 @@ open class FindAPhotoResults
     
     open static func search(_ host: String, text: String, first: Int, count: Int, completion: @escaping (_ results: FindAPhotoResults) -> ())
     {
-        var results = FindAPhotoResults(host: host, searchText: text)
+        let results = FindAPhotoResults(host: host, searchText: text)
         results.search(first: first, count: count, properties: FindAPhotoResults.DefaultMediaDataProperties, completion: completion)
     }
 
@@ -100,18 +100,16 @@ open class FindAPhotoResults
     func handleError(_ url: String, response: HTTPURLResponse?, data: Data?, error: Error?)
     {
         hasError = true
-        let message = NSString(data:data!, encoding:String.Encoding.utf8.rawValue) as! String
+        let message = NSString(data:data!, encoding:String.Encoding.utf8.rawValue)! as String
         if error != nil {
-            errorMessage = "\(error!._code) - \(error!._domain); \(error!.localizedDescription)"
+            errorMessage = "\(url): \(error!._code) - \(error!._domain); \(error!.localizedDescription)"
         }
         else if response != nil {
-            errorMessage = "\(response!.statusCode), '\(message)'"
+            errorMessage = "\(url): \(response!.statusCode), '\(message)'"
         }
         else {
-            errorMessage = "Unknown error: \(message)"
+            errorMessage = "\(url): Unknown error: \(message)"
         }
-
-        Logger.error("FindAPhoto request failed: \(errorMessage!)")
     }
 
     func handleData(_ data: Data?)
