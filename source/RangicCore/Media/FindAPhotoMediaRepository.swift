@@ -19,7 +19,7 @@ open class FindAPhotoMediaRepository : MediaRepository
             completion: { (result: FindAPhotoResults) -> () in
                 self.results = result
                 if result.hasError {
-                    Logger.warn("Search returned an error: \(result.errorMessage)")
+                    Logger.warn("Search returned an error: \(String(describing: result.errorMessage))")
                 } else {
                     self.totalMatches = result.totalMatches!
                 }

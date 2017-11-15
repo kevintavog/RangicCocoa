@@ -43,7 +43,7 @@ open class PersistentCacheLookupProvider: LookupProvider
                     }
                 }
                 else {
-                    Logger.error("Error querying for '\(key)': \(db?.lastErrorMessage())")
+                    Logger.error("Error querying for '\(key)': \(String(describing: db?.lastErrorMessage()))")
                 }
             }
         }
@@ -62,7 +62,7 @@ open class PersistentCacheLookupProvider: LookupProvider
                 if (!(db?.executeUpdate(
                     "INSERT OR REPLACE INTO LocationCache (geoLocation, fullPlacename) VALUES(:key, :json)",
                     withParameterDictionary: arguments))!) {
-                    Logger.error("Error storing '\(key)': \(db?.lastErrorMessage())' (\(json))")
+                    Logger.error("Error storing '\(key)': \(String(describing: db?.lastErrorMessage()))' (\(json))")
                 }
             }
         }
@@ -117,7 +117,7 @@ open class PersistentCacheLookupProvider: LookupProvider
                 if !(db?.executeUpdate(
                         "CREATE TABLE IF NOT EXISTS LocationCache (geoLocation TEXT PRIMARY KEY, fullPlacename TEXT)",
                         withArgumentsIn:nil))! {
-                    Logger.error("Failed creating cache tables: \(db?.lastErrorMessage()!)")
+                    Logger.error("Failed creating cache tables: \(String(describing: db?.lastErrorMessage()!))")
                 }
             } else {
                 successful = true

@@ -58,7 +58,7 @@ open class MediaProvider
 
     open func setFileDatesToExifDates(_ files: [MediaData]) -> (allSucceeded:Bool, failedFiles:[MediaData], errorMessage: String)
     {
-        var response = repository.setFileDatesToExifDates(files)
+        let response = repository.setFileDatesToExifDates(files)
         CoreNotifications.postNotification(MediaProvider.Notifications.UpdatedNotification, object: self)
         return response
     }

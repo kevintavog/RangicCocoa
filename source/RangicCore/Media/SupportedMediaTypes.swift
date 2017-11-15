@@ -30,7 +30,7 @@ open class SupportedMediaTypes
 
     static open func getTypeFromFileExtension(_ fileExtension: String) -> MediaType
     {
-        if fileExtension.characters.count > 0 {
+        if fileExtension.count > 0 {
             let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension as CFString, nil)!.takeRetainedValue()
 
             if images().contains(uti as String) {
@@ -85,8 +85,8 @@ open class SupportedMediaTypes
     static open func videos() -> [String]
     {
         if (videoTypes == nil) {
-            videoTypes = [AVFileTypeAIFC, AVFileTypeAIFF, AVFileTypeCoreAudioFormat, AVFileTypeAppleM4V, AVFileTypeMPEG4,
-                AVFileTypeAppleM4A, AVFileTypeQuickTimeMovie, AVFileTypeWAVE, AVFileTypeAMR, AVFileTypeAC3, AVFileTypeMPEGLayer3, AVFileTypeSunAU]
+            videoTypes = [AVFileType.aifc.rawValue, AVFileType.aiff.rawValue, AVFileType.caf.rawValue, AVFileType.m4v.rawValue, AVFileType.mp4.rawValue,
+                AVFileType.m4a.rawValue, AVFileType.mov.rawValue, AVFileType.wav.rawValue, AVFileType.amr.rawValue, AVFileType.ac3.rawValue, AVFileType.mp3.rawValue, AVFileType.au.rawValue]
         }
         return videoTypes!
     }

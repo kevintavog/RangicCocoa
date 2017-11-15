@@ -16,7 +16,7 @@ open class Logger
         fileLogger?.rollingFrequency = TimeInterval(24 * 60 * 60)
         fileLogger?.logFileManager.maximumNumberOfLogFiles = 10
         fileLogger?.maximumFileSize = UInt64(20 * 1024 * 1024)
-        DDLog.add(fileLogger)
+        DDLog.add(fileLogger!)
     }
 
     static open func error(_ message:String)
@@ -64,7 +64,7 @@ open class RangicLogFormatter : NSObject, DDLogFormatter
         return _cachedAppName!
     }
 
-    @objc open func format(message logMessage: DDLogMessage) -> String
+    @objc open func format(message logMessage: DDLogMessage) -> String?
     {
         var level = "<none>"
         if logMessage.flag.contains(.error) {
@@ -86,6 +86,6 @@ open class RangicLogFormatter : NSObject, DDLogFormatter
 
         let timestamp = NSString(format: "%04d-%02d-%02d %02d:%02d:%02d.%03d", components.year!, components.month!, components.day!, components.hour!, components.minute!, components.second!, msecs)
 
-        return "\(timestamp) [\(RangicLogFormatter.appName):\(logMessage.threadID!)] [\(level)] \(logMessage.message!)"
+        return "\(timestamp) [\(RangicLogFormatter.appName):\(logMessage.threadID)] [\(level)] \(logMessage.message)"
     }
 }

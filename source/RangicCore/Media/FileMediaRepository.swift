@@ -85,7 +85,7 @@ open class FileMediaRepository : MediaRepository
                 response.allSucceeded = false
                 response.failedFiles.append(mf)
                 
-                if response.errorMessage.characters.count < 1 {
+                if response.errorMessage.count < 1 {
                     response.errorMessage = result.errorMessage
                 }
             }

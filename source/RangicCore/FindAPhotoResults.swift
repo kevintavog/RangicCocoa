@@ -69,7 +69,7 @@ open class FindAPhotoResults
         Logger.debug("FindAPhoto search: \(host) - '\(searchText)', first: \(first), count: \(count)")
         self.properties = properties
 
-        if host.characters.last != "/" {
+        if host.last != "/" {
             host.append("/")
         }
 
@@ -114,15 +114,19 @@ open class FindAPhotoResults
 
     func handleData(_ data: Data?)
     {
-        let json = JSON(data:NSData(data: data!) as Data)
-        totalMatches = json["totalMatches"].int
-        items = [FindAPhotoMediaData]()
-
-        // If there are any matches, then there are one or more groups, each with one or more items
-        for group in json["groups"].arrayValue {
-            for item in group["items"].arrayValue {
-                items.append(FindAPhotoMediaData.create(item, host: host))
+        do {
+            let json = try JSON(data:NSData(data: data!) as Data)
+            totalMatches = json["totalMatches"].int
+            items = [FindAPhotoMediaData]()
+            
+            // If there are any matches, then there are one or more groups, each with one or more items
+            for group in json["groups"].arrayValue {
+                for item in group["items"].arrayValue {
+                    items.append(FindAPhotoMediaData.create(item, host: host))
+                }
             }
+        } catch {
+            // Eat the exception...
         }
     }
 }

@@ -23,26 +23,28 @@ open class OpenMapLookupProvider: LookupProvider
     /// the items are address details, ordered from most detailed to least detailed
     open func lookup(_ latitude: Double, longitude: Double) -> OrderedDictionary<String,String>
     {
-        let mutex = Mutex()
-
-        Logger.debug("OpenMap lookup: \(latitude), \(longitude)")
-        var result: OrderedDictionary<String,String>? = nil
-
-        if OpenMapLookupProvider.useFake {
-            fakeLookup(latitude, longitude: longitude, completion: { (placename: OrderedDictionary<String,String>) -> () in
-                result = placename
-                mutex.signal()
-            })
-        }
-        else {
-            asyncLookup(latitude, longitude: longitude, completion: { (placename: OrderedDictionary<String,String>) -> () in
-                result = placename
-                mutex.signal()
-            })
-        }
-
-        mutex.wait()
-        return result!
+//        let mutex = Mutex()
+//
+//        Logger.debug("OpenMap lookup: \(latitude), \(longitude)")
+//        var result: OrderedDictionary<String,String>? = nil
+//
+//        if OpenMapLookupProvider.useFake {
+//            fakeLookup(latitude, longitude: longitude, completion: { (placename: OrderedDictionary<String,String>) -> () in
+//                result = placename
+//                mutex.signal()
+//            })
+//        }
+//        else {
+//            asyncLookup(latitude, longitude: longitude, completion: { (placename: OrderedDictionary<String,String>) -> () in
+//                result = placename
+//                mutex.signal()
+//            })
+//        }
+//
+//        mutex.wait()
+//
+//        return result!
+        return OrderedDictionary<String,String>()
     }
 
     fileprivate func fakeLookup(_ latitude: Double, longitude: Double, completion: (_ placename: OrderedDictionary<String,String>) -> ())
@@ -52,7 +54,7 @@ open class OpenMapLookupProvider: LookupProvider
 
     fileprivate func asyncLookup(_ latitude: Double, longitude: Double, completion: @escaping (_ placename: OrderedDictionary<String,String>) -> ())
     {
-        if OpenMapLookupProvider.BaseLocationLookup.characters.count == 0 {
+        if OpenMapLookupProvider.BaseLocationLookup.count == 0 {
             OpenMapLookupProvider.BaseLocationLookup = OpenMapLookupProvider.DefaultLocationLookup
         }
 
@@ -90,7 +92,7 @@ open class OpenMapLookupProvider: LookupProvider
 
     fileprivate func errorToDictionary(_ url: String, response: HTTPURLResponse?, data: Data?, error: Error?) -> OrderedDictionary<String,String>
     {
-        let message = NSString(data:data!, encoding:String.Encoding.utf8.rawValue) as! String
+        let message = NSString(data:data!, encoding:String.Encoding.utf8.rawValue)! as String
         if error != nil {
             Logger.error("reverse geocode to (\(url)) failed with error: \(error!._code) - \(error!._domain)")
 
@@ -143,45 +145,49 @@ open class OpenMapLookupProvider: LookupProvider
     {
         var result = OrderedDictionary<String,String>()
 
-        let json = JSON(data:NSData(data: data!) as Data)
-        if let geoError = json["error"].string {
-            Logger.error("reverse geocode failed with message: '\(geoError)'")
-            result["geoError"] = geoError
-        }
-        else {
-            let displayName = json["display_name"].string
-            if displayName != nil {
-                result["DisplayName"] = displayName
+        do {
+            let json = try JSON(data:NSData(data: data!) as Data)
+            if let geoError = json["error"].string {
+                Logger.error("reverse geocode failed with message: '\(geoError)'")
+                result["geoError"] = geoError
             }
-
-            // Placenames are best & most easily represented when the address is ordered from most detailed to least detailed
-            // We cheat by using the display name values to match the address components properly
-            if let address = json["address"].dictionary {
-
+            else {
+                let displayName = json["display_name"].string
                 if displayName != nil {
-
-                    for detailValue in (displayName?.components(separatedBy: ","))! {
-                        let trimmedValue = detailValue.trimmingCharacters(in: CharacterSet.whitespaces)
-                        var matched = false
-                        for (key, value) in address {
-                            if value.stringValue == trimmedValue {
-                                result[key] = value.stringValue
-                                matched = true
-                                break
-                            }
-                        }
-
-//                        if !matched {
-//                            Logger.verbose("Failed matching detail value: '\(trimmedValue)' (\(address))")
-//                        }
-                    }
+                    result["DisplayName"] = displayName
                 }
-                else {
-                    for (key, value) in address {
-                        result[key] = value.stringValue
+
+                // Placenames are best & most easily represented when the address is ordered from most detailed to least detailed
+                // We cheat by using the display name values to match the address components properly
+                if let address = json["address"].dictionary {
+
+                    if displayName != nil {
+
+                        for detailValue in (displayName?.components(separatedBy: ","))! {
+                            let trimmedValue = detailValue.trimmingCharacters(in: CharacterSet.whitespaces)
+    //                        var matched = false
+                            for (key, value) in address {
+                                if value.stringValue == trimmedValue {
+                                    result[key] = value.stringValue
+    //                                matched = true
+                                    break
+                                }
+                            }
+
+    //                        if !matched {
+    //                            Logger.verbose("Failed matching detail value: '\(trimmedValue)' (\(address))")
+    //                        }
+                        }
+                    }
+                    else {
+                        for (key, value) in address {
+                            result[key] = value.stringValue
+                        }
                     }
                 }
             }
+        } catch {
+            // Eat the exception...
         }
 
         return result

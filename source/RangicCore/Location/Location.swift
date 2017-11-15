@@ -53,10 +53,10 @@ open class Location : Hashable
 
     static open func metersBetween(_ location1: Location, location2: Location) -> Double
     {
-        let lat1rad = location1.latitude * M_PI/180
-        let lon1rad = location1.longitude * M_PI/180
-        let lat2rad = location2.latitude * M_PI/180
-        let lon2rad = location2.longitude * M_PI/180
+        let lat1rad = location1.latitude * Double.pi/180
+        let lon1rad = location1.longitude * Double.pi/180
+        let lat2rad = location2.latitude * Double.pi/180
+        let lon2rad = location2.longitude * Double.pi/180
 
         let dLat = lat2rad - lat1rad
         let dLon = lon2rad - lon1rad

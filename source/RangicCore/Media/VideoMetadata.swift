@@ -93,7 +93,7 @@ open class VideoMetadata
             if let moovLocation = moovData["com.apple.quicktime.location.ISO6709"] {
                 do {
                     let regex = try NSRegularExpression(pattern: "([\\+-]\\d+\\.\\d+)", options: .caseInsensitive)
-                    let matches = regex.matches(in: moovLocation, options: .withoutAnchoringBounds, range: NSMakeRange(0, moovLocation.characters.count))
+                    let matches = regex.matches(in: moovLocation, options: .withoutAnchoringBounds, range: NSMakeRange(0, moovLocation.count))
                     if matches.count >= 2 {
                         if let latitude = Double(moovLocation.substringWithRange(matches[0].range)) {
                             if let longitude = Double(moovLocation.substringWithRange(matches[1].range)) {
@@ -216,7 +216,7 @@ open class VideoMetadata
                 for _ in 1...keyCount {
                     let fullKeyName = keyReader.readLengthAndString()
                     // Skip "mdta'
-                    let keyName = fullKeyName.substring(from: fullKeyName.characters.index(fullKeyName.startIndex, offsetBy: 4))
+                    let keyName = fullKeyName.substring(from: fullKeyName.index(fullKeyName.startIndex, offsetBy: 4))
                     keys.append(keyName)
                 }
 
@@ -270,7 +270,7 @@ open class VideoMetadata
                 tkhdReader.offset = 40
                 let widthScale = asFloat32(tkhdReader.readUInt32())
                 let widthRotation = asFloat32(tkhdReader.readUInt32())
-                var floatRotation = atan2(widthRotation, widthScale) * 180.0 / Float(M_PI)
+                var floatRotation = atan2(widthRotation, widthScale) * 180.0 / Float(Double.pi)
                 if floatRotation < 0 {
                     floatRotation += 360
                 }
@@ -316,7 +316,7 @@ open class VideoMetadata
     {
         var data = [String:String]()
         do {
-            let xmlDoc = try XMLDocument(xmlString: xmlString, options: 0)
+            let xmlDoc = try XMLDocument(xmlString: xmlString, options: XMLNode.Options(rawValue: 0))
 
             // Add namespaces to get xpath to work
             xmlDoc.rootElement()?.addNamespace(XMLNode.namespace(withName: "exif", stringValue: "http://ns.adobe.com/exif/1.0/") as! XMLNode)
@@ -468,13 +468,13 @@ open class VideoMetadata
     fileprivate func parseUuidLatLong(_ geo: String) -> [String]
     {
         var pieces = [String]()
-        let commaIndex = geo.characters.index(of: ",")
+        let commaIndex = geo.index(of: ",")
         pieces.append(geo.substring(to: commaIndex!))
         
-        let start = geo.characters.index(commaIndex!, offsetBy: 1)
-        let end = geo.characters.index(before: geo.endIndex)
+        let start = geo.index(commaIndex!, offsetBy: 1)
+        let end = geo.index(before: geo.endIndex)
         pieces.append(geo.substring(with: start..<end ))
-        pieces.append(geo.substring(from: geo.characters.index(before: geo.endIndex)))
+        pieces.append(geo.substring(from: geo.index(before: geo.endIndex)))
         return pieces
     }
 

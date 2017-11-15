@@ -22,7 +22,7 @@ open class FindAPhotoMediaData : MediaData
     open static func create(_ json:JSON, host: String) -> FindAPhotoMediaData
     {
         var normalizedHost = host
-        if normalizedHost.characters.last == "/" {
+        if normalizedHost.last == "/" {
             normalizedHost = normalizedHost.substring(to: normalizedHost.index(before: normalizedHost.endIndex))
         }
 
