@@ -16,7 +16,7 @@
 		44734C4D1BA7839100C6675C /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44734C481BA7839100C6675C /* Location.swift */; };
 		44734C4E1BA7839100C6675C /* LookupProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44734C491BA7839100C6675C /* LookupProvider.swift */; };
 		44734C4F1BA7839100C6675C /* Placename.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44734C4A1BA7839100C6675C /* Placename.swift */; };
-		44734C501BA7839100C6675C /* OpenMapLookupProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44734C4B1BA7839100C6675C /* OpenMapLookupProvider.swift */; };
+		4475F6DA1FBBFC3E003C2D89 /* ReverseNameLookupProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4475F6D91FBBFC3E003C2D89 /* ReverseNameLookupProvider.swift */; };
 		4475F76F1BA7916F00087AEE /* Async.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4475F76E1BA7916F00087AEE /* Async.framework */; };
 		447CA6771BD5CD4500CA174C /* CocoaLumberjackSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 447CA6761BD5CD4500CA174C /* CocoaLumberjackSwift.framework */; };
 		447CA67B1BD5CF4B00CA174C /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 447CA67A1BD5CF4B00CA174C /* CocoaLumberjack.framework */; };
@@ -58,7 +58,6 @@
 		44F710501DE3598C00B75B72 /* FindAPhotoMediaRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F7104F1DE3598C00B75B72 /* FindAPhotoMediaRepository.swift */; };
 		44F8575C1BD05C0F00CC9185 /* DataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F8575A1BD05C0F00CC9185 /* DataReader.swift */; };
 		44F8575D1BD05C0F00CC9185 /* VideoMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F8575B1BD05C0F00CC9185 /* VideoMetadata.swift */; };
-		44F8575F1BD05C1E00CC9185 /* PersistentCacheLookupProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F8575E1BD05C1E00CC9185 /* PersistentCacheLookupProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,7 +71,7 @@
 		44734C481BA7839100C6675C /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Location.swift; path = Location/Location.swift; sourceTree = "<group>"; };
 		44734C491BA7839100C6675C /* LookupProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LookupProvider.swift; path = Location/LookupProvider.swift; sourceTree = "<group>"; };
 		44734C4A1BA7839100C6675C /* Placename.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Placename.swift; path = Location/Placename.swift; sourceTree = "<group>"; };
-		44734C4B1BA7839100C6675C /* OpenMapLookupProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OpenMapLookupProvider.swift; path = Location/OpenMapLookupProvider.swift; sourceTree = "<group>"; };
+		4475F6D91FBBFC3E003C2D89 /* ReverseNameLookupProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReverseNameLookupProvider.swift; path = Location/ReverseNameLookupProvider.swift; sourceTree = "<group>"; };
 		4475F76E1BA7916F00087AEE /* Async.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Async.framework; path = Carthage/Build/Mac/Async.framework; sourceTree = "<group>"; };
 		447CA6761BD5CD4500CA174C /* CocoaLumberjackSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjackSwift.framework; path = Carthage/Build/Mac/CocoaLumberjackSwift.framework; sourceTree = "<group>"; };
 		447CA67A1BD5CF4B00CA174C /* CocoaLumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjack.framework; path = Carthage/Build/Mac/CocoaLumberjack.framework; sourceTree = "<group>"; };
@@ -116,7 +115,6 @@
 		44F7104F1DE3598C00B75B72 /* FindAPhotoMediaRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FindAPhotoMediaRepository.swift; path = Media/FindAPhotoMediaRepository.swift; sourceTree = "<group>"; };
 		44F8575A1BD05C0F00CC9185 /* DataReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DataReader.swift; path = Media/DataReader.swift; sourceTree = "<group>"; };
 		44F8575B1BD05C0F00CC9185 /* VideoMetadata.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoMetadata.swift; path = Media/VideoMetadata.swift; sourceTree = "<group>"; };
-		44F8575E1BD05C1E00CC9185 /* PersistentCacheLookupProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PersistentCacheLookupProvider.swift; path = Location/PersistentCacheLookupProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,12 +156,11 @@
 		44734C461BA782FA00C6675C /* Location */ = {
 			isa = PBXGroup;
 			children = (
-				44F8575E1BD05C1E00CC9185 /* PersistentCacheLookupProvider.swift */,
 				44734C471BA7839100C6675C /* MemoryCacheLookupProvider.swift */,
 				44734C481BA7839100C6675C /* Location.swift */,
 				44734C491BA7839100C6675C /* LookupProvider.swift */,
 				44734C4A1BA7839100C6675C /* Placename.swift */,
-				44734C4B1BA7839100C6675C /* OpenMapLookupProvider.swift */,
+				4475F6D91FBBFC3E003C2D89 /* ReverseNameLookupProvider.swift */,
 			);
 			name = Location;
 			sourceTree = "<group>";
@@ -402,14 +399,12 @@
 			files = (
 				44F420091BA7194C00ADBB85 /* ProcessInvoker.swift in Sources */,
 				44EBE0171BA790A500AD679A /* MediaDataDetail.swift in Sources */,
-				44734C501BA7839100C6675C /* OpenMapLookupProvider.swift in Sources */,
 				44734C4F1BA7839100C6675C /* Placename.swift in Sources */,
 				4463CD061C2F362C00B6C01D /* MediaSize.swift in Sources */,
 				44F4201B1BA7776B00ADBB85 /* BasePreferences.swift in Sources */,
 				44734C4E1BA7839100C6675C /* LookupProvider.swift in Sources */,
 				44D749DF1BAC810B00DE90B1 /* FMResultSet.m in Sources */,
 				44EBE0191BA790A500AD679A /* SupportedMediaTypes.swift in Sources */,
-				44F8575F1BD05C1E00CC9185 /* PersistentCacheLookupProvider.swift in Sources */,
 				44734C4C1BA7839100C6675C /* MemoryCacheLookupProvider.swift in Sources */,
 				445915741BD056AE001DC93A /* ImageMetadata.swift in Sources */,
 				44F4200D1BA7195700ADBB85 /* Mutex.swift in Sources */,
@@ -421,6 +416,7 @@
 				44734C4D1BA7839100C6675C /* Location.swift in Sources */,
 				44EBE0151BA790A500AD679A /* FileMediaData.swift in Sources */,
 				44F7104E1DE3595100B75B72 /* FileMediaRepository.swift in Sources */,
+				4475F6DA1FBBFC3E003C2D89 /* ReverseNameLookupProvider.swift in Sources */,
 				44936FD51DDB7BDF0011DAE1 /* FindAPhotoResults.swift in Sources */,
 				44F8575D1BD05C0F00CC9185 /* VideoMetadata.swift in Sources */,
 				44D749DA1BAC810B00DE90B1 /* FMDatabasePool.m in Sources */,
@@ -485,12 +481,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -535,11 +531,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};

@@ -101,7 +101,7 @@ open class Location : Hashable
     open func placenameAsString(_ filter: PlaceNameFilter = .detailed) -> String
     {
         if !hasPlacename() {
-            self.placename = Placename(components: Location.lookupProvider.lookup(latitude, longitude: longitude))
+            self.placename = Location.lookupProvider.lookup(latitude: latitude, longitude: longitude)
         }
 
         return (placename?.name(filter))!
@@ -110,7 +110,7 @@ open class Location : Hashable
     open func asPlacename() -> Placename?
     {
         if !hasPlacename() {
-            self.placename = Placename(components: Location.lookupProvider.lookup(latitude, longitude: longitude))
+            self.placename = Location.lookupProvider.lookup(latitude: latitude, longitude: longitude)
         }
         return placename
     }

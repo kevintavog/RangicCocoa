@@ -115,12 +115,15 @@ open class MediaData
         var details = [MediaDataDetail]()
 
         if let l = location {
-            if let components = l.asPlacename()?.components {
+            if let pn = l.asPlacename() {
                 details.append(MediaDataDetail(category: "Placename", name: nil, value: nil))
-                for key in components.keys {
-                    let value = components[key]
-                    details.append(MediaDataDetail(category: nil, name: key, value: value))
-                }
+                details.append(MediaDataDetail(category: nil, name: "site", value: pn.site))
+                details.append(MediaDataDetail(category: nil, name: "city", value: pn.city))
+                details.append(MediaDataDetail(category: nil, name: "state", value: pn.state))
+                details.append(MediaDataDetail(category: nil, name: "country", value: pn.countryName))
+                details.append(MediaDataDetail(category: nil, name: "countryCode", value: pn.countryCode))
+                details.append(MediaDataDetail(category: nil, name: "description", value: pn.description))
+                details.append(MediaDataDetail(category: nil, name: "fullDescription", value: pn.fullDescription))
             }
         }
 

@@ -1,258 +1,61 @@
 //
 //
 
+import SwiftyJSON
+
 open class Placename
 {
-    open let components: OrderedDictionary<String,String>
+    public let description: String
+    public let fullDescription: String
+    public let site: String?
+    public let city: String?
+    public let state: String?
+    public let countryCode: String?
+    public let countryName: String?
 
-    public init(components: OrderedDictionary<String,String>)
-    {
-        self.components = components
+    public init() {
+        self.description = ""
+        self.fullDescription = ""
+        self.site = nil
+        self.city = nil
+        self.state = nil
+        self.countryCode = nil
+        self.countryName = nil
     }
+
+    public init(json: JSON)
+    {
+        self.site = json["site"].string
+        self.city = json["city"].string
+        self.state = json["state"].string
+        self.countryName = json["countryName"].string
+        self.countryCode = json["countryCode"].string
+        self.fullDescription = json["fullDescription"].stringValue
+
+        let nameComponents = [
+            site,
+            city,
+            state,
+            countryName]
+        self.description = nameComponents.flatMap( { $0 }).joined(separator: ", ")
+}
 
     open func name(_ filter: PlaceNameFilter, countryFirst: Bool = false) -> String
     {
-        var parts = [String]()
-
-        if filter == .standard {
-            let siteName = getFirstMatch(Placename.prioritizedSiteComponent)
-            let city = getFirstMatch(Placename.prioritizedCityNameComponent)
-            if siteName != nil {
-                parts.append(siteName!)
-            }
-            if city != nil {
-                parts.append(city!)
-            }
-        }
-
-        for key in components.keys {
-            let value = components[key]!
-            switch filter {
+        switch filter {
             case .none:
-                if key != "DisplayName" {
-                    parts.append(value)
-                }
+                return fullDescription
 
             case .minimal:
-                if key != "country_code" {
-                    if key == "county" {
-                        if !components.keys.contains("city") {
-                            parts.append(value)
-                        }
-                    }
-                    else {
-                        parts.append(value)
-                    }
-                }
+                return description
 
             case .standard:
-                if Placename.acceptedStandardComponents.contains(key) {
-                    if !isExcluded(key, value: value) {
-                        parts.append(value)
-                    }
-                }
+                return description
 
             case .detailed:
-                if Placename.acceptedDetailedComponents.contains(key) {
-                    parts.append(value)
-                }
-            }
+                return fullDescription
         }
-
-        if parts.count == 0 && parts.contains("DisplayName") {
-            parts.append(components["DisplayName"]!)
-        }
-
-        if countryFirst {
-            parts = parts.reversed()
-        }
-
-        return parts.joined(separator: ", ")
     }
-
-    fileprivate func getFirstMatch(_ prioritizedList: [String]) -> String!
-    {
-        for key in prioritizedList {
-            if let value = components[key] {
-                return value
-            }
-        }
-        return nil
-    }
-
-    fileprivate func isExcluded(_ key: String, value: String) -> Bool
-    {
-        if let excludedValues = Placename.fieldExclusions[key] {
-            return excludedValues.contains(value)
-        }
-        return false
-    }
-
-
-    fileprivate static let acceptedStandardComponents: Set<String> =
-    [
-        "state",
-        "country"
-    ]
-
-    fileprivate static let acceptedDetailedComponents: Set<String> =
-    [
-        "state",
-        "country",
-
-
-        // City/county details
-        "city",
-        "city_district",    // Perhaps shortest of this & city?
-        "town",
-        "hamlet",
-        "locality",
-        "neighbourhood",
-        "suburb",
-        "village",
-        "county",
-
-
-        // Site details
-        "playground",
-
-        "aerodrome",
-        "archaeological_site",
-        "arts_centre",
-        "attraction",
-        "bakery",
-        "bar",
-        "basin",
-        "building",
-        "cafe",
-        "car_wash",
-        "chemist",
-        "cinema",
-        "cycleway",
-        "department_store",
-        "fast_food",
-        "furniture",
-        "garden",
-        "garden_centre",
-        "golf_course",
-        "grave_yard",
-        "hospital",
-        "hotel",
-        "house",
-        "information",
-        "library",
-        "mall",
-        "marina",
-        "memorial",
-        "military",
-        "monument",
-        "motel",
-        "museum",
-        "park",
-        "parking",
-        "path",
-        "pedestrian",
-        "pitch",
-        "place_of_worship",
-        "pub",
-        "public_building",
-        "restaurant",
-        "roman_road",
-        "school",
-        "slipway",
-        "sports_centre",
-        "stadium",
-        "supermarket",
-        "theatre",
-        "townhall",
-        "viewpoint",
-        "water",
-        "zoo",
-
-        "footway",
-        "nature_reserve"
-    ]
-
-    // For 'cityname'
-    fileprivate static let prioritizedCityNameComponent: [String] =
-    [
-        "city",
-        "city_district",    // Perhaps shortest of this & city?
-        "town",
-        "hamlet",
-        "locality",
-        "neighbourhood",
-        "suburb",
-        "village",
-        "county"
-    ]
-
-    // For the point of interest / site / building
-    fileprivate static let prioritizedSiteComponent: [String] =
-    [
-        "playground",
-
-        "aerodrome",
-        "archaeological_site",
-        "arts_centre",
-        "attraction",
-        "bakery",
-        "bar",
-        "basin",
-        "building",
-        "cafe",
-        "car_wash",
-        "chemist",
-        "cinema",
-        "cycleway",
-        "department_store",
-        "fast_food",
-        "furniture",
-        "garden",
-        "garden_centre",
-        "golf_course",
-        "grave_yard",
-        "hospital",
-        "hotel",
-        "house",
-        "information",
-        "library",
-        "mall",
-        "marina",
-        "memorial",
-        "military",
-        "monument",
-        "motel",
-        "museum",
-        "park",
-        "parking",
-        "path",
-        "pedestrian",
-        "pitch",
-        "place_of_worship",
-        "pub",
-        "public_building",
-        "restaurant",
-        "roman_road",
-        "school",
-        "slipway",
-        "sports_centre",
-        "stadium",
-        "supermarket",
-        "theatre",
-        "townhall",
-        "viewpoint",
-        "water",
-        "zoo",
-
-        "footway",
-        "nature_reserve"
-    ]
-
-    static fileprivate let fieldExclusions: [String: Set<String>] =
-    [
-        "country" : [ "United States of America", "United Kingdom" ]
-    ]
 
 }
 
