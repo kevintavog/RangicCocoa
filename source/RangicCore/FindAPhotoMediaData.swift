@@ -23,7 +23,7 @@ open class FindAPhotoMediaData : MediaData
     {
         var normalizedHost = host
         if normalizedHost.last == "/" {
-            normalizedHost = normalizedHost.substring(to: normalizedHost.index(before: normalizedHost.endIndex))
+            normalizedHost = String(normalizedHost[...normalizedHost.index(before: normalizedHost.endIndex)])
         }
 
         let fpMediaData = FindAPhotoMediaData()
@@ -35,7 +35,7 @@ open class FindAPhotoMediaData : MediaData
         fpMediaData.url = URL(string: normalizedHost.appending(json["mediaURL"].stringValue))
         fpMediaData.timestamp = getDateFormatter().date(from: json["createdDate"].stringValue)
         fpMediaData.fileTimestamp = fpMediaData.timestamp
-        fpMediaData.keywords = json["keywords"].arrayObject as! [String]!
+        fpMediaData.keywords = json["keywords"].arrayObject as! [String]?
         fpMediaData.path = json["path"].stringValue
         fpMediaData.signature = json["signature"].string
         fpMediaData.mediaThumbUrl = URL(string: normalizedHost.appending(json["thumbURL"].stringValue))

@@ -44,6 +44,7 @@ open class MediaData
 
 
     static fileprivate var dateFormatter: DateFormatter? = nil
+    static fileprivate var timeFormatter: DateFormatter? = nil
     fileprivate var cachedDetails: [MediaDataDetail]!
     fileprivate var signaturePopulated = false
     fileprivate var cachedMediaSignature: String?
@@ -100,14 +101,24 @@ open class MediaData
         }
     }
 
-    open func formattedTime() -> String
+    open func formattedDate() -> String
     {
         if MediaData.dateFormatter == nil {
             MediaData.dateFormatter = DateFormatter()
-            MediaData.dateFormatter!.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            MediaData.dateFormatter!.dateFormat = "yyyy-MM-dd"
+        }
+        
+        return MediaData.dateFormatter!.string(from: timestamp!)
+    }
+    
+    open func formattedTime() -> String
+    {
+        if MediaData.timeFormatter == nil {
+            MediaData.timeFormatter = DateFormatter()
+            MediaData.timeFormatter!.dateFormat = "yyyy-MM-dd HH:mm:ss"
         }
 
-        return MediaData.dateFormatter!.string(from: timestamp!)
+        return MediaData.timeFormatter!.string(from: timestamp!)
     }
 
     internal func loadDetails() -> [MediaDataDetail]

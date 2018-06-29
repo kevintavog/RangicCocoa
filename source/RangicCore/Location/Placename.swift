@@ -37,7 +37,7 @@ open class Placename
             city,
             state,
             countryName]
-        self.description = nameComponents.flatMap( { $0 }).joined(separator: ", ")
+        self.description = nameComponents.compactMap( { $0 }).joined(separator: ", ")
 }
 
     open func name(_ filter: PlaceNameFilter, countryFirst: Bool = false) -> String
@@ -48,6 +48,19 @@ open class Placename
 
             case .minimal:
                 return description
+
+            case .city:
+                let nameComponents = [
+                    city,
+                    state,
+                    countryName]
+                return nameComponents.compactMap( { $0 }).joined(separator: ", ")
+
+            case .cityNoCountry:
+                let nameComponents = [
+                    city,
+                    state]
+                return nameComponents.compactMap( { $0 }).joined(separator: ", ")
 
             case .standard:
                 return description
@@ -61,5 +74,5 @@ open class Placename
 
 public enum PlaceNameFilter
 {
-    case none, minimal, standard, detailed
+    case none, minimal, city, cityNoCountry, standard, detailed
 }

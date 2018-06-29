@@ -9,13 +9,13 @@ extension String
     {
         let startIndex = self.index(self.startIndex, offsetBy: range.location)
         let endIndex = self.index(startIndex, offsetBy: range.length)
-        return self.substring(with: startIndex..<endIndex)
+        return String(self[startIndex..<endIndex])
     }
 
     public func substringFromOffset(_ offset: Int) -> String
     {
         let startIndex = self.index(self.startIndex, offsetBy: offset)
-        return self.substring(from: startIndex)
+        return String(self[startIndex...])
     }
 }
 
