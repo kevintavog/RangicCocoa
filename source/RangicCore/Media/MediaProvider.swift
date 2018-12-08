@@ -22,9 +22,9 @@ open class MediaProvider
 {
     open class Notifications
     {
-        static open let Cleared = "MediaProvider.Cleared"
-        static open let UpdatedNotification = "MediaProvider.UpdatedNotification"
-        static open let DetailsAvailable = "MediaProvider.DetailsAvailable"
+        static public let Cleared = "MediaProvider.Cleared"
+        static public let UpdatedNotification = "MediaProvider.UpdatedNotification"
+        static public let DetailsAvailable = "MediaProvider.DetailsAvailable"
     }
 
     fileprivate var repository: MediaRepository = FileMediaRepository()

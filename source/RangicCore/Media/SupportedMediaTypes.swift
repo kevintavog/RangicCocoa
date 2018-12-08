@@ -10,7 +10,7 @@ open class SupportedMediaTypes
         case image, video, unknown
     }
 
-    static open var includeRawImages = false
+    static public var includeRawImages = false
 
     static fileprivate var imageTypes:[String]? = nil
     static fileprivate var videoTypes:[String]? = nil
@@ -18,7 +18,7 @@ open class SupportedMediaTypes
     static fileprivate var supportedTypes:[String]? = nil
 
 
-    static open func all() -> [String]
+    static public func all() -> [String]
     {
         if (supportedTypes == nil) {
             supportedTypes = [String]()
@@ -28,7 +28,7 @@ open class SupportedMediaTypes
         return supportedTypes!;
     }
 
-    static open func getTypeFromFileExtension(_ fileExtension: String) -> MediaType
+    static public func getTypeFromFileExtension(_ fileExtension: String) -> MediaType
     {
         if fileExtension.count > 0 {
             let uti = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension as CFString, nil)!.takeRetainedValue()
@@ -45,12 +45,12 @@ open class SupportedMediaTypes
         return MediaType.unknown
     }
 
-    static open func isSupportedFile(_ fullUrl:URL) -> Bool
+    static public func isSupportedFile(_ fullUrl:URL) -> Bool
     {
         return all().contains(getFileType(fullUrl))
     }
 
-    static open func getType(_ fullUrl:URL) -> MediaType
+    static public func getType(_ fullUrl:URL) -> MediaType
     {
         let fileType = getFileType(fullUrl)
 
@@ -65,7 +65,7 @@ open class SupportedMediaTypes
         return MediaType.unknown
     }
 
-    static open func images() -> [String]
+    static public func images() -> [String]
     {
         if (imageTypes == nil) {
             let cgImageTypes: NSArray = CGImageSourceCopyTypeIdentifiers()
@@ -82,7 +82,7 @@ open class SupportedMediaTypes
         return imageTypes!;
     }
 
-    static open func videos() -> [String]
+    static public func videos() -> [String]
     {
         if (videoTypes == nil) {
             videoTypes = [AVFileType.aifc.rawValue, AVFileType.aiff.rawValue, AVFileType.caf.rawValue, AVFileType.m4v.rawValue, AVFileType.mp4.rawValue,
@@ -91,7 +91,7 @@ open class SupportedMediaTypes
         return videoTypes!
     }
 
-    static open func getFileType(_ fullUrl:URL) -> String
+    static public func getFileType(_ fullUrl:URL) -> String
     {
         var uti:AnyObject?
         do {

@@ -8,44 +8,44 @@ open class BasePreferences
 
 
     // MARK: Doubles
-    static open func setValue(_ value: Double, key: String)
+    static public func setValue(_ value: Double, key: String)
     {
         UserDefaults.standard.set(value, forKey: key)
     }
 
-    static open func doubleForKey(_ key: String) -> Double
+    static public func doubleForKey(_ key: String) -> Double
     {
         return UserDefaults.standard.double(forKey: key)
     }
 
-    static open func setDefaultValue(_ value: Double, key: String)
+    static public func setDefaultValue(_ value: Double, key: String)
     {
         if (!keyExists(key)) { setValue(value, key: key) }
     }
 
     // MARK: Floats
-    static open func setValue(_ value: Float, key: String)
+    static public func setValue(_ value: Float, key: String)
     {
         UserDefaults.standard.set(value, forKey: key)
     }
 
-    static open func floatForKey(_ key: String) -> Float
+    static public func floatForKey(_ key: String) -> Float
     {
         return UserDefaults.standard.float(forKey: key)
     }
 
-    static open func setDefaultValue(_ value: Float, key: String)
+    static public func setDefaultValue(_ value: Float, key: String)
     {
         if (!keyExists(key)) { setValue(value, key: key) }
     }
 
     // MARK: Strings
-    static open func setValue(_ value: String, key: String)
+    static public func setValue(_ value: String, key: String)
     {
         UserDefaults.standard.set(value, forKey: key)
     }
 
-    static open func stringForKey(_ key: String) -> String
+    static public func stringForKey(_ key: String) -> String
     {
         if let obj = UserDefaults.standard.object(forKey: key) {
             if let str = obj as? NSString {
@@ -55,30 +55,30 @@ open class BasePreferences
         return ""
     }
 
-    static open func setDefaultValue(_ value: String, key: String)
+    static public func setDefaultValue(_ value: String, key: String)
     {
         if (!keyExists(key)) { setValue(value, key: key) }
     }
 
     // MARK: Ints
-    static open func setValue(_ value: Int, key: String)
+    static public func setValue(_ value: Int, key: String)
     {
         UserDefaults.standard.set(value, forKey: key)
     }
 
-    static open func intForKey(_ key: String) -> Int
+    static public func intForKey(_ key: String) -> Int
     {
         return UserDefaults.standard.integer(forKey: key)
     }
 
-    static open func setDefaultValue(_ value: Int, key: String)
+    static public func setDefaultValue(_ value: Int, key: String)
     {
         if (!keyExists(key)) { setValue(value, key: key) }
     }
     
 
     // MARK: Helpers
-    static open func keyExists(_ key: String) -> Bool
+    static public func keyExists(_ key: String) -> Bool
     {
         return UserDefaults.standard.object(forKey: key) != nil
     }

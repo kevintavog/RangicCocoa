@@ -6,7 +6,7 @@ open class FileMediaData : MediaData
     fileprivate let BytesForSignature = 2 * 1024
 
     
-    open static func create(_ url: URL, mediaType: SupportedMediaTypes.MediaType) -> FileMediaData
+    public static func create(_ url: URL, mediaType: SupportedMediaTypes.MediaType) -> FileMediaData
     {
         let fileMediaData = FileMediaData()
         fileMediaData.url = url

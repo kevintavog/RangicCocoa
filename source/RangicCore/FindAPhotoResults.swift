@@ -7,7 +7,7 @@ import SwiftyJSON
 
 open class FindAPhotoResults
 {
-    static open let DefaultMediaDataProperties = "city,createdDate,id,imageName,keywords,latitude,longitude,mediaType,mediaURL,path,signature,thumbURL"
+    static public let DefaultMediaDataProperties = "city,createdDate,id,imageName,keywords,latitude,longitude,mediaType,mediaURL,path,signature,thumbURL"
 
 
     public var hasError = false
@@ -24,7 +24,7 @@ open class FindAPhotoResults
 
 
     
-    open static func search(_ host: String, text: String, first: Int, count: Int, completion: @escaping (_ results: FindAPhotoResults) -> ())
+    public static func search(_ host: String, text: String, first: Int, count: Int, completion: @escaping (_ results: FindAPhotoResults) -> ())
     {
         let results = FindAPhotoResults(host: host, searchText: text)
         results.search(first: first, count: count, properties: FindAPhotoResults.DefaultMediaDataProperties, completion: completion)

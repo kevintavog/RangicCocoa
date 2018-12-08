@@ -6,11 +6,11 @@ import Foundation
 
 open class ProcessInvoker
 {
-    open let output: String
-    open let error: String
-    open let exitCode: Int32
+    public let output: String
+    public let error: String
+    public let exitCode: Int32
 
-    static open func run(_ launchPath: String, arguments: [String]) -> ProcessInvoker
+    static public func run(_ launchPath: String, arguments: [String]) -> ProcessInvoker
     {
         let result = ProcessInvoker.launch(launchPath, arguments: arguments)
         let process = ProcessInvoker(output: result.output, error: result.error, exitCode: result.exitCode)

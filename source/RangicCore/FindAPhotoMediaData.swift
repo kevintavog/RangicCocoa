@@ -19,7 +19,7 @@ open class FindAPhotoMediaData : MediaData
         return dateFormatter!
     }
 
-    open static func create(_ json:JSON, host: String) -> FindAPhotoMediaData
+    public static func create(_ json:JSON, host: String) -> FindAPhotoMediaData
     {
         var normalizedHost = host
         if normalizedHost.last == "/" {

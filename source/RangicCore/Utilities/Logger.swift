@@ -6,7 +6,7 @@ import CocoaLumberjackSwift
 
 open class Logger
 {
-    static open func configure()
+    static public func configure()
     {
         DDTTYLogger.sharedInstance.logFormatter = RangicLogFormatter()
         DDLog.add(DDTTYLogger.sharedInstance)
@@ -19,27 +19,27 @@ open class Logger
         DDLog.add(fileLogger!)
     }
 
-    static open func error(_ message:String)
+    static public func error(_ message:String)
     {
         DDLogError("\(message)")
     }
 
-    static open func warn(_ message:String)
+    static public func warn(_ message:String)
     {
         DDLogWarn("\(message)")
     }
 
-    static open func info(_ message:String)
+    static public func info(_ message:String)
     {
         DDLogInfo("\(message)")
     }
 
-    static open func debug(_ message:String)
+    static public func debug(_ message:String)
     {
         DDLogDebug("\(message)")
     }
 
-    static open func verbose(_ message:String)
+    static public func verbose(_ message:String)
     {
         DDLogVerbose("\(message)")
     }
@@ -64,7 +64,7 @@ open class RangicLogFormatter : NSObject, DDLogFormatter
         return _cachedAppName!
     }
 
-    @objc open func format(message logMessage: DDLogMessage) -> String?
+    open func format(message logMessage: DDLogMessage) -> String?
     {
         var level = "<none>"
         if logMessage.flag.contains(.error) {

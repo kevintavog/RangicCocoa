@@ -51,7 +51,7 @@ open class Location : Hashable
         return Location.metersBetween(self, location2: location)
     }
 
-    static open func metersBetween(_ location1: Location, location2: Location) -> Double
+    static public func metersBetween(_ location1: Location, location2: Location) -> Double
     {
         let lat1rad = location1.latitude * Double.pi/180
         let lon1rad = location1.longitude * Double.pi/180
@@ -67,7 +67,7 @@ open class Location : Hashable
         return (R * c) * 1000.0
     }
 
-    static open func toDms(_ latitude: Double, longitude: Double) -> String
+    static public func toDms(_ latitude: Double, longitude: Double) -> String
     {
         let latitudeNorthOrSouth = latitude < 0 ? "S" : "N"
         let longitudeEastOrWest = longitude < 0 ? "W" : "E"

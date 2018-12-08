@@ -6,9 +6,9 @@ import Foundation
 
 open class JheadInvoker
 {
-    open let processInvoker: ProcessInvoker
+    public let processInvoker: ProcessInvoker
 
-    static open func autoRotate(_ files: [String]) -> JheadInvoker
+    static public func autoRotate(_ files: [String]) -> JheadInvoker
     {
         let bundlePath = Bundle(for:object_getClass(JheadInvoker.self)!).resourcePath! as NSString
         let launchPath = bundlePath.appendingPathComponent("jhead")

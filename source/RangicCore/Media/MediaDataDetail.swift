@@ -4,9 +4,9 @@
 
 open class MediaDataDetail
 {
-    open let category: String?
-    open let name: String?
-    open let value: String?
+    public let category: String?
+    public let name: String?
+    public let value: String?
 
     init(category: String?, name: String?, value: String?)
     {

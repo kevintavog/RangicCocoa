@@ -7,7 +7,7 @@ import SwiftyJSON
 
 open class FileExifProvider
 {
-    static open func getDetails(_ filename: String) -> [MediaDataDetail]
+    static public func getDetails(_ filename: String) -> [MediaDataDetail]
     {
         var result = [MediaDataDetail]()
         do {
