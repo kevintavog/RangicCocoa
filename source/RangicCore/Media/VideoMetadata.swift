@@ -216,7 +216,7 @@ open class VideoMetadata
                 for _ in 1...keyCount {
                     let fullKeyName = keyReader.readLengthAndString()
                     // Skip "mdta'
-                    let keyName = fullKeyName.substring(from: fullKeyName.index(fullKeyName.startIndex, offsetBy: 4))
+                    let keyName = String(fullKeyName[fullKeyName.index(fullKeyName.startIndex, offsetBy: 4)...])
                     keys.append(keyName)
                 }
 
@@ -469,12 +469,12 @@ open class VideoMetadata
     {
         var pieces = [String]()
         let commaIndex = geo.index(of: ",")
-        pieces.append(geo.substring(to: commaIndex!))
+        pieces.append(String(geo[..<commaIndex!]))
         
         let start = geo.index(commaIndex!, offsetBy: 1)
         let end = geo.index(before: geo.endIndex)
-        pieces.append(geo.substring(with: start..<end ))
-        pieces.append(geo.substring(from: geo.index(before: geo.endIndex)))
+        pieces.append(String(geo[start..<end]))
+        pieces.append(String(geo[geo.index(before: geo.endIndex)...]))
         return pieces
     }
 
