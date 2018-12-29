@@ -15,7 +15,8 @@ open class FindAPhotoResults
     public var totalMatches:Int?
 
 
-    private var items = [FindAPhotoMediaData]()
+    public var items = [FindAPhotoMediaData]()
+
     private var host: String
     private var searchText: String
     private var properties: String
@@ -29,7 +30,7 @@ open class FindAPhotoResults
         let results = FindAPhotoResults(host: host, searchText: text)
         results.search(first: first, count: count, properties: FindAPhotoResults.DefaultMediaDataProperties, completion: completion)
     }
-
+    
     // Don't make a call to the server - return the item if it's present locally
     open func getLocalItem(_ index: Int) -> MediaData?
     {

@@ -23,7 +23,7 @@ open class FindAPhotoMediaData : MediaData
     {
         var normalizedHost = host
         if normalizedHost.last == "/" {
-            normalizedHost = String(normalizedHost[...normalizedHost.index(before: normalizedHost.endIndex)])
+            normalizedHost = String(normalizedHost[..<normalizedHost.index(before: normalizedHost.endIndex)])
         }
 
         let fpMediaData = FindAPhotoMediaData()
