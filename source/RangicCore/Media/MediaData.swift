@@ -127,8 +127,11 @@ open class MediaData
 
         if let l = location {
             if let pn = l.asPlacename() {
+                
                 details.append(MediaDataDetail(category: "Placename", name: nil, value: nil))
-                details.append(MediaDataDetail(category: nil, name: "site", value: pn.site))
+                if let sites = pn.sites {
+                    details.append(MediaDataDetail(category: nil, name: "sites", value: sites.joined(separator: ", ")))
+                }
                 details.append(MediaDataDetail(category: nil, name: "city", value: pn.city))
                 details.append(MediaDataDetail(category: nil, name: "state", value: pn.state))
                 details.append(MediaDataDetail(category: nil, name: "country", value: pn.countryName))

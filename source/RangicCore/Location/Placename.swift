@@ -7,7 +7,7 @@ open class Placename
 {
     public let description: String
     public let fullDescription: String
-    public let site: String?
+    public let sites: [String]?
     public let city: String?
     public let state: String?
     public let countryCode: String?
@@ -16,7 +16,7 @@ open class Placename
     public init() {
         self.description = ""
         self.fullDescription = ""
-        self.site = nil
+        self.sites = nil
         self.city = nil
         self.state = nil
         self.countryCode = nil
@@ -25,7 +25,11 @@ open class Placename
 
     public init(json: JSON)
     {
-        self.site = json["site"].string
+        if let siteArray = json["sites"].array {
+            self.sites = siteArray.map { $0.stringValue }
+        } else {
+            self.sites = nil
+        }
         self.city = json["city"].string
         self.state = json["state"].string
         self.countryName = json["countryName"].string
@@ -33,7 +37,7 @@ open class Placename
         self.fullDescription = json["fullDescription"].stringValue
 
         let nameComponents = [
-            site,
+            sites != nil ? sites!.joined(separator: ", ") : nil,
             city,
             state,
             countryName]
