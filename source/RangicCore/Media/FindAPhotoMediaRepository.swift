@@ -1,7 +1,6 @@
 //
 //
 
-/*
 open class FindAPhotoMediaRepository : MediaRepository
 {
     var results: FindAPhotoResults?
@@ -82,4 +81,4 @@ open class FindAPhotoMediaRepository : MediaRepository
         CoreNotifications.postNotification(notification, object: self)
     }
 }
-*/
+
