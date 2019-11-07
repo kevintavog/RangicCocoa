@@ -12,11 +12,11 @@ open class Logger
         DDLog.add(DDTTYLogger.sharedInstance)
 
         let fileLogger = DDFileLogger()
-        fileLogger?.logFormatter = RangicLogFormatter()
-        fileLogger?.rollingFrequency = TimeInterval(24 * 60 * 60)
-        fileLogger?.logFileManager.maximumNumberOfLogFiles = 10
-        fileLogger?.maximumFileSize = UInt64(20 * 1024 * 1024)
-        DDLog.add(fileLogger!)
+        fileLogger.logFormatter = RangicLogFormatter()
+        fileLogger.rollingFrequency = TimeInterval(24 * 60 * 60)
+        fileLogger.logFileManager.maximumNumberOfLogFiles = 10
+        fileLogger.maximumFileSize = UInt64(20 * 1024 * 1024)
+        DDLog.add(fileLogger)
     }
 
     static public func error(_ message:String)
