@@ -1,4 +1,4 @@
-github "Alamofire/Alamofire" "4.8.2"
-github "duemunk/Async" "master"
+github "Alamofire/Alamofire" "4.9.0"
+github "duemunk/Async" "2.0.5"
 github "CocoaLumberjack/CocoaLumberjack" "master"
 github "SwiftyJSON/SwiftyJSON"

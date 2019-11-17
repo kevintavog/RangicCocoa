@@ -29,6 +29,7 @@ open class MediaData
     open var mediaSize: MediaSize?
     open var rotation: Int?
     open var compatibleBrands: [String]!
+    open var durationSeconds: Double = 0.0
 
     open var mediaSignature: String {
         get {

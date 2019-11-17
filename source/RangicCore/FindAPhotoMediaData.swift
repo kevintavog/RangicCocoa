@@ -35,6 +35,7 @@ open class FindAPhotoMediaData : MediaData
         fpMediaData.url = URL(string: normalizedHost.appending(json["mediaURL"].stringValue))
         fpMediaData.timestamp = getDateFormatter().date(from: json["createdDate"].stringValue)
         fpMediaData.fileTimestamp = fpMediaData.timestamp
+        fpMediaData.durationSeconds = json["durationseconds"].double ?? 0.0
         fpMediaData.keywords = json["keywords"].arrayObject as! [String]?
         fpMediaData.path = json["path"].stringValue
         fpMediaData.signature = json["signature"].string

@@ -7,7 +7,7 @@ import SwiftyJSON
 
 open class FindAPhotoResults
 {
-    static public let DefaultMediaDataProperties = "city,createdDate,id,imageName,keywords,latitude,longitude,mediaType,mediaURL,path,signature,thumbURL"
+    static public let DefaultMediaDataProperties = "city,createdDate,durationseconds,id,imageName,keywords,latitude,longitude,mediaType,mediaURL,path,signature,thumbURL"
 
 
     public var hasError = false
