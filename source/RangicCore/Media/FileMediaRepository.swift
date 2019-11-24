@@ -164,6 +164,9 @@ open class FileMediaRepository : MediaRepository
                     
                 case .RescanFolder:
                     break
+
+                @unknown default:
+                    break
                 }
             }
         }

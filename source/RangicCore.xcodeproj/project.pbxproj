@@ -3,11 +3,15 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		440AFCB21DD7C6F1007B1749 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 440AFCB11DD7C6F1007B1749 /* SwiftyJSON.framework */; };
+		4430CF71238246370046D876 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 4430CF70238246370046D876 /* Alamofire */; };
+		4430CF74238246690046D876 /* Async in Frameworks */ = {isa = PBXBuildFile; productRef = 4430CF73238246690046D876 /* Async */; };
+		4430CF76238246D60046D876 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 4430CF75238246D60046D876 /* SwiftyJSON */; };
+		4430CF80238251820046D876 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4430CF7F238251820046D876 /* CocoaLumberjackSwift */; };
+		4430CF82238251820046D876 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 4430CF81238251820046D876 /* CocoaLumberjack */; };
 		4451CEEB1BA79C5C00D09540 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4451CEEA1BA79C5C00D09540 /* Quartz.framework */; };
 		4451CEED1BA79C9400D09540 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4451CEEC1BA79C9400D09540 /* AVFoundation.framework */; };
 		445915741BD056AE001DC93A /* ImageMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445915731BD056AE001DC93A /* ImageMetadata.swift */; };
@@ -17,14 +21,9 @@
 		44734C4E1BA7839100C6675C /* LookupProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44734C491BA7839100C6675C /* LookupProvider.swift */; };
 		44734C4F1BA7839100C6675C /* Placename.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44734C4A1BA7839100C6675C /* Placename.swift */; };
 		4475F6DA1FBBFC3E003C2D89 /* ReverseNameLookupProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4475F6D91FBBFC3E003C2D89 /* ReverseNameLookupProvider.swift */; };
-		4475F76F1BA7916F00087AEE /* Async.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4475F76E1BA7916F00087AEE /* Async.framework */; };
-		447CA6771BD5CD4500CA174C /* CocoaLumberjackSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 447CA6761BD5CD4500CA174C /* CocoaLumberjackSwift.framework */; };
-		447CA67B1BD5CF4B00CA174C /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 447CA67A1BD5CF4B00CA174C /* CocoaLumberjack.framework */; };
 		44936FD11DDAA21B0011DAE1 /* FindAPhotoMediaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44936FD01DDAA21B0011DAE1 /* FindAPhotoMediaData.swift */; };
 		44936FD51DDB7BDF0011DAE1 /* FindAPhotoResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44936FD41DDB7BDF0011DAE1 /* FindAPhotoResults.swift */; };
 		44A8506F1BD029DC0051CECA /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A8506E1BD029DC0051CECA /* StringExtensions.swift */; };
-		44D749E11BAC820E00DE90B1 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 44D749E01BAC820E00DE90B1 /* libsqlite3.0.tbd */; };
-		44EBE0011BA784CC00AD679A /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44EBE0001BA784CC00AD679A /* Alamofire.framework */; };
 		44EBE00A1BA7891000AD679A /* jhead in Resources */ = {isa = PBXBuildFile; fileRef = 44EBE0081BA7891000AD679A /* jhead */; };
 		44EBE00B1BA7891000AD679A /* jpegtran in Resources */ = {isa = PBXBuildFile; fileRef = 44EBE0091BA7891000AD679A /* jpegtran */; };
 		44EBE00D1BA7904D00AD679A /* CoreNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EBE00C1BA7904D00AD679A /* CoreNotifications.swift */; };
@@ -50,7 +49,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		440AFCB11DD7C6F1007B1749 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
 		44426F9D1BAC90C700C8EC2F /* RangicCore-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RangicCore-Bridging-Header.h"; sourceTree = "<group>"; };
 		4451CEEA1BA79C5C00D09540 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		4451CEEC1BA79C9400D09540 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -61,14 +59,9 @@
 		44734C491BA7839100C6675C /* LookupProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LookupProvider.swift; path = Location/LookupProvider.swift; sourceTree = "<group>"; };
 		44734C4A1BA7839100C6675C /* Placename.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Placename.swift; path = Location/Placename.swift; sourceTree = "<group>"; };
 		4475F6D91FBBFC3E003C2D89 /* ReverseNameLookupProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReverseNameLookupProvider.swift; path = Location/ReverseNameLookupProvider.swift; sourceTree = "<group>"; };
-		4475F76E1BA7916F00087AEE /* Async.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Async.framework; path = Carthage/Build/Mac/Async.framework; sourceTree = "<group>"; };
-		447CA6761BD5CD4500CA174C /* CocoaLumberjackSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjackSwift.framework; path = Carthage/Build/Mac/CocoaLumberjackSwift.framework; sourceTree = "<group>"; };
-		447CA67A1BD5CF4B00CA174C /* CocoaLumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjack.framework; path = Carthage/Build/Mac/CocoaLumberjack.framework; sourceTree = "<group>"; };
 		44936FD01DDAA21B0011DAE1 /* FindAPhotoMediaData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindAPhotoMediaData.swift; sourceTree = "<group>"; };
 		44936FD41DDB7BDF0011DAE1 /* FindAPhotoResults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindAPhotoResults.swift; sourceTree = "<group>"; };
 		44A8506E1BD029DC0051CECA /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StringExtensions.swift; path = Extensions/StringExtensions.swift; sourceTree = "<group>"; };
-		44D749E01BAC820E00DE90B1 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
-		44EBE0001BA784CC00AD679A /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/Mac/Alamofire.framework; sourceTree = "<group>"; };
 		44EBE0081BA7891000AD679A /* jhead */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = jhead; path = Executables/jhead; sourceTree = "<group>"; };
 		44EBE0091BA7891000AD679A /* jpegtran */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = jpegtran; path = Executables/jpegtran; sourceTree = "<group>"; };
 		44EBE00C1BA7904D00AD679A /* CoreNotifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreNotifications.swift; path = Utilities/CoreNotifications.swift; sourceTree = "<group>"; };
@@ -100,15 +93,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				440AFCB21DD7C6F1007B1749 /* SwiftyJSON.framework in Frameworks */,
-				447CA67B1BD5CF4B00CA174C /* CocoaLumberjack.framework in Frameworks */,
-				447CA6771BD5CD4500CA174C /* CocoaLumberjackSwift.framework in Frameworks */,
-				44D749E11BAC820E00DE90B1 /* libsqlite3.0.tbd in Frameworks */,
+				4430CF76238246D60046D876 /* SwiftyJSON in Frameworks */,
 				4451CEED1BA79C9400D09540 /* AVFoundation.framework in Frameworks */,
+				4430CF71238246370046D876 /* Alamofire in Frameworks */,
 				4451CEEB1BA79C5C00D09540 /* Quartz.framework in Frameworks */,
-				4475F76F1BA7916F00087AEE /* Async.framework in Frameworks */,
-				44EBE0011BA784CC00AD679A /* Alamofire.framework in Frameworks */,
+				4430CF82238251820046D876 /* CocoaLumberjack in Frameworks */,
+				4430CF80238251820046D876 /* CocoaLumberjackSwift in Frameworks */,
 				44F420151BA72F4D00ADBB85 /* Foundation.framework in Frameworks */,
+				4430CF74238246690046D876 /* Async in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,14 +110,8 @@
 		4451CEF41BA79D4300D09540 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				440AFCB11DD7C6F1007B1749 /* SwiftyJSON.framework */,
-				447CA67A1BD5CF4B00CA174C /* CocoaLumberjack.framework */,
-				447CA6761BD5CD4500CA174C /* CocoaLumberjackSwift.framework */,
-				44D749E01BAC820E00DE90B1 /* libsqlite3.0.tbd */,
 				4451CEEC1BA79C9400D09540 /* AVFoundation.framework */,
 				4451CEEA1BA79C5C00D09540 /* Quartz.framework */,
-				44EBE0001BA784CC00AD679A /* Alamofire.framework */,
-				4475F76E1BA7916F00087AEE /* Async.framework */,
 				44F420141BA72F4D00ADBB85 /* Foundation.framework */,
 			);
 			name = Frameworks;
@@ -288,6 +274,13 @@
 			dependencies = (
 			);
 			name = RangicCore;
+			packageProductDependencies = (
+				4430CF70238246370046D876 /* Alamofire */,
+				4430CF73238246690046D876 /* Async */,
+				4430CF75238246D60046D876 /* SwiftyJSON */,
+				4430CF7F238251820046D876 /* CocoaLumberjackSwift */,
+				4430CF81238251820046D876 /* CocoaLumberjack */,
+			);
 			productName = Rangic.Cocoa.Core;
 			productReference = 44F41FF81BA7175E00ADBB85 /* RangicCore.framework */;
 			productType = "com.apple.product-type.framework";
@@ -304,7 +297,7 @@
 				TargetAttributes = {
 					44F41FF71BA7175E00ADBB85 = {
 						CreatedOnToolsVersion = 7.0;
-						LastSwiftMigration = 0910;
+						LastSwiftMigration = 1120;
 					};
 				};
 			};
@@ -316,6 +309,12 @@
 				en,
 			);
 			mainGroup = 44F41FEE1BA7175E00ADBB85;
+			packageReferences = (
+				4430CF66238244D90046D876 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+				4430CF6F238246370046D876 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				4430CF72238246690046D876 /* XCRemoteSwiftPackageReference "Async" */,
+				4430CF7E238251820046D876 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */,
+			);
 			productRefGroup = 44F41FF91BA7175E00ADBB85 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -480,7 +479,8 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -503,7 +503,11 @@
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = RangicCore/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = RangicCore;
 				PRODUCT_NAME = RangicCore;
@@ -511,7 +515,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "RangicCore/RangicCore-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -531,14 +535,18 @@
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = RangicCore/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = RangicCore;
 				PRODUCT_NAME = RangicCore;
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "RangicCore/RangicCore-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -564,6 +572,69 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4430CF66238244D90046D876 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
+		4430CF6F238246370046D876 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.9.1;
+			};
+		};
+		4430CF72238246690046D876 /* XCRemoteSwiftPackageReference "Async" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/duemunk/Async";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.0;
+			};
+		};
+		4430CF7E238251820046D876 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CocoaLumberjack/CocoaLumberjack";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4430CF70238246370046D876 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4430CF6F238246370046D876 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		4430CF73238246690046D876 /* Async */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4430CF72238246690046D876 /* XCRemoteSwiftPackageReference "Async" */;
+			productName = Async;
+		};
+		4430CF75238246D60046D876 /* SwiftyJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4430CF66238244D90046D876 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
+		};
+		4430CF7F238251820046D876 /* CocoaLumberjackSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4430CF7E238251820046D876 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			productName = CocoaLumberjackSwift;
+		};
+		4430CF81238251820046D876 /* CocoaLumberjack */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4430CF7E238251820046D876 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			productName = CocoaLumberjack;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 44F41FEF1BA7175E00ADBB85 /* Project object */;
 }

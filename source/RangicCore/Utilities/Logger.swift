@@ -2,12 +2,11 @@
 //  RangicCore
 //
 
+import CocoaLumberjack
 import CocoaLumberjackSwift
 
-open class Logger
-{
-    static public func configure()
-    {
+open class Logger {
+    static public func configure() {
         DDTTYLogger.sharedInstance.logFormatter = RangicLogFormatter()
         DDLog.add(DDTTYLogger.sharedInstance)
 
@@ -19,34 +18,28 @@ open class Logger
         DDLog.add(fileLogger)
     }
 
-    static public func error(_ message:String)
-    {
+    static public func error(_ message:String) {
         DDLogError("\(message)")
     }
 
-    static public func warn(_ message:String)
-    {
+    static public func warn(_ message:String) {
         DDLogWarn("\(message)")
     }
 
-    static public func info(_ message:String)
-    {
+    static public func info(_ message:String) {
         DDLogInfo("\(message)")
     }
 
-    static public func debug(_ message:String)
-    {
+    static public func debug(_ message:String) {
         DDLogDebug("\(message)")
     }
 
-    static public func verbose(_ message:String)
-    {
+    static public func verbose(_ message:String) {
         DDLogVerbose("\(message)")
     }
 }
 
-open class RangicLogFormatter : NSObject, DDLogFormatter
-{
+open class RangicLogFormatter : NSObject, DDLogFormatter {
     static let calUnits = NSCalendar.Unit(rawValue:
         NSCalendar.Unit.year.rawValue
             | NSCalendar.Unit.month.rawValue
@@ -56,16 +49,14 @@ open class RangicLogFormatter : NSObject, DDLogFormatter
             | NSCalendar.Unit.second.rawValue)
 
     static var _cachedAppName: String?
-    static var appName: String
-    {
+    static var appName: String {
         if _cachedAppName == nil {
             _cachedAppName = ProcessInfo.processInfo.processName
         }
         return _cachedAppName!
     }
 
-    open func format(message logMessage: DDLogMessage) -> String?
-    {
+    open func format(message logMessage: DDLogMessage) -> String? {
         var level = "<none>"
         if logMessage.flag.contains(.error) {
             level = "Error"

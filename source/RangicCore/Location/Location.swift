@@ -120,7 +120,10 @@ open class Location : Hashable
         return placename != nil
     }
 
-    open var hashValue: Int { get { return 17 &* latitude.hashValue &* longitude.hashValue } }
+    open func hash(into hasher: inout Hasher) {
+        hasher.combine(latitude)
+        hasher.combine(longitude)
+    }
 }
 
 public func ==(lhs: Location, rhs: Location) -> Bool

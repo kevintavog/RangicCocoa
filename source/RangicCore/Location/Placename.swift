@@ -52,7 +52,7 @@ open class Placename
 
             case .minimal:
                 return description
-
+            
             case .city:
                 let nameComponents = [
                     city,
@@ -66,6 +66,23 @@ open class Placename
                     state]
                 return nameComponents.compactMap( { $0 }).joined(separator: ", ")
 
+            case .sites:
+                let nameComponents = [
+                    sites != nil ? sites!.joined(separator: ", ") : nil,
+                    city,
+                    state,
+                    countryName
+                ]
+                return nameComponents.compactMap( { $0} ).joined(separator: ",")
+
+            case .sitesNoCountry:
+                let nameComponents = [
+                    sites != nil ? sites!.joined(separator: ", ") : nil,
+                    city,
+                    state
+                ]
+                return nameComponents.compactMap( { $0} ).joined(separator: ",")
+
             case .standard:
                 return description
 
@@ -78,5 +95,5 @@ open class Placename
 
 public enum PlaceNameFilter
 {
-    case none, minimal, city, cityNoCountry, standard, detailed
+    case none, minimal, sites, sitesNoCountry, city, cityNoCountry, standard, detailed
 }

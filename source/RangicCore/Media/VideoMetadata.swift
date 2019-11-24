@@ -468,7 +468,7 @@ open class VideoMetadata
     fileprivate func parseUuidLatLong(_ geo: String) -> [String]
     {
         var pieces = [String]()
-        let commaIndex = geo.index(of: ",")
+        let commaIndex = geo.firstIndex(of: ",")
         pieces.append(String(geo[..<commaIndex!]))
         
         let start = geo.index(commaIndex!, offsetBy: 1)
