@@ -27,10 +27,10 @@ open class MediaProvider
         static public let DetailsAvailable = "MediaProvider.DetailsAvailable"
     }
 
-    fileprivate var repository: MediaRepository = FileMediaRepository()
+    fileprivate var repository: MediaRepository
 
-    public init()
-    {
+    public init(autoUpdate: Bool = true) {
+         repository = FileMediaRepository(autoUpdate: autoUpdate)
     }
 
     open func setRepository(_ repository: MediaRepository) {

@@ -1,14 +1,15 @@
 //
 //
 
-open class FileMediaRepository : MediaRepository
-{
+open class FileMediaRepository : MediaRepository {
     fileprivate var mediaFiles:[MediaData] = []
-    
+
     var folders:[String] = []
     var folderWatcher:[RangicFsEventStreamWrapper] = []
+    let autoUpdate:Bool
 
-    public init() {
+    public init(autoUpdate:Bool = true) {
+        self.autoUpdate = autoUpdate
     }
     
 
@@ -63,14 +64,16 @@ open class FileMediaRepository : MediaRepository
                 return m1.timestamp!.compare(m2.timestamp! as Date) == ComparisonResult.orderedAscending })
             
             sendNotification(MediaProvider.Notifications.UpdatedNotification)
-            
-            folderWatcher.append(RangicFsEventStreamWrapper(path: folderName, callback: { (numEvents, typeArray, pathArray) -> () in
-                var eventTypes = [RangicFsEventType]()
-                for index in 0..<Int(numEvents) {
-                    eventTypes.append((typeArray?[index])! as RangicFsEventType)
-                }
-                self.processFileSystemEvents(Int(numEvents), eventTypes: eventTypes, pathArray: pathArray as! [String])
-            }))
+
+            if autoUpdate {
+                folderWatcher.append(RangicFsEventStreamWrapper(path: folderName, callback: { (numEvents, typeArray, pathArray) -> () in
+                    var eventTypes = [RangicFsEventType]()
+                    for index in 0..<Int(numEvents) {
+                        eventTypes.append((typeArray?[index])! as RangicFsEventType)
+                    }
+                    self.processFileSystemEvents(Int(numEvents), eventTypes: eventTypes, pathArray: pathArray as! [String])
+                }))
+            }
         }
     }
 
