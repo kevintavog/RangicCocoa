@@ -74,7 +74,7 @@ open class FindAPhotoResults
             host.append("/")
         }
 
-        let url = "\(host)api/search"
+        let url = "\(host)search"
         let parameters = [
             "q": "\(searchText)",
             "first": "\(first)",

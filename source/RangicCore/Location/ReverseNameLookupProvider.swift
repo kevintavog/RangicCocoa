@@ -5,6 +5,33 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
+struct ReverseNameRequest {
+    var items: [ReverseNameRequestItem]
+}
+
+struct ReverseNameRequestItem {
+    var lat: Double
+    var lon: Double
+}
+
+struct ReverseNameResponse {
+    var items: [ReverseNameResponseItem]?
+    var hasErrors: Bool?
+}
+
+struct ReverseNameResponseItem {
+    var placename: ReverseNamePlacename
+}
+
+struct ReverseNamePlacename {
+    var fullDescription: String?
+    var sites: [String]?
+    var city: String?
+    var state: String?
+    var countryName: String?
+    var countryCode: String?
+}
+
 open class ReverseNameLookupProvider : LookupProvider {
 
     static var host: String?
@@ -28,15 +55,21 @@ open class ReverseNameLookupProvider : LookupProvider {
             return Placename()
         }
         
-        let url = "\(ReverseNameLookupProvider.host!)api/v1/name"
-        let parameters = [
-            "lat": "\(latitude)",
-            "lon": "\(longitude)"]
+        let url = "\(ReverseNameLookupProvider.host!)names"
 
+        let parameters: Parameters = [
+            "items": [
+                [
+                    "lat": latitude,
+                    "lon": longitude
+                ]
+            ]
+        ]
+        
         var error: Swift.Error? = nil
         var resultData: Data? = nil
         let semaphore = DispatchSemaphore(value: 0)
-        Alamofire.request(url, parameters: parameters)
+        Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default)
             .validate()
             .response { response in
 
@@ -57,7 +90,7 @@ open class ReverseNameLookupProvider : LookupProvider {
 
         do {
             let json = try JSON(data: resultData!)
-            return Placename(json: json)
+            return Placename(json: json["items"][0]["placename"])
         } catch {
             return Placename()
         }

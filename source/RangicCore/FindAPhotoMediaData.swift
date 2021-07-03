@@ -32,14 +32,14 @@ open class FindAPhotoMediaData : MediaData
         fpMediaData.rotation = 1
 
         fpMediaData.name = json["imageName"].stringValue
-        fpMediaData.url = URL(string: normalizedHost.appending(json["mediaURL"].stringValue))
+        fpMediaData.url = URL(string: normalizedHost.appending(json["mediaUrl"].stringValue))
         fpMediaData.timestamp = getDateFormatter().date(from: json["createdDate"].stringValue)
         fpMediaData.fileTimestamp = fpMediaData.timestamp
         fpMediaData.durationSeconds = json["durationseconds"].double ?? 0.0
         fpMediaData.keywords = json["keywords"].arrayObject as! [String]?
         fpMediaData.path = json["path"].stringValue
         fpMediaData.signature = json["signature"].string
-        fpMediaData.mediaThumbUrl = URL(string: normalizedHost.appending(json["thumbURL"].stringValue))
+        fpMediaData.mediaThumbUrl = URL(string: normalizedHost.appending(json["thumbUrl"].stringValue))
 
         if json["latitude"].exists() && json["longitude"].exists() {
             fpMediaData.location = Location(latitude: json["latitude"].doubleValue, longitude: json["longitude"].doubleValue)
@@ -54,12 +54,6 @@ open class FindAPhotoMediaData : MediaData
             Logger.warn("Unknown FindAPhoto media type: \(json["mediatype"].stringValue)")
         }
 
-
-//        open var mediaSize: MediaSize?
-//        open var rotation: Int?
-//        open var compatibleBrands: [String]!
-        
-        
         return fpMediaData
     }
 

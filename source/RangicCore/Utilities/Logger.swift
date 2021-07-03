@@ -7,8 +7,8 @@ import CocoaLumberjackSwift
 
 open class Logger {
     static public func configure() {
-        DDTTYLogger.sharedInstance.logFormatter = RangicLogFormatter()
-        DDLog.add(DDTTYLogger.sharedInstance)
+//        DDTTYLogger!!.sharedInstance.logFormatter = RangicLogFormatter()
+//        DDLog.add(DDTTYLogger!!.sharedInstance)
 
         let fileLogger = DDFileLogger()
         fileLogger.logFormatter = RangicLogFormatter()

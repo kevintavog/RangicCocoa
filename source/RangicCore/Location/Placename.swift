@@ -73,7 +73,7 @@ open class Placename
                     state,
                     countryName
                 ]
-                return nameComponents.compactMap( { $0} ).joined(separator: ",")
+                return nameComponents.compactMap( { $0} ).joined(separator: ", ")
 
             case .sitesNoCountry:
                 let nameComponents = [
@@ -81,7 +81,7 @@ open class Placename
                     city,
                     state
                 ]
-                return nameComponents.compactMap( { $0} ).joined(separator: ",")
+                return nameComponents.compactMap( { $0} ).joined(separator: ", ")
 
             case .standard:
                 return description

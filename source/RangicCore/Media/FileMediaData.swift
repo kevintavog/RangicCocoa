@@ -17,10 +17,10 @@ open class FileMediaData : MediaData
         return fileMediaData
     }
 
-    open override func reload()
-    {
-        var values: URLResourceValues
-        try! values = url.resourceValues(forKeys: [URLResourceKey.contentModificationDateKey])
+    open override func reload() {
+        guard let values = try? url.resourceValues(forKeys: [URLResourceKey.contentModificationDateKey]) else {
+            return
+        }
         let fileTimestamp = values.contentModificationDate
         
         name = url.lastPathComponent
