@@ -3,15 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4430CF71238246370046D876 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 4430CF70238246370046D876 /* Alamofire */; };
-		4430CF74238246690046D876 /* Async in Frameworks */ = {isa = PBXBuildFile; productRef = 4430CF73238246690046D876 /* Async */; };
-		4430CF76238246D60046D876 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 4430CF75238246D60046D876 /* SwiftyJSON */; };
-		4430CF80238251820046D876 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4430CF7F238251820046D876 /* CocoaLumberjackSwift */; };
-		4430CF82238251820046D876 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 4430CF81238251820046D876 /* CocoaLumberjack */; };
 		4451CEEB1BA79C5C00D09540 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4451CEEA1BA79C5C00D09540 /* Quartz.framework */; };
 		4451CEED1BA79C9400D09540 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4451CEEC1BA79C9400D09540 /* AVFoundation.framework */; };
 		445915741BD056AE001DC93A /* ImageMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445915731BD056AE001DC93A /* ImageMetadata.swift */; };
@@ -23,6 +18,16 @@
 		4475F6DA1FBBFC3E003C2D89 /* ReverseNameLookupProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4475F6D91FBBFC3E003C2D89 /* ReverseNameLookupProvider.swift */; };
 		44936FD11DDAA21B0011DAE1 /* FindAPhotoMediaData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44936FD01DDAA21B0011DAE1 /* FindAPhotoMediaData.swift */; };
 		44936FD51DDB7BDF0011DAE1 /* FindAPhotoResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44936FD41DDB7BDF0011DAE1 /* FindAPhotoResults.swift */; };
+		4499D8DF2693A859000CF34A /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4499D8DA2693A859000CF34A /* SwiftyJSON.framework */; };
+		4499D8E02693A859000CF34A /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4499D8DA2693A859000CF34A /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4499D8E12693A85A000CF34A /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4499D8DB2693A859000CF34A /* CocoaLumberjack.framework */; };
+		4499D8E22693A85A000CF34A /* CocoaLumberjack.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4499D8DB2693A859000CF34A /* CocoaLumberjack.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4499D8E32693A85A000CF34A /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4499D8DC2693A859000CF34A /* Alamofire.framework */; };
+		4499D8E42693A85A000CF34A /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4499D8DC2693A859000CF34A /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4499D8E52693A85A000CF34A /* CocoaLumberjackSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4499D8DD2693A859000CF34A /* CocoaLumberjackSwift.framework */; };
+		4499D8E62693A85A000CF34A /* CocoaLumberjackSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4499D8DD2693A859000CF34A /* CocoaLumberjackSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4499D8E72693A85A000CF34A /* Async.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4499D8DE2693A859000CF34A /* Async.framework */; };
+		4499D8E82693A85A000CF34A /* Async.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4499D8DE2693A859000CF34A /* Async.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		44A8506F1BD029DC0051CECA /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A8506E1BD029DC0051CECA /* StringExtensions.swift */; };
 		44EBE00A1BA7891000AD679A /* jhead in Resources */ = {isa = PBXBuildFile; fileRef = 44EBE0081BA7891000AD679A /* jhead */; };
 		44EBE00B1BA7891000AD679A /* jpegtran in Resources */ = {isa = PBXBuildFile; fileRef = 44EBE0091BA7891000AD679A /* jpegtran */; };
@@ -48,6 +53,24 @@
 		44F8575D1BD05C0F00CC9185 /* VideoMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F8575B1BD05C0F00CC9185 /* VideoMetadata.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		4499D8E92693A85A000CF34A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4499D8E62693A85A000CF34A /* CocoaLumberjackSwift.framework in Embed Frameworks */,
+				4499D8E22693A85A000CF34A /* CocoaLumberjack.framework in Embed Frameworks */,
+				4499D8E42693A85A000CF34A /* Alamofire.framework in Embed Frameworks */,
+				4499D8E02693A859000CF34A /* SwiftyJSON.framework in Embed Frameworks */,
+				4499D8E82693A85A000CF34A /* Async.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		44426F9D1BAC90C700C8EC2F /* RangicCore-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RangicCore-Bridging-Header.h"; sourceTree = "<group>"; };
 		4451CEEA1BA79C5C00D09540 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
@@ -61,6 +84,11 @@
 		4475F6D91FBBFC3E003C2D89 /* ReverseNameLookupProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReverseNameLookupProvider.swift; path = Location/ReverseNameLookupProvider.swift; sourceTree = "<group>"; };
 		44936FD01DDAA21B0011DAE1 /* FindAPhotoMediaData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindAPhotoMediaData.swift; sourceTree = "<group>"; };
 		44936FD41DDB7BDF0011DAE1 /* FindAPhotoResults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindAPhotoResults.swift; sourceTree = "<group>"; };
+		4499D8DA2693A859000CF34A /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/Mac/SwiftyJSON.framework; sourceTree = "<group>"; };
+		4499D8DB2693A859000CF34A /* CocoaLumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjack.framework; path = Carthage/Build/Mac/CocoaLumberjack.framework; sourceTree = "<group>"; };
+		4499D8DC2693A859000CF34A /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/Mac/Alamofire.framework; sourceTree = "<group>"; };
+		4499D8DD2693A859000CF34A /* CocoaLumberjackSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjackSwift.framework; path = Carthage/Build/Mac/CocoaLumberjackSwift.framework; sourceTree = "<group>"; };
+		4499D8DE2693A859000CF34A /* Async.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Async.framework; path = Carthage/Build/Mac/Async.framework; sourceTree = "<group>"; };
 		44A8506E1BD029DC0051CECA /* StringExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StringExtensions.swift; path = Extensions/StringExtensions.swift; sourceTree = "<group>"; };
 		44EBE0081BA7891000AD679A /* jhead */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = jhead; path = Executables/jhead; sourceTree = "<group>"; };
 		44EBE0091BA7891000AD679A /* jpegtran */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = jpegtran; path = Executables/jpegtran; sourceTree = "<group>"; };
@@ -93,14 +121,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4430CF76238246D60046D876 /* SwiftyJSON in Frameworks */,
+				4499D8DF2693A859000CF34A /* SwiftyJSON.framework in Frameworks */,
+				4499D8E72693A85A000CF34A /* Async.framework in Frameworks */,
+				4499D8E32693A85A000CF34A /* Alamofire.framework in Frameworks */,
 				4451CEED1BA79C9400D09540 /* AVFoundation.framework in Frameworks */,
-				4430CF71238246370046D876 /* Alamofire in Frameworks */,
+				4499D8E12693A85A000CF34A /* CocoaLumberjack.framework in Frameworks */,
+				4499D8E52693A85A000CF34A /* CocoaLumberjackSwift.framework in Frameworks */,
 				4451CEEB1BA79C5C00D09540 /* Quartz.framework in Frameworks */,
-				4430CF82238251820046D876 /* CocoaLumberjack in Frameworks */,
-				4430CF80238251820046D876 /* CocoaLumberjackSwift in Frameworks */,
 				44F420151BA72F4D00ADBB85 /* Foundation.framework in Frameworks */,
-				4430CF74238246690046D876 /* Async in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,6 +138,11 @@
 		4451CEF41BA79D4300D09540 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4499D8DC2693A859000CF34A /* Alamofire.framework */,
+				4499D8DE2693A859000CF34A /* Async.framework */,
+				4499D8DB2693A859000CF34A /* CocoaLumberjack.framework */,
+				4499D8DD2693A859000CF34A /* CocoaLumberjackSwift.framework */,
+				4499D8DA2693A859000CF34A /* SwiftyJSON.framework */,
 				4451CEEC1BA79C9400D09540 /* AVFoundation.framework */,
 				4451CEEA1BA79C5C00D09540 /* Quartz.framework */,
 				44F420141BA72F4D00ADBB85 /* Foundation.framework */,
@@ -268,6 +301,7 @@
 				44F41FF41BA7175E00ADBB85 /* Frameworks */,
 				44F41FF51BA7175E00ADBB85 /* Headers */,
 				44F41FF61BA7175E00ADBB85 /* Resources */,
+				4499D8E92693A85A000CF34A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -275,11 +309,6 @@
 			);
 			name = RangicCore;
 			packageProductDependencies = (
-				4430CF70238246370046D876 /* Alamofire */,
-				4430CF73238246690046D876 /* Async */,
-				4430CF75238246D60046D876 /* SwiftyJSON */,
-				4430CF7F238251820046D876 /* CocoaLumberjackSwift */,
-				4430CF81238251820046D876 /* CocoaLumberjack */,
 			);
 			productName = Rangic.Cocoa.Core;
 			productReference = 44F41FF81BA7175E00ADBB85 /* RangicCore.framework */;
@@ -311,10 +340,6 @@
 			);
 			mainGroup = 44F41FEE1BA7175E00ADBB85;
 			packageReferences = (
-				4430CF66238244D90046D876 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
-				4430CF6F238246370046D876 /* XCRemoteSwiftPackageReference "Alamofire" */,
-				4430CF72238246690046D876 /* XCRemoteSwiftPackageReference "Async" */,
-				4430CF7E238251820046D876 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */,
 			);
 			productRefGroup = 44F41FF91BA7175E00ADBB85 /* Products */;
 			projectDirPath = "";
@@ -482,8 +507,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -506,11 +530,7 @@
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = RangicCore/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = RangicCore;
 				PRODUCT_NAME = RangicCore;
@@ -538,11 +558,7 @@
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = RangicCore/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = RangicCore;
 				PRODUCT_NAME = RangicCore;
@@ -575,69 +591,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		4430CF66238244D90046D876 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.0;
-			};
-		};
-		4430CF6F238246370046D876 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Alamofire/Alamofire";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.9.1;
-			};
-		};
-		4430CF72238246690046D876 /* XCRemoteSwiftPackageReference "Async" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/duemunk/Async";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.1.0;
-			};
-		};
-		4430CF7E238251820046D876 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/CocoaLumberjack/CocoaLumberjack";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.6.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		4430CF70238246370046D876 /* Alamofire */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4430CF6F238246370046D876 /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
-		};
-		4430CF73238246690046D876 /* Async */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4430CF72238246690046D876 /* XCRemoteSwiftPackageReference "Async" */;
-			productName = Async;
-		};
-		4430CF75238246D60046D876 /* SwiftyJSON */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4430CF66238244D90046D876 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
-			productName = SwiftyJSON;
-		};
-		4430CF7F238251820046D876 /* CocoaLumberjackSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4430CF7E238251820046D876 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
-			productName = CocoaLumberjackSwift;
-		};
-		4430CF81238251820046D876 /* CocoaLumberjack */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4430CF7E238251820046D876 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
-			productName = CocoaLumberjack;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 44F41FEF1BA7175E00ADBB85 /* Project object */;
 }

@@ -2,44 +2,49 @@
 //  RangicCore
 //
 
-import CocoaLumberjack
-import CocoaLumberjackSwift
+//import CocoaLumberjack
+//import CocoaLumberjackSwift
 
 open class Logger {
     static public func configure() {
 //        DDTTYLogger!!.sharedInstance.logFormatter = RangicLogFormatter()
 //        DDLog.add(DDTTYLogger!!.sharedInstance)
 
-        let fileLogger = DDFileLogger()
-        fileLogger.logFormatter = RangicLogFormatter()
-        fileLogger.rollingFrequency = TimeInterval(24 * 60 * 60)
-        fileLogger.logFileManager.maximumNumberOfLogFiles = 10
-        fileLogger.maximumFileSize = UInt64(20 * 1024 * 1024)
-        DDLog.add(fileLogger)
+//        let fileLogger = DDFileLogger()
+//        fileLogger.logFormatter = RangicLogFormatter()
+//        fileLogger.rollingFrequency = TimeInterval(24 * 60 * 60)
+//        fileLogger.logFileManager.maximumNumberOfLogFiles = 10
+//        fileLogger.maximumFileSize = UInt64(20 * 1024 * 1024)
+//        DDLog.add(fileLogger)
     }
 
     static public func error(_ message:String) {
-        DDLogError("\(message)")
+        NSLog("ERROR: \(message)")
+//        DDLogError("\(message)")
     }
 
     static public func warn(_ message:String) {
-        DDLogWarn("\(message)")
+        NSLog("WARN: \(message)")
+//        DDLogWarn("\(message)")
     }
 
     static public func info(_ message:String) {
-        DDLogInfo("\(message)")
+        NSLog("INFO: \(message)")
+//        DDLogInfo("\(message)")
     }
 
     static public func debug(_ message:String) {
-        DDLogDebug("\(message)")
+        NSLog("DEBUG: \(message)")
+//        DDLogDebug("\(message)")
     }
 
     static public func verbose(_ message:String) {
-        DDLogVerbose("\(message)")
+        NSLog("VERBOSE: \(message)")
+//        DDLogVerbose("\(message)")
     }
 }
 
-open class RangicLogFormatter : NSObject, DDLogFormatter {
+open class RangicLogFormatter : NSObject /*, DDLogFormatter */ {
     static let calUnits = NSCalendar.Unit(rawValue:
         NSCalendar.Unit.year.rawValue
             | NSCalendar.Unit.month.rawValue
@@ -55,7 +60,7 @@ open class RangicLogFormatter : NSObject, DDLogFormatter {
         }
         return _cachedAppName!
     }
-
+/*
     open func format(message logMessage: DDLogMessage) -> String? {
         var level = "<none>"
         if logMessage.flag.contains(.error) {
@@ -79,4 +84,5 @@ open class RangicLogFormatter : NSObject, DDLogFormatter {
 
         return "\(timestamp) [\(RangicLogFormatter.appName):\(logMessage.threadID)] [\(level)] \(logMessage.message)"
     }
+ */
 }
